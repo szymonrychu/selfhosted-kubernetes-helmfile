@@ -1,0 +1,9 @@
+helmfiles:
+- path: git::https://github.com/szymonrychu/helmfile-cluster-backbone.git@helmfile.yaml?ref={{ env "BACKBONE_REF" | default "master" }}
+- path: git::https://github.com/szymonrychu/helmfile-cluster-monitoring.git@helmfile.yaml?ref={{ env "MONITORING_REF" | default "master" }}
+- path: git::https://github.com/szymonrychu/helmfile-cluster-media.git@helmfile.yaml?ref={{ env "MEDIA_REF" | default "master" }}
+- path: git::https://github.com/szymonrychu/helmfile-cluster-home-automation.git@helmfile.yaml?ref={{ env "HOME_AUTOMATION_REF" | default "master" }}
+- path: git::https://github.com/szymonrychu/helmfile-cluster-blog.git@helmfile.yaml?ref={{ env "BLOG_REF" | default "master" }}
+
+environments:
+  lab: {}
