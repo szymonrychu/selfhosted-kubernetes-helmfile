@@ -13,14 +13,6 @@ jobs:
     runs-on: [self-hosted, linux, X64]
     steps:
 
-    - name: Turnstyle
-      uses: softprops/turnstyle@v1
-      with:
-        continue-after-seconds: 180
-        poll-interval-seconds: 10
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Checkout code
       uses: actions/checkout@v2
 
