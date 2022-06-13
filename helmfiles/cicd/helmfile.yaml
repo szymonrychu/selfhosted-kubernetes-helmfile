@@ -33,10 +33,11 @@ templates:
 releases:
 
 - name: gha-runner
-  version: 2.293.0
+  version: 2.293.1
   chart: szymonrychu/gha-runner
   namespace: gha-runner
   labels:
     purpose: cicd
     application: gha-runner
   <<: *default
+  wait: false
