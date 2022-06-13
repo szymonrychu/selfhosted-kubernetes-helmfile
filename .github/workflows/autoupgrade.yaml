@@ -1,0 +1,36 @@
+name: autoupgrade
+
+on:
+  schedule:
+    - cron:  '0 0 * * *'
+
+env:
+  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+  BOT_EMAIL: "szymon.rychu@gmail.com"
+  BOT_USERNAME: "szymonrychu"
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, X64]
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Refresh central repo
+      run: |
+        set -e
+
+        git clone https://x-access-token:${BOT_TOKEN}@github.com/szymonrychu/helmfile-cluster.git /tmp/central-repo
+        cd /tmp/central-repo
+
+        pip3 install ruamel.yaml
+        ./autoupgrader.py
+
+        git config --global user.email "${BOT_EMAIL}"
+        git config --global user.name "${BOT_USERNAME}"
+
+        git add -A
+        git commit -m "Daily autoupgrade external charts"
+
+        git push origin master
