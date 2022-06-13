@@ -33,7 +33,7 @@ templates:
 releases:
 
 - name: gha-runner
-  version: 2.293.1
+  version: 2.293.2
   chart: szymonrychu/gha-runner
   namespace: gha-runner
   labels:
