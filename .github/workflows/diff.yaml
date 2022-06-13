@@ -28,6 +28,4 @@ jobs:
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        sops -d -i ./kubeconfig
-        export KUBECONFIG="$(pwd)/kubeconfig"
         helmfile diff || true
