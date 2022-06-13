@@ -1,0 +1,3 @@
+loki:
+  persistence:
+    size: 10Gi

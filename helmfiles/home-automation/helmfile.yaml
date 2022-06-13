@@ -1,0 +1,79 @@
+repositories:
+- name: k8s-at-home
+  url: https://k8s-at-home.com/charts/
+- name: szymonrychu
+  url: https://raw.githubusercontent.com/szymonrychu/charts/master/
+environments:
+  lab: {}
+templates:
+  default: &default
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: mosquitto
+  chart: k8s-at-home/mosquitto
+  version: 4.3.2
+  namespace: mosquitto
+  labels:
+    purpose: home-automation
+    application: mosquitto
+  <<: *default
+
+- name: shelly2prometheus
+  chart: szymonrychu/shelly2prometheus
+  version: 0.0.2
+  namespace: monitoring
+  labels:
+    purpose: monitoring
+    application: shelly2prometheus
+  <<: *default
+
+- name: speedtest-exporter
+  chart: k8s-at-home/speedtest-exporter
+  version: 5.3.3
+  namespace: monitoring
+  labels:
+    purpose: monitoring
+    application: speedtest-exporter
+  <<: *default
+
+- name: esphome
+  chart: k8s-at-home/esphome
+  version: 8.3.2
+  namespace: esphome
+  labels:
+    purpose: home-automation
+    application: esphome
+  <<: *default
+
+- name: home-assistant
+  chart: k8s-at-home/home-assistant
+  version: 13.2.0
+  namespace: home-assistant
+  labels:
+    purpose: home-automation
+    application: home-assistant
+  <<: *default

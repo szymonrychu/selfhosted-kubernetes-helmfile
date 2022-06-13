@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: loki-local-pvc
+  labels:
+    type: local
+spec:
+  storageClassName: loki-local-pv
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/k8s-data/raid1/loki"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: loki-local-pvc
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: loki-local-pv

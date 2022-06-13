@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, X64]
     steps:
 
     - name: Turnstyle
@@ -24,21 +24,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup tools
-      run: |
-        sudo wget -qO /usr/local/bin/kubectl "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" > /dev/null 2>&1
-        sudo chmod +x /usr/local/bin/kubectl
-
-        sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-        sudo chmod a+x /usr/local/bin/yq
-
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash > /dev/null 2>&1
-        (helm plugin install https://github.com/databus23/helm-diff || helm plugin update diff) > /dev/null 2>&1
-        (helm plugin install https://github.com/futuresimple/helm-secrets || helm plugin update secrets) > /dev/null 2>&1
-
-        curl -s https://api.github.com/repos/roboll/helmfile/releases/latest | jq -r '.assets[] | .browser_download_url' | grep 'linux_amd64' | xargs sudo wget -qO /usr/local/bin/helmfile
-        sudo chmod +x /usr/local/bin/helmfile
-
     - name: Sync
       env:
         ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
@@ -48,5 +33,4 @@ jobs:
         gpg --import encryption_key.gpg
         sops -d -i ./kubeconfig
         export KUBECONFIG="$(pwd)/kubeconfig"
-        environment="$(yq e '.environments | keys | .[0]' helmfile.yaml)"
-        helmfile -e $environment sync
+        helmfile apply

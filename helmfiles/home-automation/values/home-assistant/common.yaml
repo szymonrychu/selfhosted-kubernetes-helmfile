@@ -1,0 +1,80 @@
+env:
+  TZ: CET
+
+postgresql:
+  enabled: true
+  postgresqlUsername: home-assistant
+  postgresqlPassword: home-assistant-pass
+  postgresqlDatabase: home-assistant
+  primary:
+    securityContext:
+      enabled: true
+      fsGroup: 1000
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1000
+    persistence:
+      enabled: true
+      existingClaim: "postgresql-raid1-pvc"
+
+hostNetwork: true
+
+influxdb:
+  enabled: true
+  influxdb:
+    securityContext:
+      enabled: true
+      fsGroup: 1000
+      runAsUser: 1000
+  volumePermissions:
+    securityContext:
+      fsGroup: 1000
+      runAsUser: 1000
+  architecture: standalone
+  database: home_assistant
+  authEnabled: false
+  persistence:
+    enabled: true
+    existingClaim: "influxdb-raid1-pvc"
+
+metrics:
+  enabled: true
+  prometheusRule:
+    enabled: true
+  serviceMonitor:
+    bearerTokenSecret:
+      name: "home-assistant"
+      key: "BEARER_TOKEN"
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    mountPath: /config
+    hostPath: /k8s-data/raid1/home-assistant-config
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: home-assistant.szymonrichert.pl
+        paths:
+          - path: /
+    tls:
+      - secretName: home-assistant-tls
+        hosts: 
+          - home-assistant.szymonrichert.pl
+        
+      

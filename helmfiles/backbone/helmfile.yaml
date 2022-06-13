@@ -1,0 +1,87 @@
+repositories:
+- name: stable
+  url: https://charts.helm.sh/stable
+- name: szymonrychu
+  url: https://raw.githubusercontent.com/szymonrychu/charts/master/
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+- name: jetstack
+  url: https://charts.jetstack.io
+- name: ingress-nginx
+  url: https://kubernetes.github.io/ingress-nginx
+- name: argo
+  url: https://argoproj.github.io/argo-helm
+
+templates:
+  operators-default:
+    disableValidation: true
+    disableValidationOnInstall: true
+  default: &default
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: metallb
+  chart: bitnami/metallb
+  namespace: ingress-system
+  version: 3.0.6
+  labels:
+    purpose: backbone
+    application: metallb
+  <<: *default
+
+- name: cert-manager
+  chart: jetstack/cert-manager
+  namespace: ingress-system
+  version: 1.8.0
+  labels:
+    purpose: backbone
+    application: cert-manager
+  <<: *default
+  # <<: *operatorsdefaults
+
+- name: ingress-nginx
+  chart: ingress-nginx/ingress-nginx
+  namespace: ingress-system
+  version: 4.1.2
+  needs:
+  - ingress-system/metallb
+  - ingress-system/cert-manager
+  labels:
+    purpose: backbone
+    application: ingress-nginx
+  <<: *default
+  # <<: *operatorsdefaults
+
+- name: external-dns
+  chart: bitnami/external-dns
+  version: 6.5.1
+  namespace: ingress-system
+  needs:
+  - ingress-system/ingress-nginx
+  labels:
+    purpose: backbone
+    application: external-dns
+  <<: *default

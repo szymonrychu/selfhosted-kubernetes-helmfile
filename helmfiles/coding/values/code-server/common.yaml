@@ -1,0 +1,31 @@
+config:
+  codeServer:
+    domain: code.szymonrichert.pl
+  
+  oauth2Proxy:
+    keycloakRedirectmUrl: https://code.szymonrichert.pl/oauth2/callback
+    keycloakRealmUrl: https://auth.szymonrichert.pl/auth/realms/Lab
+    cookieName: oauth2-authorization-cookie
+    cookieDomain: szymonrichert.pl
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: code.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+   - secretName: code-tls
+     hosts:
+       - code.szymonrichert.pl
+
+podSecurityContext:
+  fsGroup: 1000
+  # runAsGroup: 1000
+  # runAsNonRoot: true
+  # runAsUser: 1000

@@ -1,0 +1,43 @@
+repositories:
+- name: codecentric
+  url: https://codecentric.github.io/helm-charts
+templates:
+  operators-default:
+    disableValidation: true
+    disableValidationOnInstall: true
+  default: &default
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/common-{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: keycloak
+  timeout: 600
+  version: 18.1.1
+  chart: codecentric/keycloak
+  namespace: keycloak
+  labels:
+    purpose: authentication
+    application: keycloak
+  <<: *default

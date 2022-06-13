@@ -1,0 +1,97 @@
+image:
+  repository: ghcr.io/k8s-at-home/plex
+  pullPolicy: IfNotPresent
+  tag: v1.25.9.5721-965587f64
+
+service:
+  main:
+    primary: true
+    ports:
+      http:
+        port: 32400
+  dnla-tcp:
+    enabled: true
+    type: NodePort
+    ports:
+      dnla-tcp:
+        enabled: true
+        port: 32469
+        protocol: TCP
+        targetPort: 32469
+    externalTrafficPolicy: Local
+  dnla-udp:
+    enabled: true
+    type: NodePort
+    ports:
+      dnla-udp:
+        enabled: true
+        port: 1900
+        protocol: UDP
+        targetPort: 1900
+    externalTrafficPolicy: Local
+
+ingress:
+  main:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: plex.szymonrichert.pl
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: plex-tls
+        hosts:
+          - plex.szymonrichert.pl
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  # runAsNonRoot: true
+  runAsUser: 1000
+
+env:
+  NVIDIA_VISIBLE_DEVICES: GPU-75e37533-e1a4-88d2-f573-dca6ce27d047
+
+metrics:
+  enabled: true
+
+hostNetwork: true
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: 4
+    memory: 4096Mi
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    mountPath: /config
+    hostPath: /k8s-data/raid1/plex-config
+  transcoding:
+    enabled: true
+    type: hostPath
+    mountPath: /transcode
+    hostPath: /k8s-data/plex-transcoding-temp
+  movies:
+    enabled: true
+    type: hostPath
+    mountPath: /media/movies
+    hostPath: /k8s-data/disk/movies
+  tvseries:
+    enabled: true
+    type: hostPath
+    mountPath: /media/tvseries
+    hostPath: /k8s-data/disk/tvseries
+  music:
+    enabled: true
+    type: hostPath
+    mountPath: /media/music
+    hostPath: /k8s-data/disk/music

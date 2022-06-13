@@ -1,25 +1,20 @@
-name: diff
+name: autoupgrade
 
 on:
-  pull_request:
-    branches:
-      - master
+  schedule:
+    - cron:  '0 0 * * *'
 
 jobs:
   build:
-    runs-on: [self-hosted, linux, X64]
+    runs-on: ubuntu-latest
     steps:
-
-    - name: Turnstyle
-      uses: softprops/turnstyle@v1
-      with:
-        continue-after-seconds: 180
-        poll-interval-seconds: 10
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Setup tools
+      run: |
+        sudo pip3 install ruamel.yaml
 
     - name: Diff
       env:
@@ -30,4 +25,5 @@ jobs:
         gpg --import encryption_key.gpg
         sops -d -i ./kubeconfig
         export KUBECONFIG="$(pwd)/kubeconfig"
-        helmfile diff || true
+        environment="$(yq e '.environments | keys | .[0]' helmfile.yaml)"
+        helmfile -e $environment diff || true

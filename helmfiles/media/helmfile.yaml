@@ -1,0 +1,82 @@
+repositories:
+- name: k8s-at-home
+  url: https://k8s-at-home.com/charts/
+templates:
+  operators-default:
+    disableValidation: true
+    disableValidationOnInstall: true
+  default: &default
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: intel-gpu-plugin
+  chart: k8s-at-home/intel-gpu-plugin
+  namespace: kube-system
+  version: 4.3.2
+  labels:
+    purpose: media
+    application: intel-gpu-plugin
+  <<: *default
+
+- name: samba
+  chart: k8s-at-home/samba
+  version: 6.1.2
+  namespace: samba
+  labels:
+    purpose: media
+    application: samba
+  <<: *default
+
+- name: transmission
+  chart: k8s-at-home/transmission
+  version: 8.3.2
+  namespace: transmission
+  labels:
+    purpose: media
+    application: transmission
+  <<: *default
+
+- name: emby
+  chart: k8s-at-home/emby
+  version: 3.3.2
+  namespace: emby
+  needs:
+  - kube-system/intel-gpu-plugin
+  labels:
+    purpose: media
+    application: emby
+  <<: *default
+
+- name: plex
+  chart: k8s-at-home/plex
+  version: 6.3.3
+  namespace: plex
+  needs:
+  - kube-system/intel-gpu-plugin
+  labels:
+    purpose: media
+    application: plex
+  <<: *default

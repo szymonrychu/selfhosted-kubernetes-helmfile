@@ -1,0 +1,42 @@
+repositories:
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+templates:
+  operators-default:
+    disableValidation: true
+    disableValidationOnInstall: true
+  default: &default
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: wordpress
+  version: 14.3.1
+  chart: bitnami/wordpress
+  namespace: blog
+  labels:
+    purpose: blog
+    application: wordpress
+  <<: *default
