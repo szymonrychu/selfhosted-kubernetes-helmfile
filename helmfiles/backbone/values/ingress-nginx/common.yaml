@@ -2,3 +2,5 @@ controller:
   hostNetwork: true
   hostPort:
     enabled: true
+  updateStrategy:
+    type: Recreate
