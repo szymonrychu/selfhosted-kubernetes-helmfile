@@ -1,5 +1,5 @@
 creation_rules:
-  - path_regex: .*.secrets.yaml
+  - path_regex: default.secrets.yaml
     pgp: D39E46932A270AA3BA490B9DB9FE928D3E8BCED8
   - path_regex: kubeconfig
     pgp: D39E46932A270AA3BA490B9DB9FE928D3E8BCED8

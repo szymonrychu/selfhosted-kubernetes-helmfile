@@ -28,7 +28,6 @@ templates:
     - values/{{`{{ .Release.Name }}`}}/common.yaml
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
     secrets:
-    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
 
 releases:
