@@ -20,11 +20,11 @@ jobs:
     - name: Refresh central repo
       run: |
         set -e
-
+        rm -rf /tmp/central-repo
+        
         git clone https://x-access-token:${BOT_TOKEN}@github.com/szymonrychu/helmfile-cluster.git /tmp/central-repo
         cd /tmp/central-repo
-
-        pip3 install ruamel.yaml
+        
         ./autoupgrader.py
 
         git config --global user.email "${BOT_EMAIL}"
