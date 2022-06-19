@@ -29,3 +29,11 @@ podSecurityContext:
   # runAsGroup: 1000
   # runAsNonRoot: true
   # runAsUser: 1000
+
+resources:
+  limits:
+    memory: 512Gi
+    cpu: 500m
+  requests:
+    memory: 128Mi
+    cpu: 100m

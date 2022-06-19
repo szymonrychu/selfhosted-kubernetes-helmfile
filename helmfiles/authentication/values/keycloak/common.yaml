@@ -20,11 +20,11 @@ ingress:
 
 resources:
   requests:
-    cpu: "500m"
-    memory: "1024Mi"
+    cpu: 500m
+    memory: 1024Mi
   limits:
     cpu: "1"
-    memory: "2048Mi"
+    memory: 2048Mi
 
 postgresql:
   securityContext:
@@ -38,3 +38,10 @@ postgresql:
     accessModes:
       - ReadWriteOnce
     size: 2Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 250m
+      memory: 512Mi
