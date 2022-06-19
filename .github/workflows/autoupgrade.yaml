@@ -2,7 +2,7 @@ name: autoupgrade
 
 on:
   schedule:
-    - cron:  '0 10 * * *' # 10:00 UTC -> 12:00 Warsaw
+    - cron:  '0 10 * * 6' # 10:00 UTC -> 12:00 Warsaw at Saturdays
 
 env:
   BOT_TOKEN: ${{ secrets.BOT_TOKEN }}

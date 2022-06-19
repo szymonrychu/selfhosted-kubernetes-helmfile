@@ -3,6 +3,10 @@ set -e
 set -o nounset
 set -o pipefail
 
+if [[ -z "${DEFAULT_TIMEOUT_S:-}" ]]; then
+  readonly DEFAULT_TIMEOUT_S='600'
+fi
+
 fail() {
     printf "Missing parameter!\n" >2
     exit 1
@@ -57,6 +61,27 @@ kubectl_secrets_wrapper() {
     fi
 }
 
+fixHelmRelease() {
+    local release="$1"
+    local namespace="$2"
+    kubectl delete secret \
+        -n "${namespace}" \
+        "$(kubectl get secrets -n "${namespace}" | grep -E "^sh.helm.release.v1.${release}.v[0-9]+" | awk '{print $1}' | tail -1)"
+}
+
+timeoutReached() {
+  local end_time="$1"
+  if [[ "$(date +%s)" -ge "${end_time}" ]]; then
+    printf "Timeout reached, removing locks!\n" >&2
+    for helm_release_namespace in $(helm list --all-namespaces --failed --pending --output json | jq -r '.[] | .name + ":" + .namespace'); do
+        helm_release="$(printf "${helm_release_namespace}" | cut -d':' -f1)"
+        helm_namespace="$(printf "${helm_release_namespace}" | cut -d':' -f2)"
+        fixHelmRelease "${helm_release}" "${helm_namespace}"
+    done
+    exit
+  fi
+}
+
 export -f kubectl_cmd
 export -f bash_wrapper
 export -f kubectl_wrapper
@@ -66,10 +91,13 @@ readonly EVENT_NAME="${1:-}"
 readonly ENVIRONMENT_NAME="${2:-}"
 readonly RELEASE_NAME="${3:-}"
 readonly RELEASE_NAMESPACE="${4:-}"
+readonly TIMEOUT_S="${5:-$DEFAULT_TIMEOUT_S}"
 
 [[ -z "${EVENT_NAME}" ]]        && fail
 [[ -z "${ENVIRONMENT_NAME}" ]]  && fail
 [[ -z "${EVENT_NAME}" ]]        && fail
+
+readonly TIMEOUT_TMSTP="$(($(date +%s) + TIMEOUT_S))"
 
 if [[ "${EVENT_NAME}" == "presync" ]]; then
     readonly KUBECTL="kubectl apply"
@@ -84,6 +112,13 @@ fi
 readonly SH_SEARCH_SUFF="${EVENT_NAME}"
 
 readonly CURRENT_PWD="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+
+printf ""
+while [[ $(helm list --all-namespaces --failed --pending --output json | jq '. | length') -gt 0 ]]; do
+    timeoutReached "${TIMEOUT_TMSTP}"
+    printf "."
+    sleep 1
+done
 
 if [[ ! -z "${RELEASE_NAME}" ]] && [[ ! -z "${RELEASE_NAMESPACE}" ]]; then
     readonly RELEASE_DIR="${CURRENT_PWD}/values/${RELEASE_NAME}"
