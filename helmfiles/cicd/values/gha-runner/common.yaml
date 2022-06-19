@@ -1,3 +1,11 @@
 config:
   githubOwner: "szymonrychu"
   githubRepository: "helmfile-cluster"
+
+resources:
+  limits:
+    cpu: 1
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
