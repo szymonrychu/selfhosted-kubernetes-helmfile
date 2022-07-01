@@ -42,7 +42,7 @@ releases:
 - name: metallb
   chart: bitnami/metallb
   namespace: ingress-system
-  version: 3.0.9
+  version: 3.0.10
   labels:
     purpose: backbone
     application: metallb
