@@ -63,8 +63,8 @@ hostNetwork: true
 
 resources:
   requests:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
   limits:
     cpu: 4
     memory: 4096Mi
