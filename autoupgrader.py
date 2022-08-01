@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from ruamel.yaml import round_trip_load
+from requests.exceptions import ConnectionError
 import logging
 
 from lib.helmfile import Helmfile
@@ -14,11 +15,16 @@ def load_helmfiles():
         for helmfile_raw in main_helmfile['helmfiles']:
             yield Helmfile(helmfile_raw['path'])
 
+
 def _main():
     repo_cache = []
     for helmfile in load_helmfiles():
-        repo_cache = helmfile.upgrade_all_releases(repo_cache)
-        helmfile.write()
+        try:
+            repo_cache = helmfile.upgrade_all_releases(repo_cache)
+            helmfile.write()
+        except ConnectionError as e:
+            logging.error(str(e))
+
 
 if __name__ == '__main__':
     _main()

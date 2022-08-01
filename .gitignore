@@ -1,2 +1,13 @@
 .helmfile
 __pycache__
+*.idea
+.gradle
+build/
+out/
+*.log
+metastore_db
+*.iml
+.DS_Store
+*.gz
+venv
+.pytest*
