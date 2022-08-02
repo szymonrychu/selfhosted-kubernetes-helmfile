@@ -42,7 +42,7 @@ releases:
 - name: metallb
   chart: bitnami/metallb
   namespace: ingress-system
-  version: 3.0.10
+  version: 3.0.12
   labels:
     purpose: backbone
     application: metallb
@@ -51,7 +51,7 @@ releases:
 - name: cert-manager
   chart: jetstack/cert-manager
   namespace: ingress-system
-  version: 1.8.2
+  version: 1.9.1
   labels:
     purpose: backbone
     application: cert-manager
@@ -73,7 +73,7 @@ releases:
 
 - name: external-dns
   chart: bitnami/external-dns
-  version: 6.6.1
+  version: 6.7.2
   namespace: ingress-system
   needs:
   - ingress-system/ingress-nginx

@@ -34,7 +34,7 @@ releases:
 - name: intel-gpu-plugin
   chart: k8s-at-home/intel-gpu-plugin
   namespace: kube-system
-  version: 4.3.2
+  version: 4.4.0
   labels:
     purpose: media
     application: intel-gpu-plugin
@@ -42,7 +42,7 @@ releases:
 
 - name: samba
   chart: k8s-at-home/samba
-  version: 6.1.2
+  version: 6.2.0
   namespace: samba
   labels:
     purpose: media
@@ -51,7 +51,7 @@ releases:
 
 - name: transmission
   chart: k8s-at-home/transmission
-  version: 8.3.2
+  version: 8.4.0
   namespace: transmission
   labels:
     purpose: media
@@ -60,7 +60,7 @@ releases:
 
 - name: emby
   chart: k8s-at-home/emby
-  version: 3.3.2
+  version: 3.4.0
   namespace: emby
   needs:
   - kube-system/intel-gpu-plugin
@@ -71,7 +71,7 @@ releases:
 
 - name: plex
   chart: k8s-at-home/plex
-  version: 6.3.3
+  version: 6.4.1
   namespace: plex
   needs:
   - kube-system/intel-gpu-plugin
