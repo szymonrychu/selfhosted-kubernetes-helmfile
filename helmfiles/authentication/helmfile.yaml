@@ -33,7 +33,7 @@ releases:
 
 - name: keycloak
   timeout: 600
-  version: 18.2.1
+  version: 18.3.0
   chart: codecentric/keycloak
   namespace: keycloak
   labels:

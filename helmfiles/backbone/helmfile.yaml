@@ -42,7 +42,7 @@ releases:
 - name: metallb
   chart: bitnami/metallb
   namespace: ingress-system
-  version: 4.0.0
+  version: 4.0.1
   labels:
     purpose: backbone
     application: metallb
@@ -73,7 +73,7 @@ releases:
 
 - name: external-dns
   chart: bitnami/external-dns
-  version: 6.7.3
+  version: 6.7.4
   namespace: ingress-system
   needs:
   - ingress-system/ingress-nginx
