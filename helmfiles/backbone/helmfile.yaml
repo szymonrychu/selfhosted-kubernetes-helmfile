@@ -48,6 +48,17 @@ releases:
     application: kured
   <<: *default
 
+- name: apt-autoupgrade
+  chart: szymonrychu/ubuntu-apt-autoupgrade
+  version: 1.0.0
+  namespace: kube-system
+  needs:
+  - kube-system/kured
+  labels:
+    purpose: backbone
+    application: apt-autoupgrade
+  <<: *default
+
 - name: local-path-provisioner
   chart: szymonrychu/local-path-provisioner
   namespace: rook-ceph

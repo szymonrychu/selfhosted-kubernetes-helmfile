@@ -149,8 +149,13 @@ grafana:
         - grafana.szymonrichert.pl
         secretName: grafana-tls
   grafana.ini:
+    allow_embedding: true
     auth:
       oauth_auto_login: true
+    "auth.anonymous":
+      enabled: true
+      org_name: "Main Org."
+      org_role: Viewer
     "auth.generic_oauth":
       enabled: true
       scopes: profile,email,groups
