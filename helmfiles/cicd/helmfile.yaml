@@ -32,7 +32,16 @@ templates:
 releases:
 
 - name: gha-runner
-  version: 2.293.15
+  version: 2.293.10 # keep patch
+  chart: szymonrychu/gha-runner
+  namespace: gha-runner
+  labels:
+    purpose: cicd
+    application: gha-runner
+  <<: *default
+  wait: false
+- name: madafaka
+  version: 2.293.10
   chart: szymonrychu/gha-runner
   namespace: gha-runner
   labels:

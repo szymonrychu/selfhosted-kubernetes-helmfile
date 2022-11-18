@@ -1,0 +1,43 @@
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+error_log /var/log/nginx.error info;
+
+events {
+	worker_connections 768;
+}
+stream {
+
+    log_format basic '$remote_addr [$time_local] '
+        '$protocol $status $bytes_sent $bytes_received '
+        '$session_time "$upstream_addr" '
+        '"$upstream_bytes_sent" "$upstream_bytes_received" "$upstream_connect_time"';
+
+    access_log /var/log/nginx/access.log basic;
+    error_log  /var/log/nginx/error.log;
+
+    upstream https_backend {
+        {% for host in nginx_static_upstreams -%}
+        server {{ host }}:443 fail_timeout=2s;
+        {% endfor -%}
+    }
+
+    upstream http_backend {
+        {% for host in nginx_static_upstreams -%}
+        server {{ host }}:80 fail_timeout=2s;
+        {% endfor -%}
+    }
+
+    server {
+        listen 443;
+        proxy_pass https_backend;
+        proxy_next_upstream on;
+    }
+
+    server {
+        listen 80;
+        proxy_pass http_backend;
+        proxy_next_upstream on;
+    }
+}

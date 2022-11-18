@@ -1,6 +1,6 @@
 repositories:
-- name: k8s-at-home
-  url: https://k8s-at-home.com/charts/
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
 - name: szymonrychu
   url: https://raw.githubusercontent.com/szymonrychu/charts/master/
 environments:
@@ -32,45 +32,27 @@ templates:
 
 releases:
 
-- name: mosquitto
-  chart: k8s-at-home/mosquitto
-  version: 4.3.2
-  namespace: mosquitto
-  labels:
-    purpose: home-automation
-    application: mosquitto
-  <<: *default
+# - name: speedtest-exporter
+#   chart: k8s-at-home/speedtest-exporter
+#   version: 5.3.3
+#   namespace: monitoring
+#   labels:
+#     purpose: monitoring
+#     application: speedtest-exporter
+#   <<: *default
 
-- name: shelly2prometheus
-  chart: szymonrychu/shelly2prometheus
-  version: 0.0.2
-  namespace: monitoring
-  labels:
-    purpose: monitoring
-    application: shelly2prometheus
-  <<: *default
-
-- name: speedtest-exporter
-  chart: k8s-at-home/speedtest-exporter
-  version: 5.3.3
-  namespace: monitoring
-  labels:
-    purpose: monitoring
-    application: speedtest-exporter
-  <<: *default
-
-- name: esphome
-  chart: k8s-at-home/esphome
-  version: 8.3.2
-  namespace: esphome
-  labels:
-    purpose: home-automation
-    application: esphome
-  <<: *default
+# - name: esphome
+#   chart: truecharts/esphome
+#   version: 11.0.53
+#   namespace: esphome
+#   labels:
+#     purpose: home-automation
+#     application: esphome
+#   <<: *default
 
 - name: home-assistant
-  chart: k8s-at-home/home-assistant
-  version: 13.2.0
+  chart: szymonrychu/home-assistant
+  version: 1.0.0
   namespace: home-assistant
   labels:
     purpose: home-automation

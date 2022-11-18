@@ -1,0 +1,4 @@
+---
+consul_root_dir: /etc/consul.d
+consul_template_root_dir: /etc/consul-template.d
+_ansible_node_interface: "ansible_{{consul_node_interface}}"

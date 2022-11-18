@@ -1,0 +1,93 @@
+---
+
+# - name: Add Google gpg key
+#   apt_key:
+#     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+#     state: present
+
+# - name: Add Kubernetes Repository
+#   apt_repository:
+#     repo: "deb [arch=amd64] http://apt.kubernetes.io/ kubernetes-xenial main"
+#     state: present
+
+# - name: Install Kubernetes
+#   ansible.builtin.package:
+#     name: "{{ item }}"
+#     state: present
+#     update_cache: true
+#   with_items:
+#     - kubelet
+#     - kubeadm
+#     - kubernetes-cni
+
+# kubeadm init \
+#   --pod-network-cidr "10.1.0.0/16" \
+#   --service-cidr "10.2.0.0/16" \
+#   --control-plane-endpoint "kubernetes.consul:6444" \
+#   --upload-certs \
+#   --apiserver-cert-extra-sans "10.8.0.16,10.8.0.17,10.8.0.18,192.168.1.16,192.168.1.17,192.168.1.18,szymonrichert.pl,k8s.szymonrichert.pl,kubernetes.consul"
+
+
+
+- name: Download k3s installer
+  get_url:
+    url: "https://raw.githubusercontent.com/k3s-io/k3s/release-{{ k3s_installer_version }}/install.sh"
+    dest: /root/install.sh
+    mode: "0700"
+
+- name: Install initial k3s master
+  ansible.builtin.shell:
+    creates: /etc/rancher/k3s/k3s.yaml
+    executable: /bin/bash
+    cmd: |
+      /root/install.sh server \
+        --cluster-init \
+        --service-node-port-range 1-65535 \
+        --node-ip {{ hostvars[inventory_hostname][_ansible_k3s_node_interface]['ipv4']['address'] }} \
+        --disable-helm-controller \
+        --disable traefik,local-storage,servicelb \
+        --etcd-expose-metrics \
+        --tls-san {{ _k3s_san_comma_list }} \
+        --disable-cloud-controller \
+        --token {{ k3s_token }}
+  when: first_k3s_master_node == inventory_hostname
+
+- name: Wait for initial k3s up
+  ansible.builtin.wait_for:
+    port: 6443
+    delay: 20
+  when: first_k3s_master_node == inventory_hostname
+
+- name: Install other k3s masters
+  ansible.builtin.shell:
+    creates: /etc/rancher/k3s/k3s.yaml
+    executable: /bin/bash
+    cmd: |
+      /root/install.sh server \
+        --server https://{{ _initial_master_k3s_node_ip }}:6443 \
+        --service-node-port-range 1-65535 \
+        --node-ip {{ hostvars[inventory_hostname][_ansible_k3s_node_interface]['ipv4']['address'] }} \
+        --disable-helm-controller \
+        --disable traefik,local-storage,servicelb \
+        --etcd-expose-metrics \
+        --tls-san {{ _k3s_san_comma_list }} \
+        --disable-cloud-controller \
+        --token {{ k3s_token }}
+  when: first_k3s_master_node != inventory_hostname and inventory_hostname in k8s_master_nodes
+
+- name: "Setup k8s worker nodes"
+  ansible.builtin.shell:
+    creates: /etc/rancher/k3s/k3s.yaml
+    executable: /bin/bash
+    cmd: |
+      /root/install.sh agent \
+        --server https://{{ _initial_master_k3s_node_ip }}:6443 \
+        --token {{ k3s_token }}
+  when: inventory_hostname in k8s_worker_nodes
+
+- name: Ensure k3s service is enabled
+  ansible.builtin.service:
+    name: k3s
+    state: started
+    enabled: yes
+  when: inventory_hostname in k8s_worker_nodes or inventory_hostname in k8s_master_nodes

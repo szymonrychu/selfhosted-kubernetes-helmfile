@@ -1,0 +1,4 @@
+---
+_ansible_k3s_node_interface: "ansible_{{k3s_node_iface}}"
+_initial_master_k3s_node_ip: "{{ hostvars[first_k3s_master_node][_ansible_k3s_node_interface]['ipv4']['address'] }}"
+_k3s_san_comma_list: "{% for san in k8s_api_cert_sans %}{{ san }}{% if not loop.last %},{% endif %}{% endfor %}"

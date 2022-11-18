@@ -1,0 +1,31 @@
+vpn_master_hostname: vpn_server
+
+vpn_static_client_dict:
+  nuc1: 10.8.0.16
+  nuc2: 10.8.0.17
+  nuc3: 10.8.0.18
+  laptop1: 10.8.0.32
+
+consul_1st_node: nuc1
+
+consul_master_nodes:
+  - nuc1
+  - nuc2
+  - nuc3
+
+first_k3s_master_node: nuc1
+k8s_master_nodes:
+  - nuc1
+  - nuc2
+  - nuc3
+
+k8s_worker_nodes:
+  - laptop1
+
+k3s_token: hVkKeAjdtVYKnhvhZduz
+
+nginx_static_upstreams:
+  - 10.8.0.16
+  - 10.8.0.17
+  - 10.8.0.18
+  - 10.8.0.32

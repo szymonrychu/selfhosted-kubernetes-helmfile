@@ -1,0 +1,55 @@
+repositories:
+- name: rook-release
+  url: https://charts.rook.io/release
+- name: szymonrychu
+  url: https://raw.githubusercontent.com/szymonrychu/charts/master/
+templates:
+  default: &default
+    disableValidation: true
+    disableValidationOnInstall: true
+    disableOpenAPIValidation: true
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Environment.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+- name: rook-ceph
+  chart: rook-release/rook-ceph
+  namespace: rook-ceph
+  version: "1.10.5" # latest release without 'common' bitnami chart in dependencies
+  <<: *default
+  labels:
+    purpose: storage
+    application: rook-ceph
+
+- name: rook-ceph-cluster
+  chart: rook-release/rook-ceph-cluster
+  namespace: rook-ceph
+  version: "1.10.5" # latest release without 'common' bitnami chart in dependencies
+  force: true
+  <<: *default
+  # <<: *operatorDefault
+  labels:
+    purpose: storage
+    application: rook-ceph-cluster
+  needs:
+    - rook-ceph/rook-ceph

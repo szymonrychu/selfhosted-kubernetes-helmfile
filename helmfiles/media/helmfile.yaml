@@ -1,4 +1,6 @@
 repositories:
+- name: truecharts
+  url: https://charts.truecharts.org
 - name: k8s-at-home
   url: https://k8s-at-home.com/charts/
 templates:
@@ -31,14 +33,14 @@ templates:
 
 releases:
 
-- name: intel-gpu-plugin
-  chart: k8s-at-home/intel-gpu-plugin
-  namespace: kube-system
-  version: 4.4.2
-  labels:
-    purpose: media
-    application: intel-gpu-plugin
-  <<: *default
+# - name: intel-gpu-plugin
+#   chart: truecharts/intel-gpu-plugin
+#   namespace: kube-system
+#   version: 4.4.2
+#   labels:
+#     purpose: media
+#     application: intel-gpu-plugin
+#   <<: *default
 
 - name: samba
   chart: k8s-at-home/samba
@@ -49,33 +51,40 @@ releases:
     application: samba
   <<: *default
 
-- name: transmission
-  chart: k8s-at-home/transmission
-  version: 8.4.3
-  namespace: transmission
+- name: qbittorrent
+  chart: truecharts/qbittorrent
+  version: 11.0.43
+  namespace: qbittorrent
   labels:
     purpose: media
-    application: transmission
+    application: qbittorrent
   <<: *default
 
 - name: emby
-  chart: k8s-at-home/emby
-  version: 3.4.2
+  chart: truecharts/emby
+  version: 11.0.42
   namespace: emby
-  needs:
-  - kube-system/intel-gpu-plugin
   labels:
     purpose: media
     application: emby
   <<: *default
 
-- name: plex
-  chart: k8s-at-home/plex
-  version: 6.4.3
-  namespace: plex
-  needs:
-  - kube-system/intel-gpu-plugin
+- name: jellyfin
+  chart: truecharts/jellyfin
+  version: 11.0.44
+  namespace: jellyfin
   labels:
     purpose: media
-    application: plex
+    application: jellyfin
   <<: *default
+
+# - name: plex
+#   chart: truecharts/plex
+#   version: 10.2.20
+#   namespace: plex
+#   # needs:
+#   # - kube-system/intel-gpu-plugin
+#   labels:
+#     purpose: media
+#     application: plex
+#   <<: *default

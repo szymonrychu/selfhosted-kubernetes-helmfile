@@ -1,0 +1,10 @@
+[openvpn_server]
+vpn_server ansible_host=178.62.213.96 ansible_connection=ssh ansible_user=vpn
+
+[openvpn_clients]
+nuc1 ansible_host=192.168.1.16 ansible_connection=ssh ansible_user=szymonri
+nuc2 ansible_host=192.168.1.17 ansible_connection=ssh ansible_user=szymonri
+nuc3 ansible_host=192.168.1.18 ansible_connection=ssh ansible_user=szymonri
+laptop1 ansible_host=192.168.1.32 ansible_connection=ssh ansible_user=szymonri
+
+[all]

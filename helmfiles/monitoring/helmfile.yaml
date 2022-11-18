@@ -1,8 +1,8 @@
 repositories:
 - name: prometheus-community
   url: https://prometheus-community.github.io/helm-charts
-- name: loki
-  url: https://grafana.github.io/loki/charts
+- name: grafana
+  url: https://grafana.github.io/helm-charts
 templates:
   default: &default
     disableValidation: true
@@ -41,13 +41,13 @@ releases:
     application: prometheus
   <<: *default
 
-- name: loki
-  namespace: monitoring
-  chart: loki/loki-stack
-  version: 2.1.2
-  labels:
-    purpose: monitoring
-    application: loki
-  needs:
-  - monitoring/prometheus
-  <<: *default
+# - name: loki
+#   namespace: monitoring
+#   chart: grafana/loki-stack
+#   version: 2.8.7
+#   labels:
+#     purpose: monitoring
+#     application: loki
+#   needs:
+#   - monitoring/prometheus
+#   <<: *default

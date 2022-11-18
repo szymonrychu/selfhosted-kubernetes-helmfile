@@ -1,0 +1,8 @@
+vpn_master_hostname: vpn
+vpn_client_list: []
+  # - robot
+  # - overlord
+vpn_static_client_dict: {}
+  # node1: 10.8.0.2
+  # node2: 10.8.0.3
+  # node3: 10.8.0.4

@@ -1,7 +1,7 @@
 class Version():
 
-    def __init__(self, raw: str):
-
+    def __init__(self, version: str):
+        raw = str(version)
         if raw.startswith('v'):
             raw = raw[1:]
         self._suffix = ''

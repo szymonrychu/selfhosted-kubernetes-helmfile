@@ -1,13 +1,13 @@
 helmfiles:
-- path: helmfiles/cicd/helmfile.yaml
+# - path: helmfiles/cicd/helmfile.yaml
 - path: helmfiles/backbone/helmfile.yaml
 - path: helmfiles/monitoring/helmfile.yaml
 - path: helmfiles/authentication/helmfile.yaml
-- path: helmfiles/datascience/helmfile.yaml
-- path: helmfiles/coding/helmfile.yaml
-# - path: helmfiles/home-automation/helmfile.yaml
+# - path: helmfiles/datascience/helmfile.yaml
+# - path: helmfiles/coding/helmfile.yaml
+# # - path: helmfiles/home-automation/helmfile.yaml
 - path: helmfiles/media/helmfile.yaml
-- path: helmfiles/blog/helmfile.yaml
+# - path: helmfiles/blog/helmfile.yaml
 
 environments:
   default: {}

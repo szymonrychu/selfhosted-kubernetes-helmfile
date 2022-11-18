@@ -4,3 +4,33 @@ controller:
     enabled: true
   updateStrategy:
     type: Recreate
+
+  replicaCount: 4
+
+
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - ingress-nginx
+        topologyKey: "kubernetes.io/hostname"
+
+
+  admissionWebhooks:
+    enabled: false
+    timeoutSeconds: 10
+
+  service:
+    annotations:
+      metallb.universe.tf/loadBalancerIPs: 178.62.213.96
+    # loadBalancerIP: 178.62.213.96
+  #   type: NodePort
+  #   nodePorts:
+  #     http: 32080
+  #     https: 32443
+  #     # tcp:
+  #     #   8080: 32808

@@ -1,0 +1,4 @@
+monitoring:
+  enabled: false
+#   rulesNamespace: monitoring
+pspEnable: false
