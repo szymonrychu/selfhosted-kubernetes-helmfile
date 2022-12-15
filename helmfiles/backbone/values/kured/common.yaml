@@ -1,0 +1,10 @@
+configuration:
+  period: ""                    # reboot check period (default 1h0m0s)
+  rebootDays:
+    - sa
+  notifyUrl: ""                 # notification URL with the syntax as follows: https://containrrr.dev/shoutrrr/services/overview/
+  messageTemplateDrain: ""      # slack message template when notifying about a node being drained (default "Draining node %s")
+  messageTemplateReboot: ""     # slack message template when notifying about a node being rebooted (default "Rebooted node %s")
+  messageTemplateUncordon: ""   # slack message template when notifying about a node being uncordoned (default "Node %s rebooted & uncordoned successfully!")
+  startTime: "2:00"             # only reboot after this time of day (default "0:00")
+  endTime: "4:00"               # only reboot before this time of day (default "23:59")

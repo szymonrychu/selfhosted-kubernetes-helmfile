@@ -11,3 +11,5 @@ metastore_db
 *.gz
 venv
 .pytest*
+ansible/buffer
+ansible/hosts

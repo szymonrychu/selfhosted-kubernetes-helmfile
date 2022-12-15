@@ -20,4 +20,25 @@ jobs:
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        helmfile diff || true
+        helmfile diff
+
+  diff-complete:
+    needs: [build]
+    name: Container Build Completed
+    runs-on: ubuntu-latest
+    steps:
+      - name: complete message
+        run: echo "Container Build and Tests Completed Successfully"
+
+  automerge:
+    needs: [diff-complete]
+    if: github.event_name == 'pull_request'
+    name: Automerge build
+    runs-on: ubuntu-latest
+    steps:
+      - name: automerge
+        uses: pascalgn/automerge-action@eb68b061739cb9d81564f8e812d0b3c45f0fb09a # tag=v0.15.5
+        env:
+          GITHUB_TOKEN: "${{ secrets.BOT_TOKEN }}"
+          UPDATE_RETRIES: 12
+          UPDATE_RETRY_SLEEP: 60000

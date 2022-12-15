@@ -1,0 +1,150 @@
+---
+# Source: jellyfin/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: samba-jellyfin
+  labels:
+    helm.sh/chart: jellyfin-0.1.0
+    app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/instance: samba
+    app.kubernetes.io/version: "3.17.0-alpine"
+    app.kubernetes.io/managed-by: Helm
+---
+# Source: jellyfin/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba-jellyfin
+  labels:
+    helm.sh/chart: jellyfin-0.1.0
+    app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/instance: samba
+    app.kubernetes.io/version: "3.17.0-alpine"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: jellyfin
+      app.kubernetes.io/instance: samba
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: jellyfin
+        app.kubernetes.io/instance: samba
+    spec:
+      serviceAccountName: samba-jellyfin
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: jellyfin
+          securityContext:
+            {}
+          image: "dperson/samba:latest"
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8096
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 5
+          startupProbe:
+            failureThreshold: 60
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: http
+            timeoutSeconds: 2
+          resources:
+            limits:
+              cpu: 200m
+              memory: 256Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+          env:
+            - name: GLOBAL1
+              value: tls enabled=no
+            - name: GLOBAL2
+              value: bind interfaces only = yes
+            - name: USERID
+              value: "0"
+            - name: GROUPID
+              value: "0"
+            - name: PERMISSIONS
+              value: 644:644
+            - name: NMDP
+              value: "true"
+            - name: RECYCLE
+              value: "true"
+            - name: SHARE1
+              value: movies;/media/movies;yes;no;yes
+            - name: SHARE2
+              value: tvshows;/media/tvshows;yes;no;yes
+            - name: SHARE3
+              value: music;/media/music;yes;no;yes
+            - name: SHARE4
+              value: documents;/media/documents;yes;no;yes
+            - name: TZ
+              value: UTC
+          volumeMounts:
+            - name: cache
+              mountPath: /cache
+            - name: varlogs
+              mountPath: /var/logs
+            - name: tmp
+              mountPath: /tmp
+            - name: documents
+              mountPath: /media/documents
+            - name: movies
+              mountPath: /media/movies
+            - name: tvshows
+              mountPath: /media/tvshows
+            - name: music
+              mountPath: /media/music
+            - name: documents
+              mountPath: /media/documents
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - laptop1
+      hostNetwork: true
+      volumes:
+        - name: cache
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
+        - name: temp
+          emptyDir: {}
+        - name: varlogs
+          emptyDir: {}
+        - name: movies
+          emptyDir: {}
+        - name: tvshows
+          emptyDir: {}
+        - name: music
+          emptyDir: {}
+        - name: documents
+          emptyDir: {}
+---
+# Source: jellyfin/templates/pvc.yaml
+---
+---
+# Source: jellyfin/templates/pvc.yaml
+---
+

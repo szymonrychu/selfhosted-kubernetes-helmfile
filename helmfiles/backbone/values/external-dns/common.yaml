@@ -1,15 +1,13 @@
 sources:
   - ingress
 
-service:
-  type: LoadBalancer
-  externalIPs:
-    - 178.62.213.96
-
 provider: cloudflare
 
+logLevel: debug
 
 cloudflare:
   proxied: true
+
+txtPrefix: k8s-
 
 policy: sync

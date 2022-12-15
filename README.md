@@ -1,78 +1,92 @@
 # Helmfile Cluster
 
-## Overview
 
-This repository is a central repository managing baremetal, Kubernetes based home server.
-It uses `helmfile` to manage all resources installed on it- from `nginx-ingress` and `metallb`, through `jupyterhub` and `code-server` up to `transmission` and `plex`.
 
-## Sub-Helmfiles structure
+## Getting started
 
-Repository consists of set of `helmfile.yaml` files organized into theme-based subdirectories:
+To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-* `helmfiles/backbone/` manages things like `ingress-nginx`, `cert-manager`, `metallb` and `external-dns` helm releases- everything bare-metal cluster needs to host web applications
-* `helmfiles/authentication/` keeps `keycloak` release which provide OIDC/OAuth2 authentication/authorization for other services deployed in cluster
-* `helmfiles/cicd/` setting up Github Actions Runner chart (from my [other repo](https://github.com/szymonrychu/gha-runner)) - currently it's upgrades are not functioning properly- see *Known Issues* below.
-* `helmfiles/monitoring/` installs and upgrades Grafana/Prometheus/Loki stack allowing for good-enough observability for the cluster.
-* `helmfiles/blog/` manages my `wordpress` installation hosting [www.szymonrichert.pl](www.szymonrichert.pl)/[blog.szymonrichert.pl](blog.szymonrichert.pl).
-* `helmfiles/media/` keeps things like `plex`, `emby`, `transmission` and `samba`, so my personal video files are available everywhere.
-* `helmfiles/coding` installs [`code server`](https://github.com/coder/code-server) (web-based vscode) installed using my customized container and my own helm chart (from my [other repo](https://github.com/szymonrychu/code-server-oauth2)) integrating vscode with `keycloak` using `Oauth2`.
-* `helmfiles/datascience/` manages `jupyterhub` installation and configuration
-* `helmfiles/home-automation/` installs `home-assistant`, `mosquitto` server, `speedtest-exporter`, [`shelly2prometheus`](https://github.com/szymonrychu/shelly2prometheus), `esphome`.
+Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-## Sub-Helmfiles directory's structure
+## Add your files
 
-Each of above subdirectories follows similar directory structure:
-
-* `helmfile.yaml` - defines all releases installed through this particular subdirectory
-* `values/<name of the release>/common.yaml` - keeps all non-secret helm configuration customizing installation to my needs
-* `values/<name of the release>/common.secrets.yaml` - keeps all secrets used by helm encrypted with `sops` and `gpg`, so it's possible to put them into public repo safely
-* `values/<name of the release>/raw/<anything>.<pre/post>.yaml` - plain kubernetes files applied before `helm upgrade --install` run by helmfile or after.
-* `values/<name of the release>/raw/<anything>.secrets.<pre/post>yaml` - plain kubernetes encrypted with `gpg` files applied before `helm upgrade --install` run by helmfile or after.
-
-The structure of how the `YAML` files are loaded by such `helmfile.yaml` is defined by `&default` yaml anchor:
+- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
+- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
 ```
-templates:
-  default: &default
-    (...)
-    values:
-    - values/common.yaml
-    - values/{{`{{ .Environment.Name }}`}}.yaml
-    - values/{{`{{ .Release.Name }}`}}/common.yaml
-    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
-    secrets:
-    - values/{{`{{ .Release.Name }}`}}/common.secrets.yaml
-    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+cd existing_repo
+git remote add origin https://gitlab.com/szymonrychu/helmfile-cluster.git
+git branch -M main
+git push -uf origin main
 ```
 
-This defines merging order for the values.yaml provided in the release's directory. Thanks to it, it's possible to easily define different types of the environments out of one `helmfile.yaml`.
-Using that approach allows to setup several separate `environments`, having most of the configuration common among them and focuse only on differences between them.
-It heavily resembles `hiera` pattern from `Puppet`. The idea is to separate configuration to layers- from most common describing **a** cluster and all settings specific to any cluster, going though different flavours of clusters (like *development*, *staging* or *production*), through common settings specific for a release among all flavours up to very specific settings for particular release and particular flavour of cluster.
+## Integrate with your tools
 
-For this particular usecase (one simple, baremetal non-ha kubernetes server) such approach is a bit of an overkill.
-BUT it's subhelmfiles can be imported and slightly customized in order to manage commercial projects (as it's done in main `helmfile.yaml`- see [helmfile README.md](https://github.com/helmfile/helmfile#helmfile-)).
+- [ ] [Set up project integrations](https://gitlab.com/szymonrychu/helmfile-cluster/-/settings/integrations)
 
-## Additional things in the repo
+## Collaborate with your team
 
-Besides that repository contains of:
+- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
+- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
+- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
+- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
+- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-* master `helmfile.yaml` connecting all subdirectory helmfiles into one run
-* encrypted `kubeconfig` with gpg
-* `upgrade.py` python script, that allows for external pipelines to easily upgrade a release in a themed helmfile.
-* `autoupgrade.py` python script, that will parse all themed `helmfile.yaml`s and upgrade all helm releases into their newest available stable version.
+## Test and Deploy
 
-## Pipelines
+Use the built-in continuous integration in GitLab.
 
-There are 3 types of pipelines that run for this repository. Each of the pipelines is using self-hosted runner running in a cluster it's managing.
-That allows for hiding kubernetes API endpoint, while also removing necessity of encrypting/decrypting `kubeconfig` on the fly in the pipeline.
-Also - because self-hosted runner has all tools necessary preinstalled- the runs are faster.
+- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
+- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
+- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
+- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
+- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-* `diff` pipeline- reacts to pull-requests created in the repository and pointing to `master` branch. It will run `helmfile diff` command in a root of the repository and print-out delta between what's in the server vs what's coming in after mege to master.
-* `main` pipeline- reacts to all commits pushed to `master`. Once triggered it will run `helmfile apply` in root of the repository, which means that all the changes from master will get applied to cluster. What's nice is that `helmfile` is smart enough to check what releases change between current and previous master and pick only helm releases that need to be updated.
-* `autoupgrade` pipeline is somewhat special- it runs out of CRON (at 10:00 UTC everyday) and instead of using `helmfile` commands, it will run `autupgrade.py` script, which will edit all `helmfile.yalm` files and update releases with new charts. Once the files are edited, pipeline will commit the changes back to `master` branch, which will trigger `main` pipeline and automatically upgrade all releases.
+***
 
-## Known Issues
+# Editing this README
 
-* Current implementation will require a bit of love to get it running on HA Kubernetes cluster. Most of the helm releases don't use PVCs, but `hostPath` mounts.
-* Currently not all helm releases come-through clearly- some of them will always show something after running `helmfile diff`. That's unhealthy state, because it means, that even `helmfile apply` will refresh all resources of the release and it will simply clutter diff's output.
-* there is chicken-and-egg problem between a pipeline that applies stuff to a cluster and `gha-runner` release. Once `gha-release` rotates deployment and it's pod running pipeline that does all of this to a cluster, it will hang the run. When that's happening one should simply cancel rotten build and trigger apply once again.
+When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+
+## Suggestions for a good README
+Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+
+## Name
+Choose a self-explaining name for your project.
+
+## Description
+Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+
+## Badges
+On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+
+## Visuals
+Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+
+## Installation
+Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+## Usage
+Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+
+## Support
+Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+
+## Roadmap
+If you have ideas for releases in the future, it is a good idea to list them in the README.
+
+## Contributing
+State if you are open to contributions and what your requirements are for accepting them.
+
+For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+
+You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+
+## Authors and acknowledgment
+Show your appreciation to those who have contributed to the project.
+
+## License
+For open source projects, say how it is licensed.
+
+## Project status
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.

@@ -1,0 +1,5 @@
+- name: Install parted package
+  ansible.builtin.package:
+    name: parted
+    state: present
+

@@ -1,0 +1,165 @@
+- name: "Install unzip package"
+  ansible.builtin.package:
+    name: unzip
+    state: present
+
+- name: "Install nginx package"
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: Download consul binary
+  ansible.builtin.get_url:
+    url: "https://releases.hashicorp.com/consul/{{ consul_version }}/consul_{{ consul_version }}_linux_amd64.zip"
+    dest: /tmp/consul.zip
+    mode: '0440'
+
+- name: Download consul-template binary
+  ansible.builtin.get_url:
+    url: "https://releases.hashicorp.com/consul-template/{{ consul_template_version }}/consul-template_{{ consul_template_version }}_linux_amd64.zip"
+    dest: /tmp/consul_template.zip
+    mode: '0440'
+
+- name: "Ensure {{ consul_root_dir }} directory exists"
+  ansible.builtin.file:
+    path: "{{ consul_root_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: "Ensure {{ consul_template_root_dir }} directory exists"
+  ansible.builtin.file:
+    path: "{{ consul_template_root_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Unzip consul.zip
+  ansible.builtin.unarchive:
+    src: /tmp/consul.zip
+    dest: /usr/bin/
+    remote_src: yes
+
+- name: Unzip consul-template.zip
+  ansible.builtin.unarchive:
+    src: /tmp/consul_template.zip
+    dest: /usr/bin/
+    remote_src: yes
+
+- name: Create consul secret
+  ansible.builtin.command:
+    cmd: bash -c "/usr/bin/consul keygen > {{ consul_root_dir }}/.consul_key"
+    chdir: "{{ consul_root_dir }}"
+    creates: "{{ consul_root_dir }}/.consul_key"
+  when: consul_master_nodes[0] == inventory_hostname
+
+- name: Generate consul tls ca
+  ansible.builtin.command:
+    cmd: "/usr/bin/consul tls ca create"
+    chdir: "{{ consul_root_dir }}"
+    creates: "{{ consul_root_dir }}/consul-agent-ca-key.pem"
+  when: consul_master_nodes[0] == inventory_hostname
+
+- name: "Generate consul cert for {{ consul_dc }} dc and {{ consul_domain }} domain"
+  ansible.builtin.command:
+    cmd: "/usr/bin/consul tls cert create -server -dc {{ consul_dc }} -domain {{ consul_domain }}"
+    chdir: "{{ consul_root_dir }}"
+    creates: "{{ consul_root_dir }}/{{ consul_dc }}-server-{{ consul_domain }}-0-key.pem"
+  when: consul_master_nodes[0] == inventory_hostname
+
+- name: Fetch certs from 1st consul master
+  fetch:
+    src: "{{ consul_root_dir }}/{{ item }}"
+    dest: "buffer/consul/{{ item | basename }}"
+    flat: yes
+  loop:
+    - consul-agent-ca.pem
+    - .consul_key
+    - "{{ consul_dc }}-server-{{ consul_domain }}-0.pem"
+    - "{{ consul_dc }}-server-{{ consul_domain }}-0-key.pem"
+  when: consul_master_nodes[0] == inventory_hostname
+
+- name: Upload consul keys to other masters
+  copy:
+    src: "buffer/consul/{{ item | basename }}"
+    dest: "{{ consul_root_dir }}/{{ item }}"
+  loop:
+    - consul-agent-ca.pem
+    - .consul_key
+    - "{{ consul_dc }}-server-{{ consul_domain }}-0.pem"
+    - "{{ consul_dc }}-server-{{ consul_domain }}-0-key.pem"
+  when: consul_master_nodes[0] != inventory_hostname
+
+- name: Load .consul_key to variable
+  slurp:
+    src: "{{ consul_root_dir }}/.consul_key"
+  register: consul_key
+
+- name: Place consul.hcl
+  ansible.builtin.template:
+    src: consul.hcl.j2
+    dest: "{{ consul_root_dir }}/consul.hcl"
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart Consul
+
+- name: Place consul.service
+  ansible.builtin.template:
+    src: consul.service.j2
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart Consul
+
+- name: Place k8s-service.hcl
+  ansible.builtin.template:
+    src: k8s-service.hcl.j2
+    dest: "{{ consul_root_dir }}/k8s-service.hcl"
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart Consul
+
+- name: Place consul-template.service
+  ansible.builtin.template:
+    src: consul-template.service.j2
+    dest: /etc/systemd/system/consul-template.service
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart Consul Template
+
+- name: Place nginx.conf.hcl
+  ansible.builtin.copy:
+    src: nginx.conf.tpl
+    dest: "{{ consul_template_root_dir }}/nginx.conf.tpl"
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart Consul Template
+
+- name: "Ensure /etc/systemd/resolved.conf.d directory exists"
+  ansible.builtin.file:
+    path: /etc/systemd/resolved.conf.d
+    state: directory
+    mode: '0755'
+
+- name: Place systemd-resolved consul.conf
+  ansible.builtin.template:
+    src: resolved-consul.conf.j2
+    dest: /etc/systemd/resolved.conf.d/consul.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart Systemd Resolved
+
+- lineinfile:
+    dest: /etc/hosts
+    line: "{{ hostvars[inventory_hostname][_ansible_node_interface]['ipv4']['address'] }} kubernetes.local"
+    state: present
