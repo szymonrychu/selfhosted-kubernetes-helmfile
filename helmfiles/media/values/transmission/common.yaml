@@ -13,75 +13,16 @@ initContainers:
       runAsUser: 1000
       runAsGroup: 1000
 
-additionalContainers:
-  oauth2proxy:
-    env:
-    - name: OAUTH2_PROXY_PROVIDER
-      value: keycloak-oidc
-    - name: OAUTH2_PROXY_CLIENT_ID
-      valueFrom:
-        secretKeyRef:
-          key: oidc-session-id
-          name: transmission
-    - name: OAUTH2_PROXY_CLIENT_SECRET
-      valueFrom:
-        secretKeyRef:
-          key: oidc-session-secret
-          name: transmission
-    - name: OAUTH2_PROXY_REDIRECT_URL
-      value: https://transmission.szymonrichert.pl/oauth2/callback
-    - name: OAUTH2_PROXY_OIDC_ISSUER_URL
-      value: https://auth.szymonrichert.pl/auth/realms/Lab
-    - name: OAUTH2_PROXY_HTTP_ADDRESS
-      value: 0.0.0.0:4180
-    - name: OAUTH2_PROXY_REVERSE_PROXY
-      value: "true"
-    - name: OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER
-      value: "true"
-    - name: OAUTH2_PROXY_PASS_ACCESS_TOKEN
-      value: "true"
-    - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
-      value: "true"
-    - name: OAUTH2_PROXY_UPSTREAMS
-      value: http://localhost:9091
-    - name: OAUTH2_PROXY_COOKIE_NAME
-      value: oauth2-authorization-cookie
-    - name: OAUTH2_PROXY_COOKIE_DOMAIN
-      value: szymonrichert.pl
-    - name: OAUTH2_PROXY_EMAIL_DOMAINS
-      value: '*'
-    - name: OAUTH2_PROXY_COOKIE_SECRET
-      valueFrom:
-        secretKeyRef:
-          key: oidc-cookie-secret
-          name: transmission
-    image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
-    imagePullPolicy: IfNotPresent
-    livenessProbe:
-      failureThreshold: 3
-      periodSeconds: 10
-      successThreshold: 1
-      tcpSocket:
-        port: http-oidc
-      timeoutSeconds: 1
-    name: oauth2proxy
-    ports:
-    - containerPort: 4180
-      name: http-oidc
-      protocol: TCP
-    readinessProbe:
-      failureThreshold: 3
-      periodSeconds: 10
-      successThreshold: 1
-      tcpSocket:
-        port: http-oidc
-      timeoutSeconds: 1
-    resources: {}
-    terminationMessagePath: /dev/termination-log
-    terminationMessagePolicy: File
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - laptop1
 
 env:
   TZ: UTC
@@ -141,9 +82,11 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
+    storageClass: local-path
+    type: pvc
     mountPath: /config
-    hostPath: /k8s-data/raid1/transmission-config
+    retain: true
+    size: 10Gi
   downloads:
     enabled: true
     type: hostPath

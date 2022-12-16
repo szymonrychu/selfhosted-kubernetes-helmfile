@@ -14,6 +14,101 @@ ingress:
         hosts: 
           - esphome.szymonrichert.pl
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - laptop1
+
+service:
+  main:
+    ports:
+      main:
+        port: 4180
+        targetPort: 4180
+
+secret:
+  esphome:
+    enabled: true
+
+additionalContainers:
+  oauth2proxy:
+    env:
+    - name: OAUTH2_PROXY_PROVIDER
+      value: keycloak-oidc
+    - name: OAUTH2_PROXY_CLIENT_ID
+      valueFrom:
+        secretKeyRef:
+          key: oidc-client-id
+          name: esphome-esphome
+    - name: OAUTH2_PROXY_CLIENT_SECRET
+      valueFrom:
+        secretKeyRef:
+          key: oidc-client-secret
+          name: esphome-esphome
+    - name: OAUTH2_PROXY_REDIRECT_URL
+      value: https://esphome.szymonrichert.pl/oauth2/callback
+    - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+      value: https://auth.szymonrichert.pl/realms/Lab
+    - name: OAUTH2_PROXY_HTTP_ADDRESS
+      value: 0.0.0.0:4180
+    - name: OAUTH2_PROXY_REVERSE_PROXY
+      value: "true"
+    - name: OAUTH2_PROXY_PASS_AUTHORIZATION_HEADER
+      value: "true"
+    - name: OAUTH2_PROXY_PASS_ACCESS_TOKEN
+      value: "true"
+    - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
+      value: "true"
+    - name: OAUTH2_PROXY_UPSTREAMS
+      value: http://127.0.0.1:6052
+    - name: OAUTH2_PROXY_COOKIE_NAME
+      value: oauth2-authorization-cookie
+    - name: OAUTH2_PROXY_COOKIE_DOMAIN
+      value: szymonrichert.pl
+    - name: OAUTH2_PROXY_EMAIL_DOMAINS
+      value: '*'
+    - name: OAUTH2_PROXY_COOKIE_SECRET
+      valueFrom:
+        secretKeyRef:
+          key: oidc-cookie-secret
+          name: esphome-esphome
+    image: quay.io/oauth2-proxy/oauth2-proxy:v7.3.0
+    imagePullPolicy: IfNotPresent
+    livenessProbe:
+      failureThreshold: 3
+      periodSeconds: 10
+      successThreshold: 1
+      tcpSocket:
+        port: http-oidc
+      timeoutSeconds: 1
+    name: oauth2proxy
+    ports:
+    - containerPort: 4180
+      name: http-oidc
+      protocol: TCP
+    readinessProbe:
+      failureThreshold: 3
+      periodSeconds: 10
+      successThreshold: 1
+      tcpSocket:
+        port: http-oidc
+      timeoutSeconds: 1
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+
 persistence:
   config:
     enabled: true

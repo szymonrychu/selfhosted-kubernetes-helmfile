@@ -1,7 +1,7 @@
-image:
-  repository: ghcr.io/k8s-at-home/plex
-  pullPolicy: IfNotPresent
-  tag: v1.25.9.5721-965587f64
+# image:
+#   repository: ghcr.io/k8s-at-home/plex
+#   pullPolicy: IfNotPresent
+#   tag: v1.25.9.5721-965587f64
 
 service:
   main:
@@ -30,11 +30,22 @@ service:
         targetPort: 1900
     externalTrafficPolicy: Local
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - laptop1
+
 ingress:
   main:
     enabled: true
+    ingressClassName: nginx
     annotations:
-      kubernetes.io/ingress.class: nginx
+      external-dns/create-record: "true"
       cert-manager.io/cluster-issuer: letsencrypt-prod
       kubernetes.io/tls-acme: "true"
     hosts:
@@ -53,13 +64,13 @@ podSecurityContext:
   # runAsNonRoot: true
   runAsUser: 1000
 
-env:
-  NVIDIA_VISIBLE_DEVICES: GPU-75e37533-e1a4-88d2-f573-dca6ce27d047
+# env:
+#   NVIDIA_VISIBLE_DEVICES: GPU-75e37533-e1a4-88d2-f573-dca6ce27d047
 
 metrics:
   enabled: true
 
-hostNetwork: true
+# hostNetwork: true
 
 resources:
   requests:
@@ -72,14 +83,11 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
+    storageClass: local-path
+    type: pvc
     mountPath: /config
-    hostPath: /k8s-data/raid1/plex-config
-  transcoding:
-    enabled: true
-    type: hostPath
-    mountPath: /transcode
-    hostPath: /k8s-data/plex-transcoding-temp
+    retain: true
+    size: 10Gi
   movies:
     enabled: true
     type: hostPath

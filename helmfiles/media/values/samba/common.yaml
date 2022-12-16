@@ -51,6 +51,16 @@ ingress:
   main:
     enabled: false
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - laptop1
+
 resources:
   limits:
     cpu: 200m

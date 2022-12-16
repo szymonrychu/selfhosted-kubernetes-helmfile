@@ -30,4 +30,4 @@
 #         git config --global user.email "${BOT_EMAIL}"
 #         git config --global user.name "${BOT_USERNAME}"
 
-#         (git add -A && git commit -m "Daily autoupgrade external charts" && git push origin master) || true
+#         (git add -A && git commit -m "Daily autoupgrade external charts" && git push origin main) || true

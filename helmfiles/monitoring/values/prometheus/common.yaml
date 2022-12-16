@@ -1,5 +1,25 @@
 prometheusOperator:
   manageCrds: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: application
+            operator: In
+            values:
+            - keycloak
+        topologyKey: "kubernetes.io/hostname"
   admissionWebhooks:
     patch:
       resources:
@@ -9,6 +29,26 @@ prometheusOperator:
         requests:
           cpu: 50m
           memory: 100Mi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "kubernetes.io/hostname"
+                operator: In
+                values:
+                  - nuc1
+                  - nuc2
+                  - nuc3
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: application
+                operator: In
+                values:
+                - keycloak
+            topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
       cpu: 500m
@@ -27,6 +67,26 @@ grafana:
       requests:
         cpu: 50m
         memory: 100Mi
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: application
+              operator: In
+              values:
+              - keycloak
+          topologyKey: "kubernetes.io/hostname"
   securityContext:
     fsGroup: 1000
     runAsGroup: 1000
@@ -41,17 +101,37 @@ grafana:
       requests:
         cpu: 50m
         memory: 50Mi
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: application
+            operator: In
+            values:
+            - keycloak
+        topologyKey: "kubernetes.io/hostname"
   resources:
-    limits:
-      cpu: 200m
-      memory: 200Mi
     requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
       cpu: 100m
-      memory: 100Mi
+      memory: 384Mi
   persistence:
     type: pvc
     enabled: true
-    storageClassName: grafana-local-pvc
+    storageClassName: local-path
     accessModes:
       - ReadWriteOnce
     size: 2Gi
@@ -61,6 +141,9 @@ grafana:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
       kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "https://home-assistant.szymonrichert.pl, https://grafana.szymonrichert.pl"
+      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     hosts:
       - grafana.szymonrichert.pl
     path: /
@@ -69,16 +152,22 @@ grafana:
         - grafana.szymonrichert.pl
         secretName: grafana-tls
   grafana.ini:
+    allow_embedding: true
     auth:
       oauth_auto_login: true
+    "auth.anonymous":
+      enabled: true
+      org_name: "Main Org."
+      org_role: Viewer
     "auth.generic_oauth":
       enabled: true
-      scopes: openid email profile
+      scopes: profile,email,groups
       name: Keycloak
-      allow_sign_up: true
-      auth_url: https://auth.szymonrichert.pl/auth/realms/Lab/protocol/openid-connect/auth
-      token_url: https://auth.szymonrichert.pl/auth/realms/Lab/protocol/openid-connect/token
-      api_url: https://auth.szymonrichert.pl/auth/realms/Lab/protocol/openid-connect/userinfo
+      allow_sign_up: false
+      auth_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/auth
+      token_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/token
+      api_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/userinfo
+      role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
     server:
       root_url: https://grafana.szymonrichert.pl/
     smtp:
@@ -93,6 +182,15 @@ grafana:
       access: proxy
       type: loki
       url: http://loki:3100
+      version: 1
+    - name: HomeAssistant
+      editable: false
+      orgId: 1
+      access: proxy
+      type: loki
+      url: http://home-assistant-influxdb.home-assistant.svc.cluster.local:8086
+      user: admin
+      password: kheKGkxzizrWdFoHwg
       version: 1
 
 alertmanager:
@@ -112,9 +210,54 @@ alertmanager:
     global:
       smtp_smarthost: "smtp.gmail.com:465"
       smtp_from: "monitoring.szymonrichert.pl@gmail.com"
+  alertmanagerSpec:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: application
+              operator: In
+              values:
+              - keycloak
+          topologyKey: "kubernetes.io/hostname"
+
 
 prometheus:
+  service:
+    sessionAffinity: "ClientIP"
   prometheusSpec:
+    replicas: 3
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: application
+              operator: In
+              values:
+              - keycloak
+          topologyKey: "kubernetes.io/hostname"
     ruleSelector: {}
     ruleNamespaceSelector: {}
     ruleSelectorNilUsesHelmValues: false
@@ -132,16 +275,38 @@ prometheus:
     retentionSize: 100GB
     resources:
       limits:
-        cpu: "1"
-        memory: 1500Mi
+        cpu: 500m
+        memory: 3000Mi
       requests:
-        cpu: 100m
-        memory: 500Mi
+        cpu: 300m
+        memory: 512Mi
     storageSpec:
       volumeClaimTemplate:    
         spec:
           accessModes: [ "ReadWriteOnce" ]
-          storageClassName: prometheus-local-pvc
+          storageClassName: local-path
           resources:
             requests:
               storage: 100Gi
+
+kube-state-metrics:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: application
+            operator: In
+            values:
+            - keycloak
+        topologyKey: "kubernetes.io/hostname"

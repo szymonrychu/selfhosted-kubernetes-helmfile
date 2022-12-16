@@ -66,24 +66,6 @@ loki:
   #        store: inmemory
   #    enable_api: true
 
-  ## Additional Loki container arguments, e.g. log level (debug, info, warn, error)
-  extraArgs: {}
-    # log.level: debug
-
-  livenessProbe:
-    httpGet:
-      path: /ready
-      port: http-metrics
-    initialDelaySeconds: 45
-
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
-  networkPolicy:
-    enabled: false
-
-  ## The app name of loki clients
-  client: {}
-    # name:
-
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
   nodeSelector: {}
 
@@ -136,92 +118,78 @@ loki:
     runAsNonRoot: true
     runAsUser: 1000
 
-  service:
-    type: ClusterIP
-    nodePort:
-    port: 3100
-    annotations: {}
-    labels: {}
-    targetPort: http-metrics
-
-  serviceAccount:
-    create: true
-    name:
-    annotations: {}
-    automountServiceAccountToken: true
-
-  terminationGracePeriodSeconds: 4800
-
-  ## Tolerations for pod assignment
-  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  tolerations: []
-
-  # The values to set in the PodDisruptionBudget spec
-  # If not set then a PodDisruptionBudget will not be created
-  podDisruptionBudget: {}
-  # minAvailable: 1
-  # maxUnavailable: 1
-
-  updateStrategy:
-    type: RollingUpdate
-
-  serviceMonitor:
-    enabled: false
-    interval: ""
-    additionalLabels: {}
-    annotations: {}
-    # scrapeTimeout: 10s
-
-  initContainers: []
-  ## Init containers to be added to the loki pod.
-  # - name: my-init-container
-  #   image: busybox:latest
-  #   command: ['sh', '-c', 'echo hello']
-
-  extraContainers: []
-  ## Additional containers to be added to the loki pod.
-  # - name: reverse-proxy
-  #   image: angelbarrera92/basic-auth-reverse-proxy:dev
-  #   args:
-  #     - "serve"
-  #     - "--upstream=http://localhost:3100"
-  #     - "--auth-config=/etc/reverse-proxy-conf/authn.yaml"
-  #   ports:
-  #     - name: http
-  #       containerPort: 11811
-  #       protocol: TCP
-  #   volumeMounts:
-  #     - name: reverse-proxy-auth-config
-  #       mountPath: /etc/reverse-proxy-conf
-
-
-  extraVolumes: []
-  ## Additional volumes to the loki pod.
-  # - name: reverse-proxy-auth-config
-  #   secret:
-  #     secretName: reverse-proxy-auth-config
-
-  ## Extra volume mounts that will be added to the loki container
-  extraVolumeMounts: []
-
-  extraPorts: []
-  ## Additional ports to the loki services. Useful to expose extra container ports.
-  # - port: 11811
-  #   protocol: TCP
-  #   name: http
-  #   targetPort: http
-
-  # Extra env variables to pass to the loki container
-  env: []
-
-  # Specify Loki Alerting rules based on this documentation: https://grafana.com/docs/loki/latest/alerting/
-  # When specified, you also need to add a ruler config section above. An example is shown in the alerting docs.
-  alerting_groups: []
-  #  - name: example
-  #    rules:
-  #    - alert: HighThroughputLogStreams
-  #      expr: sum by(container) (rate({job=~"loki-dev/.*"}[1m])) > 1000
-  #      for: 2m
+  write:
+    affinity: |
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                {{- include "loki.writeSelectorLabels" . | nindent 10 }}
+            topologyKey: kubernetes.io/hostname
+  read:
+    affinity: |
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                {{- include "loki.readSelectorLabels" . | nindent 10 }}
+            topologyKey: kubernetes.io/hostname
+  singleBinary:
+    affinity: |
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                {{- include "loki.singleBinarySelectorLabels" . | nindent 10 }}
+            topologyKey: kubernetes.io/hostname
+  gateway:
+    affinity: |
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                {{- include "loki.gatewaySelectorLabels" . | nindent 10 }}
+            topologyKey: kubernetes.io/hostname
 
 promtail:
   enabled: true
@@ -249,6 +217,30 @@ promtail:
     - name: journal
       mountPath: /var/log/journal
       readOnly: true
+  
+  podLabels:
+    application: promtail
+
+  affinity: |
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: application
+                operator: In
+                values:
+                - promtail
+          topologyKey: kubernetes.io/hostname
 
 grafana:
   enabled: false
