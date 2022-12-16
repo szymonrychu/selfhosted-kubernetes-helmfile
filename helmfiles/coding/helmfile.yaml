@@ -1,6 +1,6 @@
 repositories:
 - name: szymonrychu
-  url: https://raw.githubusercontent.com/szymonrychu/charts/master/
+  url: https://szymonrychu.github.io/charts
 templates:
   operators-default:
     disableValidation: true
@@ -32,8 +32,9 @@ templates:
 releases:
 
 - name: code-server
-  version: 1.1.2
-  chart: szymonrychu/code-server-oauth2
+  chart: ../../../charts/charts/code-server-oauth2/
+  # version: 0.0.1
+  # chart: szymonrychu/code-server-oauth2
   namespace: code-server
   labels:
     purpose: editor
