@@ -4,7 +4,7 @@ config:
   
   oauth2Proxy:
     keycloakRedirectmUrl: https://code.szymonrichert.pl/oauth2/callback
-    keycloakRealmUrl: https://auth.szymonrichert.pl/auth/realms/Lab
+    keycloakRealmUrl: https://auth.szymonrichert.pl/realms/Lab
     cookieName: oauth2-authorization-cookie
     cookieDomain: szymonrichert.pl
 
