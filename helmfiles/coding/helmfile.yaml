@@ -32,9 +32,8 @@ templates:
 releases:
 
 - name: code-server
-  chart: ../../../charts/charts/code-server-oauth2/
-  # version: 0.0.1
-  # chart: szymonrychu/code-server-oauth2
+  version: 0.0.1
+  chart: szymonrychu/code-server-oauth2
   namespace: code-server
   labels:
     purpose: editor
