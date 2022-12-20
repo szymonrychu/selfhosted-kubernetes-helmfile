@@ -17,5 +17,6 @@ k8s_api_cert_sans:
   - k8s.szymonrichert.pl
 
 k3s_install_log_path: /var/log/k3s.log
-k3s_node_iface: eno1
+k3s_master_node_iface: eno1
+k3s_worker_node_iface: enp8s0
 k3s_token: token

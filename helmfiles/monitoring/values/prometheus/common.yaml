@@ -310,3 +310,6 @@ kube-state-metrics:
             values:
             - keycloak
         topologyKey: "kubernetes.io/hostname"
+
+prometheus-node-exporter:
+  hostNetwork: false

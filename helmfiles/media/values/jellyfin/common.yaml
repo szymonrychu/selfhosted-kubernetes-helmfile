@@ -16,9 +16,8 @@ ingress:
           - jellyfin.szymonrichert.pl
 
 image:
-  repository: szymonrychu/jellyfin
+  repository: ghcr.io/szymonrychu/jellyfin
   pullPolicy: IfNotPresent
-  tag: master-0.0.6
 
 env:
   JELLYFIN_PublishedServerUrl: "https://jellyfin.szymonrichert.pl/"
@@ -54,8 +53,8 @@ resources:
     cpu: 200m
     memory: 256Mi
   limits:
-    cpu: 4
-    memory: 4096Mi
+    cpu: "8"
+    memory: 12Gi
 
 persistence:
   config:
@@ -68,54 +67,54 @@ persistence:
     type: hostPath
     mountPath: /config
     hostPath: /k8s-data/jellyfin-config
-  transcoding:
-    enabled: true
-    type: hostPath
-    mountPath: /config/transcoding-temp
-    hostPath: /k8s-data/jellyfin-transcoding-temp
   movies:
     enabled: true
     type: hostPath
     mountPath: /media/movies
     hostPath: /k8s-data/disk/movies
-  tvseries:
+  tvshows:
     enabled: true
     type: hostPath
-    mountPath: /media/tvseries
-    hostPath: /k8s-data/disk/tvseries
+    mountPath: /media/tvshows
+    hostPath: /k8s-data/disk/tvshows
   music:
     enabled: true
     type: hostPath
     mountPath: /media/music
     hostPath: /k8s-data/disk/music
-  nvidia-modeset:
-    enabled: true
-    type: hostPath
-    mountPath: /dev/nvidia-modeset
-    hostPath: /dev/nvidia-modeset
-  nvidia0:
-    enabled: true
-    type: hostPath
-    mountPath: /dev/nvidia0
-    hostPath: /dev/nvidia0
-  nvidia1:
-    enabled: true
-    type: hostPath
-    mountPath: /dev/nvidia1
-    hostPath: /dev/nvidia1
-  nvidiactl:
-    enabled: true
-    type: hostPath
-    mountPath: /dev/nvidiactl
-    hostPath: /dev/nvidiactl
-  nvram:
-    enabled: true
-    type: hostPath
-    mountPath: /dev/nvram
-    hostPath: /dev/nvram
-  libcuda:
-    enabled: true
-    type: hostPath
-    mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
-    hostPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+  # transcoding:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /config/transcoding-temp
+  #   hostPath: /k8s-data/jellyfin-transcoding-temp
+  # nvidia-modeset:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia-modeset
+  #   hostPath: /dev/nvidia-modeset
+  # nvidia0:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia0
+  #   hostPath: /dev/nvidia0
+  # nvidia1:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia1
+  #   hostPath: /dev/nvidia1
+  # nvidiactl:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidiactl
+  #   hostPath: /dev/nvidiactl
+  # nvram:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvram
+  #   hostPath: /dev/nvram
+  # libcuda:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+  #   hostPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
 

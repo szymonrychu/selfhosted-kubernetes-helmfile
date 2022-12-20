@@ -10,8 +10,8 @@ resources:
     memory: 768Mi
     cpu: 50m
   limits:
-    memory: 2048Mi
-    cpu: 500m
+    memory: 3Gi
+    cpu: 750m
 
 podLabels:
   application: keycloak

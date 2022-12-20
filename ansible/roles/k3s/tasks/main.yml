@@ -5,4 +5,4 @@
 
 - name: "Setup Kuberbetes binaries"
   ansible.builtin.include_tasks:
-    file: kubeadm.yml
+    file: k3s.yml

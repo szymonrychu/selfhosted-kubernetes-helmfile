@@ -20,10 +20,10 @@
     #     name: consul
     #   when: inventory_hostname in k8s_master_nodes
       
-    # - name: Install kubernetes
-    #   ansible.builtin.include_role:
-    #     name: kubernetes
-    #   when: inventory_hostname in k8s_master_nodes
+    - name: Install kubernetes
+      ansible.builtin.include_role:
+        name: k3s
+      # when: inventory_hostname in k8s_master_nodes
       
     - name: Install OpenVPN Server
       ansible.builtin.include_role:
