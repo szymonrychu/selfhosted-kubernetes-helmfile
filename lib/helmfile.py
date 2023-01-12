@@ -3,8 +3,19 @@ import string
 import logging
 from ruamel.yaml import round_trip_load, round_trip_dump
 from typing import List
+from enum import Enum
 
 from .version import Version
+
+class UpgradeType(Enum):
+    MAJOR_MINOR_PATCH = 'all'
+    MINOR_PATCH_ONLY = 'minor'
+    PATCH_ONLY = 'patch'
+
+    @classmethod
+    def values(self):
+        return [member.value for member in UpgradeType]
+
 
 class HelmRepository():
 
@@ -35,8 +46,9 @@ class HelmRepository():
                 logging.error(f"Couldn't download index- code was '{resp.status_code}'")
         return self._repo_index
     
-    def get_latest_chart_version(self, chart: str) -> str:
+    def get_latest_chart_version(self, chart: str, current_version: Version, upgrade_type: UpgradeType) -> str:
         chart_versions = {}
+
         for chart_name, releases_list in self._load_index()['entries'].items():
             if chart_name not in chart_versions.keys():
                 chart_versions[chart_name] = []
@@ -44,7 +56,24 @@ class HelmRepository():
                 version = Version(release['version'])
                 if version.is_stable:
                     chart_versions[chart_name].append(version)
-        return sorted(chart_versions[chart])[-1]
+        
+        sorted_versions = sorted(chart_versions[chart])
+        result = None
+
+        if upgrade_type == UpgradeType.PATCH_ONLY:
+            for  _v in sorted_versions:
+                if _v.major == current_version.major and _v.minor == current_version.minor:
+                    result = _v
+        
+        elif upgrade_type == UpgradeType.MINOR_PATCH_ONLY:
+            for  _v in sorted_versions:
+                if _v.major == current_version.major:
+                    result = _v
+        
+        elif sorted_versions[-1] > current_version:
+            result = sorted_versions[-1]
+
+        return result or current_version
 
 
 class HelmRelease():
@@ -64,7 +93,7 @@ class HelmRelease():
         return self._version
     
     def update_version(self, version: Version):
-        self._version = str(version)
+        self._version = version
 
     @property
     def chart(self) -> str:
@@ -140,12 +169,12 @@ class Helmfile():
         logging.info(f"Release named '{release_name}' not found!")
         return False
 
-    def upgrade_all_releases(self, repository_cache: List[HelmRepository] = []) -> List[HelmRepository]:
+    def upgrade_all_releases(self, repository_cache: List[HelmRepository] = [], upgrade_type: UpgradeType = UpgradeType.MAJOR_MINOR_PATCH) -> List[HelmRepository]:
         repository_cache = self._merge_repos_cache(repository_cache)
         for helm_repository in repository_cache:
             for helm_release in self.get_releases():
                 if helm_release.repo_name == helm_repository.name:
-                    new_version = helm_repository.get_latest_chart_version(helm_release.chart)
+                    new_version = helm_repository.get_latest_chart_version(helm_release.chart, helm_release.version, upgrade_type)
                     if new_version != helm_release.version:
                         logging.info(f"Found new version of '{helm_release.repo_name}/{helm_release.chart}' '{new_version}'")
                         helm_release.update_version(new_version)
