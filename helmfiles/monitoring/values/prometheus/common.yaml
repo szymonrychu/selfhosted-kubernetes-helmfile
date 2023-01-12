@@ -15,10 +15,10 @@ prometheusOperator:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
           matchExpressions:
-          - key: application
+          - key: app
             operator: In
             values:
-            - keycloak
+            - kube-prometheus-stack-operator
         topologyKey: "kubernetes.io/hostname"
   admissionWebhooks:
     patch:
@@ -29,26 +29,6 @@ prometheusOperator:
         requests:
           cpu: 50m
           memory: 100Mi
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: "kubernetes.io/hostname"
-                operator: In
-                values:
-                  - nuc1
-                  - nuc2
-                  - nuc3
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: application
-                operator: In
-                values:
-                - keycloak
-            topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
       cpu: 500m
@@ -58,49 +38,11 @@ prometheusOperator:
       memory: 200Mi
 
 grafana:
-  imageRenderer:
-    enabled: true
-    resources:
-      limits:
-        cpu: 100m
-        memory: 200Mi
-      requests:
-        cpu: 50m
-        memory: 100Mi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: application
-              operator: In
-              values:
-              - keycloak
-          topologyKey: "kubernetes.io/hostname"
   securityContext:
     fsGroup: 1000
     runAsGroup: 1000
     runAsNonRoot: false
     runAsUser: 1000
-  initChownData:
-    enabled: true
-    resources:
-      limits:
-        cpu: 100m
-        memory: 100Mi
-      requests:
-        cpu: 50m
-        memory: 50Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -116,10 +58,10 @@ grafana:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
           matchExpressions:
-          - key: application
+          - key: app.kubernetes.io/name
             operator: In
             values:
-            - keycloak
+            - grafana
         topologyKey: "kubernetes.io/hostname"
   resources:
     requests:
@@ -141,9 +83,6 @@ grafana:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
       kubernetes.io/tls-acme: "true"
-      nginx.ingress.kubernetes.io/enable-cors: "true"
-      nginx.ingress.kubernetes.io/cors-allow-origin: "https://home-assistant.szymonrichert.pl, https://grafana.szymonrichert.pl"
-      nginx.ingress.kubernetes.io/cors-allow-methods: "GET"
     hosts:
       - grafana.szymonrichert.pl
     path: /
@@ -152,13 +91,8 @@ grafana:
         - grafana.szymonrichert.pl
         secretName: grafana-tls
   grafana.ini:
-    allow_embedding: true
     auth:
       oauth_auto_login: true
-    "auth.anonymous":
-      enabled: true
-      org_name: "Main Org."
-      org_role: Viewer
     "auth.generic_oauth":
       enabled: true
       scopes: profile,email,groups
@@ -226,10 +160,10 @@ alertmanager:
         requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
             matchExpressions:
-            - key: application
+            - key: app.kubernetes.io/name
               operator: In
               values:
-              - keycloak
+              - alertmanager
           topologyKey: "kubernetes.io/hostname"
 
 
@@ -238,26 +172,6 @@ prometheus:
     sessionAffinity: "ClientIP"
   prometheusSpec:
     replicas: 3
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: application
-              operator: In
-              values:
-              - keycloak
-          topologyKey: "kubernetes.io/hostname"
     ruleSelector: {}
     ruleNamespaceSelector: {}
     ruleSelectorNilUsesHelmValues: false
@@ -288,28 +202,6 @@ prometheus:
           resources:
             requests:
               storage: 100Gi
-
-kube-state-metrics:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: "kubernetes.io/hostname"
-            operator: In
-            values:
-              - nuc1
-              - nuc2
-              - nuc3
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: application
-            operator: In
-            values:
-            - keycloak
-        topologyKey: "kubernetes.io/hostname"
 
 prometheus-node-exporter:
   hostNetwork: false
