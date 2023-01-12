@@ -1,6 +1,7 @@
 name: autoupgrade
 
 on:
+  workflow_dispatch: {}
   schedule:
     - cron:  '0 8 * * 1,2,3,4,5' # 10:00 UTC -> 12:00 Warsaw at Saturdays
 
