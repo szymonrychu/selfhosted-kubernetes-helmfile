@@ -13,6 +13,8 @@ repositories:
   url: https://szymonrychu.github.io/charts
 - name: postgresql-operator
   url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+- name: rook-release
+  url: https://charts.rook.io/release
 templates:
   default: &default
     wait: true
@@ -144,12 +146,3 @@ releases:
     application: rook-ceph-cluster
   needs:
     - rook-ceph/rook-ceph
-
-- name: postgres-operator
-  version: 1.8.2
-  chart: postgres-operator-charts/postgres-operator
-  namespace: postgres-operator
-  labels:
-    purpose: backbone
-    application: postgres-operator
-  <<: *operators
