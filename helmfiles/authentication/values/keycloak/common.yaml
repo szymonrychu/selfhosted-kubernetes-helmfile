@@ -48,6 +48,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
+    "nginx.ingress.kubernetes.io/proxy-buffer-size": "128k"
   tls: true
 
 pdb:
@@ -108,8 +109,8 @@ postgresql:
         memory: 64Mi
         cpu: 10m
       limits:
-        memory: 256Mi
-        cpu: 100m
+        memory: 512Mi
+        cpu: 500m
   readReplicas:
     replicaCount: 3
     podSecurityContext:
@@ -149,7 +150,7 @@ postgresql:
         memory: 64Mi
         cpu: 10m
       limits:
-        memory: 256Mi
-        cpu: 100m
+        memory: 512Mi
+        cpu: 500m
 cache:
   enabled: true

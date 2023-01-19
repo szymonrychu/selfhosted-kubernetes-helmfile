@@ -13,3 +13,4 @@ venv
 .pytest*
 ansible/buffer
 ansible/hosts
+terraform/modules/**/*.zip

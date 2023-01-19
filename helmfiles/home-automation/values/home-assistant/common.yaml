@@ -92,7 +92,9 @@ influxdb:
             - key: "kubernetes.io/hostname"
               operator: In
               values:
-                - laptop1
+                - nuc1
+                - nuc2
+                - nuc3
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
         - labelSelector:
@@ -117,7 +119,9 @@ influxdb:
         cpu: 250m
   persistence:
     enabled: true
-    storageClass: local-path
+    storageClass: ceph
+    accessModes: 
+      - ReadWriteMany
   volumePermissions:
     enabled: true
   ## @section Metrics parameters
@@ -240,7 +244,9 @@ postgresql:
       application: postgresql-primary
     persistence:
       enabled: true
-      storageClass: local-path
+      storageClass: ceph
+      accessModes: 
+        - ReadWriteMany
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -281,7 +287,9 @@ postgresql:
       application: postgresql-readonly
     persistence:
       enabled: true
-      storageClass: local-path
+      storageClass: ceph
+      accessModes: 
+        - ReadWriteMany
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:

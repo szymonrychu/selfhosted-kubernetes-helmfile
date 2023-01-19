@@ -5,10 +5,20 @@ controller:
   updateStrategy:
     type: Recreate
 
-  replicaCount: 4
+  replicaCount: 1
 
 
   affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:

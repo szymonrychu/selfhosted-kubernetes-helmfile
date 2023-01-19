@@ -119,21 +119,21 @@ cephClusterSpec:
         cpu: "1000m"
         memory: "1Gi"
       requests:
-        cpu: "200m"
+        cpu: "10m"
         memory: "128Mi"
     mon:
       limits:
         cpu: "1000m"
         memory: "1Gi"
       requests:
-        cpu: "200m"
+        cpu: "50m"
         memory: "128Mi"
     osd:
       limits:
         cpu: "2000m"
         memory: "4Gi"
       requests:
-        cpu: "200m"
+        cpu: "10m"
         memory: "128Mi"
     prepareosd:
       # limits: It is not recommended to set limits on the OSD prepare job since it's a one-time burst for memory
@@ -150,18 +150,18 @@ cephClusterSpec:
         memory: "40Mi"
     crashcollector:
       limits:
-        cpu: "200m"
+        cpu: "20m"
         memory: "60Mi"
       requests:
-        cpu: "100m"
+        cpu: "5m"
         memory: "60Mi"
     logcollector:
       limits:
-        cpu: "200m"
-        memory: "512Mi"
+        cpu: "20m"
+        memory: "60Mi"
       requests:
-        cpu: "100m"
-        memory: "100Mi"
+        cpu: "5m"
+        memory: "60Mi"
     cleanup:
       limits:
         cpu: "500m"

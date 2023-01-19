@@ -11,10 +11,9 @@ repositories:
   url: https://kubereboot.github.io/charts
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
+- name: postgresql-operator
+  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 templates:
-  operators-default:
-    disableValidation: true
-    disableValidationOnInstall: true
   default: &default
     wait: true
     missingFileHandler: Warn
@@ -38,6 +37,11 @@ templates:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
     secrets:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+  operators-default: &operators
+    disableValidation: true
+    disableValidationOnInstall: true
+    <<: *default
+
 
 releases:
 
@@ -95,8 +99,7 @@ releases:
   labels:
     purpose: backbone
     application: cert-manager
-  <<: *default
-  # <<: *operatorsdefaults
+  <<: *operators
 
 - name: ingress-nginx
   chart: ingress-nginx/ingress-nginx
@@ -109,7 +112,6 @@ releases:
     purpose: backbone
     application: ingress-nginx
   <<: *default
-  # <<: *operatorsdefaults
 
 - name: external-dns
   chart: bitnami/external-dns
@@ -121,3 +123,33 @@ releases:
     purpose: backbone
     application: external-dns
   <<: *default
+
+- name: rook-ceph
+  chart: rook-release/rook-ceph
+  namespace: rook-ceph
+  version: "1.10.5" # latest release without 'common' bitnami chart in dependencies
+  labels:
+    purpose: backbone
+    application: rook-ceph
+  <<: *operators
+
+- name: rook-ceph-cluster
+  chart: rook-release/rook-ceph-cluster
+  namespace: rook-ceph
+  version: "1.10.5" # latest release without 'common' bitnami chart in dependencies
+  force: true
+  <<: *default
+  labels:
+    purpose: backbone
+    application: rook-ceph-cluster
+  needs:
+    - rook-ceph/rook-ceph
+
+- name: postgres-operator
+  version: 1.8.2
+  chart: postgres-operator-charts/postgres-operator
+  namespace: postgres-operator
+  labels:
+    purpose: backbone
+    application: postgres-operator
+  <<: *operators
