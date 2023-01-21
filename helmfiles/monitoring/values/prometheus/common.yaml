@@ -27,7 +27,7 @@ prometheusOperator:
           cpu: 100m
           memory: 100Mi
         requests:
-          cpu: 50m
+          cpu: 10m
           memory: 100Mi
   resources:
     limits:
@@ -35,7 +35,16 @@ prometheusOperator:
       memory: 500Mi
     requests:
       cpu: 100m
-      memory: 200Mi
+      memory: 32Mi
+    
+  prometheusConfigReloader:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 500Mi
+      requests:
+        cpu: 10m
+        memory: 200Mi
 
 grafana:
   deploymentStrategy:
@@ -67,7 +76,7 @@ grafana:
         topologyKey: "kubernetes.io/hostname"
   resources:
     requests:
-      cpu: 50m
+      cpu: 10m
       memory: 128Mi
     limits:
       cpu: 100m
@@ -135,7 +144,7 @@ alertmanager:
       cpu: 200m
       memory: 200Mi
     requests:
-      cpu: 100m
+      cpu: 10m
       memory: 100Mi
   securityContext:
     fsGroup: 1000
@@ -195,7 +204,7 @@ prometheus:
         memory: 3000Mi
       requests:
         cpu: 300m
-        memory: 512Mi
+        memory: 1536Mi
     storageSpec:
       volumeClaimTemplate:    
         spec:

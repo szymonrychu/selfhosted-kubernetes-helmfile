@@ -7,7 +7,7 @@ production: true
 replicaCount: 3
 resources:
   requests:
-    memory: 768Mi
+    memory: 512Mi
     cpu: 50m
   limits:
     memory: 3Gi
