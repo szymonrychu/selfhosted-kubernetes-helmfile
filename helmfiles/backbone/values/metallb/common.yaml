@@ -3,7 +3,7 @@ configInline:
     - name: default
       protocol: layer2
       addresses:
-      - 178.62.213.96/32
+      - 188.166.16.229/32
 
 resources:
   limits:

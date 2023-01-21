@@ -10,7 +10,6 @@
     mode: '0755'
 
 - name: Fetch ca.crt and ta.key from local to OpenVPN clients
-  run_once: true
   copy:
     src: buffer/openvpn/{{ item | basename }}
     dest: /etc/openvpn/client/{{ item | basename }}
@@ -19,9 +18,9 @@
     - ta.key
   notify:
     - Restart OpenVPN client
+  when: inventory_hostname not in _openvpn_clients
 
 - name: Fetch client.key from local to OpenVPN client
-  run_once: true
   copy:
     src: buffer/openvpn/client.key
     dest: /etc/openvpn/client/client.key
@@ -30,7 +29,6 @@
   when: inventory_hostname not in _openvpn_clients
 
 - name: Fetch <nodename>.key from local to OpenVPN client
-  run_once: true
   copy:
     src: buffer/openvpn/{{inventory_hostname}}.key
     dest: /etc/openvpn/client/client.key
@@ -39,7 +37,6 @@
   when: inventory_hostname in _openvpn_clients
 
 - name: Fetch client.crt from local to OpenVPN client
-  run_once: true
   copy:
     src: buffer/openvpn/client.crt
     dest: /etc/openvpn/client/client.crt
@@ -48,7 +45,6 @@
   when: inventory_hostname not in _openvpn_clients
 
 - name: Fetch <nodename>.crt from local to OpenVPN client
-  run_once: true
   copy:
     src: buffer/openvpn/{{inventory_hostname}}.crt
     dest: /etc/openvpn/client/client.crt
