@@ -1,20 +1,24 @@
 class Version():
 
     def __init__(self, raw: str):
+        self._major, self._minor, self._patch = None, None, None
 
-        if raw.startswith('v'):
-            raw = raw[1:]
-        self._suffix = ''
-        if '-' in raw:
-            raw_splitted = raw.split('-')
-            main, self._suffix = raw_splitted[0], '-'.join(raw_splitted[1:])
-        else:
-            main = raw
-        main_splitted = main.split('.')
-        self._major = main_splitted[0]
-        self._minor = main_splitted[1]
         try:
-            self._patch = main_splitted[2]
+            if raw.startswith('v'):
+                raw = raw[1:]
+            self._suffix = ''
+            if '-' in raw:
+                raw_splitted = raw.split('-')
+                main, self._suffix = raw_splitted[0], '-'.join(raw_splitted[1:])
+            else:
+                main = raw
+            for _i, _v in enumerate(main.split('.')):
+                if _i == 0:
+                    self._major = _v
+                elif _i == 1:
+                    self._minor = _v
+                elif _i == 2:
+                    self._patch = _v
         except IndexError:
             self._patch = None
     

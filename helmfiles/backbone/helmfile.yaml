@@ -127,7 +127,7 @@ releases:
 - name: rook-ceph
   chart: rook-release/rook-ceph
   namespace: rook-ceph
-  version: 1.10.5
+  version: 1.10.10
   labels:
     purpose: backbone
     application: rook-ceph
@@ -136,11 +136,11 @@ releases:
 - name: rook-ceph-cluster
   chart: rook-release/rook-ceph-cluster
   namespace: rook-ceph
-  version: 1.10.5
+  version: 1.10.10
   force: true
   <<: *default
   labels:
     purpose: backbone
     application: rook-ceph-cluster
   needs:
-    - rook-ceph/rook-ceph
+  - rook-ceph/rook-ceph
