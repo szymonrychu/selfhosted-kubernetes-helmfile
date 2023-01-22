@@ -42,14 +42,14 @@ releases:
 #     application: intel-gpu-plugin
 #   <<: *default
 
-- name: samba
-  chart: k8s-at-home/samba
-  version: 6.2.2
-  namespace: samba
-  labels:
-    purpose: media
-    application: samba
-  <<: *default
+# - name: samba
+#   chart: k8s-at-home/samba
+#   version: 6.2.2
+#   namespace: samba
+#   labels:
+#     purpose: media
+#     application: samba
+#   <<: *default
 
 - name: qbittorrent
   chart: truecharts/qbittorrent
@@ -60,14 +60,14 @@ releases:
     application: qbittorrent
   <<: *default
 
-- name: emby
-  chart: truecharts/emby
-  version: 11.0.42
-  namespace: emby
-  labels:
-    purpose: media
-    application: emby
-  <<: *default
+# - name: emby
+#   chart: truecharts/emby
+#   version: 11.0.42
+#   namespace: emby
+#   labels:
+#     purpose: media
+#     application: emby
+#   <<: *default
 
 - name: jellyfin
   chart: truecharts/jellyfin
