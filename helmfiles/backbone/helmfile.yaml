@@ -11,7 +11,7 @@ repositories:
   url: https://kubereboot.github.io/charts
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
-- name: postgresql-operator
+- name: postgres-operator-charts
   url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 - name: rook-release
   url: https://charts.rook.io/release
