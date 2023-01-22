@@ -117,8 +117,8 @@ grafana:
       root_url: https://grafana.szymonrichert.pl/
     smtp:
       enabled: true
-      host: "smtp.gmail.com:465"
-      from_address: "monitoring.szymonrichert.pl@gmail.com"
+      host: "pro.eu.turbo-smtp.com:465"
+      from_address: "monitoring@szymonrichert.pl"
   
   additionalDataSources:
     - name: Loki
@@ -153,8 +153,8 @@ alertmanager:
     runAsUser: 1000
   config:
     global:
-      smtp_smarthost: "smtp.gmail.com:465"
-      smtp_from: "monitoring.szymonrichert.pl@gmail.com"
+      smtp_smarthost: "pro.eu.turbo-smtp.com:465"
+      smtp_from: "monitoring@szymonrichert.pl"
   alertmanagerSpec:
     affinity:
       nodeAffinity:
