@@ -60,7 +60,9 @@ class HelmRepository():
         sorted_versions = sorted(chart_versions[chart])
         result = None
 
-        if upgrade_type == UpgradeType.PATCH_ONLY:
+        if not sorted_versions:
+            logging.warning(f"Error handling '{chart}-{current_version}', can't find suitable upgrade version!")
+        elif upgrade_type == UpgradeType.PATCH_ONLY:
             for  _v in sorted_versions:
                 if _v.major == current_version.major and _v.minor == current_version.minor:
                     result = _v

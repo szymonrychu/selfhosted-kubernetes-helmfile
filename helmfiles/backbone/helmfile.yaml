@@ -74,14 +74,14 @@ releases:
     application: apt-autoupgrade
   <<: *default
 
-# - name: local-path-provisioner
-#   chart: szymonrychu/local-path-provisioner
-#   namespace: rook-ceph
-#   version: 1.0.0
-#   labels:
-#     purpose: storage
-#     application: local-path-provisioner
-#   <<: *default
+- name: local-path-provisioner
+  chart: szymonrychu/local-path-provisioner
+  namespace: rook-ceph
+  version: 0.0.24
+  labels:
+    purpose: storage
+    application: local-path-provisioner
+  <<: *default
 
 - name: metallb
   chart: szymonrychu/metallb
@@ -138,9 +138,19 @@ releases:
   namespace: rook-ceph
   version: 1.10.10
   force: true
-  <<: *default
   labels:
     purpose: backbone
     application: rook-ceph-cluster
   needs:
   - rook-ceph/rook-ceph
+  <<: *default
+
+- name: postgres-operator
+  chart: postgres-operator-charts/postgres-operator
+  namespace: postgres-operator
+  version: 1.8.2
+  force: true
+  labels:
+    purpose: backbone
+    application: postgres-operator
+  <<: *operators
