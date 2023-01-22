@@ -1,0 +1,6 @@
+image:
+  tag: v1.8.2-43-g3e148ea5
+
+configKubernetes:
+  enable_pod_antiaffinity: true
+  enable_readiness_probe: true

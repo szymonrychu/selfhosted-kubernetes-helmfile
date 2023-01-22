@@ -109,9 +109,9 @@ grafana:
       scopes: profile,email,groups,openid
       name: Keycloak
       allow_sign_up: false
-      auth_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/auth
-      token_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/token
-      api_url: https://auth.szymonrichert.pl/realms/Lab/protocol/openid-connect/userinfo
+      auth_url: https://auth.szymonrichert.pl/realms/lab/protocol/openid-connect/auth
+      token_url: https://auth.szymonrichert.pl/realms/lab/protocol/openid-connect/token
+      api_url: https://auth.szymonrichert.pl/realms/lab/protocol/openid-connect/userinfo
       role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
     server:
       root_url: https://grafana.szymonrichert.pl/
