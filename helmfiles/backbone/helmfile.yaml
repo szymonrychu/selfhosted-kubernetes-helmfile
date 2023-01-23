@@ -15,6 +15,8 @@ repositories:
   url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 - name: rook-release
   url: https://charts.rook.io/release
+- name: csi-driver-smb
+  url: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
 templates:
   default: &default
     wait: true
@@ -44,6 +46,15 @@ templates:
     disableValidationOnInstall: true
     <<: *default
 releases:
+
+- name: csi-driver-smb
+  chart: csi-driver-smb/csi-driver-smb
+  version: v1.9.0
+  namespace: kube-system
+  labels:
+    purpose: backbone
+    application: smb-csi-driver
+  <<: *default
 
 - name: gha-runner
   chart: szymonrychu/gha-runner
