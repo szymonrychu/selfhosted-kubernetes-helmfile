@@ -15,15 +15,6 @@ ingress:
         hosts:
           - jellyfin.szymonrichert.pl
 
-image:
-  repository: ghcr.io/szymonrychu/jellyfin
-  pullPolicy: IfNotPresent
-
-env:
-  JELLYFIN_PublishedServerUrl: "https://jellyfin.szymonrichert.pl/"
-  # NVIDIA_VISIBLE_DEVICES: all
-  # NVIDIA_DRIVER_CAPABILITIES: compute,utility
-
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -32,7 +23,7 @@ affinity:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - laptop1
+          - nuc1
 
 podSecurityContext:
   fsGroup: 1000
@@ -59,14 +50,10 @@ resources:
 persistence:
   config:
     enabled: true
-    storageClass: local-path
-    # type: pvc
-    # mountPath: /config
-    # retain: true
-    # size: 10Gi
-    type: hostPath
+    storageClass: ceph
+    type: pvc
     mountPath: /config
-    hostPath: /k8s-data/jellyfin-config
+    size: 10Gi
   movies:
     enabled: true
     type: hostPath

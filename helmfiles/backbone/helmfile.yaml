@@ -49,7 +49,7 @@ releases:
 
 - name: csi-driver-smb
   chart: csi-driver-smb/csi-driver-smb
-  version: v1.9.0
+  version: 1.9.0
   namespace: kube-system
   labels:
     purpose: backbone
@@ -58,7 +58,7 @@ releases:
 
 - name: gha-runner
   chart: szymonrychu/gha-runner
-  version: 1.0.1
+  version: 1.0.2
   namespace: gha-runner
   labels:
     purpose: backbone

@@ -35,19 +35,19 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
-  version: 44.2.1
+  version: 44.3.0
   labels:
     purpose: monitoring
     application: prometheus
   <<: *default
 
-# - name: loki
-#   namespace: monitoring
-#   chart: grafana/loki-stack
-#   version: 2.8.7
-#   labels:
-#     purpose: monitoring
-#     application: loki
-#   needs:
-#   - monitoring/prometheus
-#   <<: *default
+- name: loki
+  namespace: monitoring
+  chart: grafana/loki-stack
+  version: 2.8.9
+  labels:
+    purpose: monitoring
+    application: loki
+  needs:
+  - monitoring/prometheus
+  <<: *default

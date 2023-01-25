@@ -34,11 +34,11 @@ persistence:
     type: hostPath
     mountPath: /media/movies
     hostPath: /k8s-data/disk/movies
-  tvseries:
+  tvshows:
     enabled: true
     type: hostPath
-    mountPath: /media/tvseries
-    hostPath: /k8s-data/disk/tvseries
+    mountPath: /media/tvshows
+    hostPath: /k8s-data/disk/tvshows
   music:
     enabled: true
     type: hostPath

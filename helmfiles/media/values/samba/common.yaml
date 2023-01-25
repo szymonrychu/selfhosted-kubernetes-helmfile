@@ -20,9 +20,9 @@ env:
   # -- Set the container timezone
   TZ: UTC
   SHARE1: movies;/k8s-data/disk/movies;yes;no;yes
-  SHARE2: tvshows;/k8s-data/disk/tvseries;yes;no;yes
+  SHARE2: tvshows;/k8s-data/disk/tvshows;yes;no;yes
   SHARE3: music;/k8s-data/disk/music;yes;no;yes
-  SHARE4: public;/k8s-data/raid1/documents;yes;no;yes
+  SHARE4: public;/k8s-data/disk/documents;yes;no;yes
   NMDP: yes
   RECYCLE: yes
   USERID: 1000
@@ -59,7 +59,7 @@ affinity:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - laptop1
+          - nuc1
 
 resources:
   limits:

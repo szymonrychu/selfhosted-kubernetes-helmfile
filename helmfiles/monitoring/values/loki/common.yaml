@@ -1,57 +1,56 @@
 loki:
-  config:
-    auth_enabled: false
-    ingester:
-      chunk_idle_period: 3m
-      chunk_block_size: 262144
-      chunk_retain_period: 1m
-      max_transfer_retries: 0
-      lifecycler:
-        ring:
-          kvstore:
-            store: inmemory
-          replication_factor: 1
+  auth_enabled: false
+  ingester:
+    chunk_idle_period: 3m
+    chunk_block_size: 262144
+    chunk_retain_period: 1m
+    max_transfer_retries: 0
+    lifecycler:
+      ring:
+        kvstore:
+          store: inmemory
+        replication_factor: 1
 
-        ## Different ring configs can be used. E.g. Consul
-        # ring:
-        #   store: consul
-        #   replication_factor: 1
-        #   consul:
-        #     host: "consul:8500"
-        #     prefix: ""
-        #     http_client_timeout: "20s"
-        #     consistent_reads: true
-    limits_config:
-      enforce_metric_name: false
-      reject_old_samples: true
-      reject_old_samples_max_age: 168h
-    schema_config:
-      configs:
-      - from: 2020-10-24
-        store: boltdb-shipper
-        object_store: filesystem
-        schema: v11
-        index:
-          prefix: index_
-          period: 24h
-    server:
-      http_listen_port: 3100
-    storage_config:
-      boltdb_shipper:
-        active_index_directory: /data/loki/boltdb-shipper-active
-        cache_location: /data/loki/boltdb-shipper-cache
-        cache_ttl: 24h         # Can be increased for faster performance over longer query periods, uses more disk space
-        shared_store: filesystem
-      filesystem:
-        directory: /data/loki/chunks
-    chunk_store_config:
-      max_look_back_period: 0s
-    table_manager:
-      retention_deletes_enabled: true
-      retention_period: 168h
-    compactor:
-      working_directory: /data/loki/boltdb-shipper-compactor
+      ## Different ring configs can be used. E.g. Consul
+      # ring:
+      #   store: consul
+      #   replication_factor: 1
+      #   consul:
+      #     host: "consul:8500"
+      #     prefix: ""
+      #     http_client_timeout: "20s"
+      #     consistent_reads: true
+  limits_config:
+    enforce_metric_name: false
+    reject_old_samples: true
+    reject_old_samples_max_age: 168h
+  
+  schema_config:
+    configs:
+    - from: 2020-10-24
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v11
+      index:
+        prefix: index_
+        period: 24h
+      
+  storage_config:
+    boltdb_shipper:
+      active_index_directory: /data/loki/boltdb-shipper-active
+      cache_location: /data/loki/boltdb-shipper-cache
+      cache_ttl: 24h         # Can be increased for faster performance over longer query periods, uses more disk space
       shared_store: filesystem
+    filesystem:
+      directory: /data/loki/chunks
+      
+  # table_manager:
+  #   retention_deletes_enabled: true
+  #   retention_period: 168h
+  
+  compactor:
+    working_directory: /data/loki/boltdb-shipper-compactor
+    shared_store: filesystem
   # Needed for Alerting: https://grafana.com/docs/loki/latest/alerting/
   # This is just a simple example, for more details: https://grafana.com/docs/loki/latest/configuration/#ruler_config
   #  ruler:
@@ -73,11 +72,6 @@ loki:
   ## If you set enabled as "True", you need :
   ## - create a pv which above 10Gi and has same namespace with loki
   ## - keep storageClassName same with below setting
-  persistence:
-    enabled: true
-    accessModes:
-    - ReadWriteOnce
-    existingClaim: loki-local-pvc
 
   ## Pod Labels
   podLabels: {}
@@ -102,7 +96,7 @@ loki:
       port: http-metrics
     initialDelaySeconds: 45
 
-  replicas: 1
+  replicas: 3
 
   resources:
     limits:
@@ -136,6 +130,12 @@ loki:
               matchLabels:
                 {{- include "loki.writeSelectorLabels" . | nindent 10 }}
             topologyKey: kubernetes.io/hostname
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 10Gi
+      storageClass: local-path
   read:
     affinity: |
       nodeAffinity:
@@ -154,6 +154,13 @@ loki:
               matchLabels:
                 {{- include "loki.readSelectorLabels" . | nindent 10 }}
             topologyKey: kubernetes.io/hostname
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 10Gi
+      storageClass: local-path
+
   singleBinary:
     affinity: |
       nodeAffinity:
@@ -172,6 +179,38 @@ loki:
               matchLabels:
                 {{- include "loki.singleBinarySelectorLabels" . | nindent 10 }}
             topologyKey: kubernetes.io/hostname
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 10Gi
+      storageClass: local-path
+
+  backend:
+    affinity: |
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: "kubernetes.io/hostname"
+              operator: In
+              values:
+                - nuc1
+                - nuc2
+                - nuc3
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                {{- include "loki.singleBinarySelectorLabels" . | nindent 10 }}
+            topologyKey: kubernetes.io/hostname
+    persistence:
+      enabled: true
+      accessModes:
+      - ReadWriteOnce
+      size: 10Gi
+      storageClass: local-path
+
   gateway:
     affinity: |
       nodeAffinity:
@@ -221,26 +260,26 @@ promtail:
   podLabels:
     application: promtail
 
-  affinity: |
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: "kubernetes.io/hostname"
-            operator: In
-            values:
-              - nuc1
-              - nuc2
-              - nuc3
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: application
-                operator: In
-                values:
-                - promtail
-          topologyKey: kubernetes.io/hostname
+  # affinity: |
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: "kubernetes.io/hostname"
+  #           operator: In
+  #           values:
+  #             - nuc1
+  #             - nuc2
+  #             - nuc3
+  #   podAntiAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       - labelSelector:
+  #           matchExpressions:
+  #             - key: application
+  #               operator: In
+  #               values:
+  #               - promtail
+  #         topologyKey: kubernetes.io/hostname
 
 grafana:
   enabled: false

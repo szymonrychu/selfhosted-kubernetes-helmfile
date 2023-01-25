@@ -1,8 +1,6 @@
 repositories:
-- name: truecharts
-  url: https://charts.truecharts.org
-- name: k8s-at-home
-  url: https://k8s-at-home.com/charts/
+- name: szymonrychu
+  url: https://szymonrychu.github.io/charts
 templates:
   operators-default:
     disableValidation: true
@@ -42,23 +40,23 @@ releases:
 #     application: intel-gpu-plugin
 #   <<: *default
 
-# - name: samba
-#   chart: k8s-at-home/samba
-#   version: 6.2.2
-#   namespace: samba
-#   labels:
-#     purpose: media
-#     application: samba
-#   <<: *default
-
-- name: qbittorrent
-  chart: truecharts/qbittorrent
-  version: 11.0.43
-  namespace: qbittorrent
+- name: samba
+  chart: szymonrychu/samba
+  version: 0.1.0
+  namespace: samba
   labels:
     purpose: media
-    application: qbittorrent
+    application: samba
   <<: *default
+
+# - name: qbittorrent
+#   chart: szymonrychu/qbittorrent
+#   version: 11.0.43
+#   namespace: qbittorrent
+#   labels:
+#     purpose: media
+#     application: qbittorrent
+#   <<: *default
 
 # - name: emby
 #   chart: truecharts/emby
@@ -70,8 +68,8 @@ releases:
 #   <<: *default
 
 - name: jellyfin
-  chart: truecharts/jellyfin
-  version: 11.0.44
+  chart: szymonrychu/jellyfin
+  version: 0.3.2
   namespace: jellyfin
   labels:
     purpose: media
