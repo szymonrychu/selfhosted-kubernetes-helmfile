@@ -177,9 +177,14 @@ cephFileSystems:
         replicated:
           size: 3
       dataPools:
-        - failureDomain: host
+        - name: replicated
+          failureDomain: host
           replicated:
             size: 3
+            requireSafeReplicaSize: true
+          parameters:
+            compression_mode:
+              none
       metadataServer:
         activeCount: 1
         activeStandby: true
