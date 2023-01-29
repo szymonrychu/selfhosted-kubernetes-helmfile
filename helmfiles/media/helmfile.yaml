@@ -49,14 +49,14 @@ releases:
     application: samba
   <<: *default
 
-# - name: qbittorrent
-#   chart: szymonrychu/qbittorrent
-#   version: 11.0.43
-#   namespace: qbittorrent
-#   labels:
-#     purpose: media
-#     application: qbittorrent
-#   <<: *default
+- name: qbittorrent
+  chart: szymonrychu/qbittorrent
+  version: 0.3.2
+  namespace: qbittorrent
+  labels:
+    purpose: media
+    application: qbittorrent
+  <<: *default
 
 # - name: emby
 #   chart: truecharts/emby

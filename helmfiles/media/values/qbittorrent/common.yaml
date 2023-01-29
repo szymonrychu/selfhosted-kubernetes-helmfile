@@ -1,33 +1,75 @@
 ingress:
-  main:
-    enabled: true
-    ingressClassName: "nginx"
-    annotations:
-      cert-manager.io/cluster-issuer: letsencrypt-prod
-      kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: qbt.szymonrichert.pl
-        paths:
-          - path: /
-            pathType: Prefix
-    tls:
-      - secretName: qbt-tls
-        hosts:
-          - qbt.szymonrichert.pl
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: qbt.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: qbt-tls
+      hosts:
+        - qbt.szymonrichert.pl
 
-podSecurityContext:
-  fsGroup: 1000
-  runAsGroup: 1000
-  # runAsNonRoot: true
-  runAsUser: 1000
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - nuc1
+
+qbittorrent:
+  securityContext:
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+
+oauth2Proxy:
+  enabled: false
+  keycloakClientId: qbittorrent
+  keycloakRedirectmUrl: https://qbt.szymonrichert.pl/oauth2/callback
+  keycloakRealmUrl: https://auth.szymonrichert.pl/realms/lab
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: qbt.szymonrichert.pl
+  allowedGroups: qbittorrent
+  securityContext:
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+
+initPermissions:
+  enabled: true
+  securityContext:
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
 
 persistence:
   config:
     enabled: true
-    storageClass: local-path
+    storageClass: ceph
+    accessMode: ReadWriteMany
     type: pvc
     mountPath: /config
-    retain: true
     size: 10Gi
   movies:
     enabled: true

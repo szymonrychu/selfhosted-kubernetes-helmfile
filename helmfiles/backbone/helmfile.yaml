@@ -85,6 +85,15 @@ releases:
     application: apt-autoupgrade
   <<: *default
 
+- name: availability-checker
+  chart: szymonrychu/availability-checker
+  version: 0.0.2
+  namespace: kube-system
+  labels:
+    purpose: backbone
+    application: availability-checker
+  <<: *default
+
 - name: local-path-provisioner
   chart: szymonrychu/local-path-provisioner
   namespace: rook-ceph
