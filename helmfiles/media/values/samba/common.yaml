@@ -19,10 +19,10 @@ image:
 env:
   # -- Set the container timezone
   TZ: UTC
-  SHARE1: movies;/k8s-data/disk/movies;yes;no;yes
-  SHARE2: tvshows;/k8s-data/disk/tvshows;yes;no;yes
-  SHARE3: music;/k8s-data/disk/music;yes;no;yes
-  SHARE4: public;/k8s-data/disk/documents;yes;no;yes
+  SHARE1: movies;/media/movies;yes;no;yes
+  SHARE2: tvshows;/media/tvshows;yes;no;yes
+  SHARE3: music;/media/music;yes;no;yes
+  SHARE4: public;/media/documents;yes;no;yes
   NMDP: yes
   RECYCLE: yes
   USERID: 1000
@@ -63,28 +63,28 @@ affinity:
 
 resources:
   limits:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
   requests:
     cpu: 50m
     memory: 128Mi
 
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
+
 persistence:
-  documents-share:
+  movies:
     enabled: true
     type: hostPath
-    hostPath: /k8s-data/raid1/documents
-  movies-share:
-    enabled: true
-    type: hostPath
+    mountPath: /media/movies
     hostPath: /k8s-data/disk/movies
-  tvseries-share:
+  tvshows:
     enabled: true
     type: hostPath
-    hostPath: /k8s-data/disk/tvseries
-  music-share:
+    mountPath: /media/tvshows
+    hostPath: /k8s-data/disk/tvshows
+  music:
     enabled: true
     type: hostPath
+    mountPath: /media/music
     hostPath: /k8s-data/disk/music
