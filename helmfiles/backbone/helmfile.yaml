@@ -124,7 +124,7 @@ releases:
 - name: ingress-nginx
   chart: ingress-nginx/ingress-nginx
   namespace: ingress-system
-  version: 4.4.2
+  version: 4.5.0
   needs:
   - ingress-system/metallb
   - ingress-system/cert-manager
@@ -135,7 +135,7 @@ releases:
 
 - name: external-dns
   chart: bitnami/external-dns
-  version: 6.13.2
+  version: 6.13.3
   namespace: ingress-system
   needs:
   - ingress-system/ingress-nginx
