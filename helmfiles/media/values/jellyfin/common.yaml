@@ -42,9 +42,11 @@ resources:
   requests:
     cpu: 200m
     memory: 256Mi
+    gpu.intel.com/i915: "1"
   limits:
     cpu: "8"
     memory: 12Gi
+    gpu.intel.com/i915: "1"
 
 persistence:
   config:

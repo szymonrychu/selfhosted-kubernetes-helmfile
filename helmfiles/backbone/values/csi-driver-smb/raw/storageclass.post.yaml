@@ -2,13 +2,10 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: smb
+  name: smb-tvshows
 provisioner: smb.csi.k8s.io
 parameters:
-  # On Windows, "*.default.svc.cluster.local" could not be recognized by csi-proxy
-  source: "//192.168.1.1/pub"
-  # if csi.storage.k8s.io/provisioner-secret is provided, will create a sub directory
-  # with PV name under source
+  source: "//samba.samba.svc.cluster.local/tvshows"
   csi.storage.k8s.io/provisioner-secret-name: "smbcreds"
   csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
   csi.storage.k8s.io/node-stage-secret-name: "smbcreds"
@@ -24,5 +21,28 @@ mountOptions:
   - mfsymlinks
   - cache=strict
   - noserverino
-  - domain=home
-  - vers=2.0
+  - vers=3.0
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: smb-movies
+provisioner: smb.csi.k8s.io
+parameters:
+  source: "//samba.samba.svc.cluster.local/movies"
+  csi.storage.k8s.io/provisioner-secret-name: "smbcreds"
+  csi.storage.k8s.io/provisioner-secret-namespace: "kube-system"
+  csi.storage.k8s.io/node-stage-secret-name: "smbcreds"
+  csi.storage.k8s.io/node-stage-secret-namespace: "kube-system"
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=1000
+  - gid=1000
+  - noperm
+  - mfsymlinks
+  - cache=strict
+  - noserverino
+  - vers=3.0

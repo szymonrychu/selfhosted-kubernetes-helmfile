@@ -19,14 +19,12 @@ image:
 env:
   # -- Set the container timezone
   TZ: UTC
-  SHARE1: movies;/media/movies;yes;no;yes
-  SHARE2: tvshows;/media/tvshows;yes;no;yes
-  SHARE3: music;/media/music;yes;no;yes
-  SHARE4: public;/media/documents;yes;no;yes
+  SHARE1: movies;/media/movies;yes;no;no
+  SHARE2: tvshows;/media/tvshows;yes;no;no
+  SHARE3: music;/media/music;yes;no;no
+  SHARE4: public;/media/documents;yes;no;no
   NMDP: yes
   RECYCLE: yes
-  USERID: 1000
-  GROUPID: 1000
   PERMISSIONS: 644:644
   GLOBAL1: tls enabled=no
   GLOBAL2: bind interfaces only = yes
@@ -88,3 +86,5 @@ persistence:
     type: hostPath
     mountPath: /media/music
     hostPath: /k8s-data/disk/music
+
+
