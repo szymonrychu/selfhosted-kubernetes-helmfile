@@ -42,7 +42,7 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.3.2
+  version: 0.4.3
   namespace: qbittorrent
   labels:
     purpose: media
@@ -60,7 +60,7 @@ releases:
 
 - name: jellyfin
   chart: szymonrychu/jellyfin
-  version: 0.3.3
+  version: 0.4.2
   namespace: jellyfin
   labels:
     purpose: media
