@@ -18,6 +18,7 @@ templates:
       showlogs: true
       command: ../../.hook.sh
       args:
+      - home-automation
       - '{{`{{ .Event.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'

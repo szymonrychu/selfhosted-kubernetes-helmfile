@@ -17,6 +17,7 @@ templates:
       showlogs: true
       command: ../../.hook.sh
       args:
+      - media
       - '{{`{{ .Event.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'

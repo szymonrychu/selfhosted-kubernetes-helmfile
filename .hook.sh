@@ -15,12 +15,14 @@ fail() {
     exit 1
 }
 
-readonly EVENT_NAME="${1:-}"
-readonly RELEASE_NAME="${2:-}"
-readonly RELEASE_NAMESPACE="${3:-}"
-readonly TIMEOUT_S="${4:-$DEFAULT_TIMEOUT_S}"
+readonly PHASE="${1:-}"
+readonly EVENT_NAME="${2:-}"
+readonly RELEASE_NAME="${3:-}"
+readonly RELEASE_NAMESPACE="${4:-}"
+readonly TIMEOUT_S="${5:-$DEFAULT_TIMEOUT_S}"
 
-[[ -z "${EVENT_NAME}" ]] && fail "Missing 1st parameter EVENT_NAME"
+[[ -z "${PHASE}" ]] && fail "Missing 1st parameter PHASE"
+[[ -z "${EVENT_NAME}" ]] && fail "Missing 2nd parameter EVENT_NAME"
 
 if [[ "${EVENT_NAME}" == "presync" ]]; then
     readonly KUBECTL="kubectl apply --wait=true"
@@ -37,8 +39,9 @@ fi
 
 readonly TIMEOUT_TMSTP="$(($(date +%s) + TIMEOUT_S))"
 
-if [[ ! -z "${RELEASE_NAME}" ]] && [[ ! -z "${RELEASE_NAMESPACE}" ]]; then
-    printf "Running hook for '%s' in '%s' namespace during '%s'\n" "${RELEASE_NAME}" "${RELEASE_NAMESPACE}" "${EVENT_NAME}"
+if [[ ! -z "${RELEASE_NAME}" ]] && [[ ! -z "${RELEASE_NAMESPACE}" ]] && [[ "${EVENT_NAME}" == "presync" ]]; then
+    printf "Checking '%s' helm relase health in '%s' namespace during\n" "${RELEASE_NAME}" "${RELEASE_NAMESPACE}"
+
     faulty_release_revision=""
     while true; do
         faulty_release_revision="$(helm list --all-namespaces --output json | jq -r ".[] | select(.name==\"${RELEASE_NAME}\" and .namespace==\"${RELEASE_NAMESPACE}\" and .status != \"deployed\") | .revision")"
@@ -46,16 +49,19 @@ if [[ ! -z "${RELEASE_NAME}" ]] && [[ ! -z "${RELEASE_NAMESPACE}" ]]; then
             printf "Release ok!"
             break
         fi
-        if [[ "$(date +%s)" -ge "${end_time}" ]]; then
+        if [[ "$(date +%s)" -ge "${TIMEOUT_TMSTP}" ]]; then
             printf "Timeout waiting for release to stabilize reached, deleting secret '%s' in namespace '%s'!\n" "sh.helm.release.v1.${RELEASE_NAME}.v${faulty_release_revision}" "${RELEASE_NAMESPACE}"
             kubectl delete secret -n "${RELEASE_NAMESPACE}" "sh.helm.release.v1.${RELEASE_NAME}.v${faulty_release_revision}"
         fi
         sleep 1
     done
+fi
+
+if [[ ! -z "${RELEASE_NAME}" ]] && [[ ! -z "${RELEASE_NAMESPACE}" ]]; then
 
     readonly RELEASE_DIR="${CURRENT_PWD}/values/${RELEASE_NAME}"
     if [[ -d "${RELEASE_DIR}/raw" ]]; then
-        printf "Searching for files to apply!\n"
+        printf "Searching for files to apply for '%s' in '%s' namespace!\n" "${RELEASE_NAME}" "${RELEASE_NAMESPACE}"
         find "${RELEASE_DIR}/raw" -name "*.common.${YAML_SEARCH_SUFF}.yaml" -exec bash -xec "${KUBECTL} -n ${RELEASE_NAMESPACE} -f {}" \;
         find "${RELEASE_DIR}/raw" -name "*.common.${YAML_SEARCH_SUFF}.secrets.yaml" -exec bash -xec "sops -d {} | ${KUBECTL} -n ${RELEASE_NAMESPACE} -f -" \;
         find "${RELEASE_DIR}/raw" -name "*.${RELEASE_NAME}.${YAML_SEARCH_SUFF}.yaml" -exec bash -xec "${KUBECTL} -n ${RELEASE_NAMESPACE} -f {}" \;

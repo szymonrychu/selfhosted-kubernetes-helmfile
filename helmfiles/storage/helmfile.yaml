@@ -18,6 +18,7 @@ templates:
       showlogs: true
       command: ../../.hook.sh
       args:
+      - storage
       - '{{`{{ .Event.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'

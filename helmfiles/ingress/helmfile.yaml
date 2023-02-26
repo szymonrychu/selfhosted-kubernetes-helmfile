@@ -22,6 +22,7 @@ templates:
       showlogs: true
       command: ../../.hook.sh
       args:
+      - ingress
       - '{{`{{ .Event.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'

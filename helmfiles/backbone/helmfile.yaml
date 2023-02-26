@@ -20,6 +20,7 @@ templates:
       showlogs: true
       command: ../../.hook.sh
       args:
+      - backbone
       - '{{`{{ .Event.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'
