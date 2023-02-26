@@ -29,7 +29,7 @@ templates:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
     secrets:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
-  operators-default: &operators
+  operators-default:
     disableValidation: true
     disableValidationOnInstall: true
     <<: *default
