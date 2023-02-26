@@ -14,3 +14,7 @@ venv
 ansible/buffer
 ansible/hosts
 terraform/modules/**/*.zip
+terraform/**/.terraform
+terraform/**/terraform.tfstate
+terraform/**/terraform.tfstate.backup
+terraform/**/.terraform.lock.hcl
