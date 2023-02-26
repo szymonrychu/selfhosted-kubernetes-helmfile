@@ -1,3 +1,0 @@
-controller:
-  dnsPolicy: ClusterFirst
-  workingMountDir: /k8s-data/

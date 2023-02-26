@@ -1,12 +1,14 @@
 repositories:
 - name: stable
   url: https://charts.helm.sh/stable
-- name: kubereboot
-  url: https://kubereboot.github.io/charts
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+- name: jetstack
+  url: https://charts.jetstack.io
+- name: ingress-nginx
+  url: https://kubernetes.github.io/ingress-nginx
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
-- name: postgres-operator-charts
-  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 templates:
   default: &default
     wait: true
@@ -36,50 +38,43 @@ templates:
     <<: *default
 releases:
 
-- name: gha-runner
-  chart: szymonrychu/gha-runner
-  version: 1.0.2
-  namespace: gha-runner
+- name: metallb
+  chart: szymonrychu/metallb
+  namespace: ingress-system
+  version: 3.0.12
   labels:
     purpose: backbone
-    application: gha-runner
+    application: metallb
   <<: *default
 
-- name: kured
-  chart: kubereboot/kured
-  version: 4.4.1
-  namespace: kube-system
+- name: cert-manager
+  chart: jetstack/cert-manager
+  namespace: ingress-system
+  version: 1.11.0
   labels:
     purpose: backbone
-    application: kured
-  <<: *default
-
-- name: apt-autoupgrade
-  chart: szymonrychu/ubuntu-apt-autoupgrade
-  version: 0.1.0
-  namespace: kube-system
-  needs:
-  - kube-system/kured
-  labels:
-    purpose: backbone
-    application: apt-autoupgrade
-  <<: *default
-
-- name: availability-checker
-  chart: szymonrychu/availability-checker
-  version: 0.0.2
-  namespace: kube-system
-  labels:
-    purpose: backbone
-    application: availability-checker
-  <<: *default
-
-- name: postgres-operator
-  chart: postgres-operator-charts/postgres-operator
-  namespace: postgres-operator
-  version: 1.9.0
-  force: true
-  labels:
-    purpose: backbone
-    application: postgres-operator
+    application: cert-manager
   <<: *operators
+
+- name: ingress-nginx
+  chart: ingress-nginx/ingress-nginx
+  namespace: ingress-system
+  version: 4.5.2
+  needs:
+  - ingress-system/metallb
+  - ingress-system/cert-manager
+  labels:
+    purpose: backbone
+    application: ingress-nginx
+  <<: *default
+
+- name: external-dns
+  chart: bitnami/external-dns
+  version: 6.14.0
+  namespace: ingress-system
+  needs:
+  - ingress-system/ingress-nginx
+  labels:
+    purpose: backbone
+    application: external-dns
+  <<: *default

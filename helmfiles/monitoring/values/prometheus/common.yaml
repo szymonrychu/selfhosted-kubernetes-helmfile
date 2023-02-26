@@ -123,19 +123,11 @@ grafana:
   additionalDataSources:
     - name: Loki
       editable: false
+      isDefault: false
       orgId: 1
       access: proxy
       type: loki
       url: http://loki:3100
-      version: 1
-    - name: HomeAssistant
-      editable: false
-      orgId: 1
-      access: proxy
-      type: loki
-      url: http://home-assistant-influxdb.home-assistant.svc.cluster.local:8086
-      user: admin
-      password: kheKGkxzizrWdFoHwg
       version: 1
 
 alertmanager:

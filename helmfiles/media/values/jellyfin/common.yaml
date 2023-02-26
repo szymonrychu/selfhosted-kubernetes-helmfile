@@ -14,16 +14,6 @@ ingress:
       hosts:
         - jellyfin.szymonrichert.pl
 
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - nuc1
-
 podSecurityContext:
   fsGroup: 1000
   runAsGroup: 1000
@@ -49,27 +39,17 @@ resources:
     gpu.intel.com/i915: "1"
 
 persistence:
-  config:
+  - name: config
     enabled: true
-    storageClass: ceph
+    storageClass: nas-nfs
     type: pvc
     mountPath: /config
     size: 10Gi
-  movies:
+  - name: media
     enabled: true
     type: hostPath
-    mountPath: /media/movies
-    hostPath: /k8s-data/disk/movies
-  tvshows:
-    enabled: true
-    type: hostPath
-    mountPath: /media/tvshows
-    hostPath: /k8s-data/disk/tvshows
-  music:
-    enabled: true
-    type: hostPath
-    mountPath: /media/music
-    hostPath: /k8s-data/disk/music
+    mountPath: /media
+    hostPath: /samba
   # transcoding:
   #   enabled: true
   #   type: hostPath

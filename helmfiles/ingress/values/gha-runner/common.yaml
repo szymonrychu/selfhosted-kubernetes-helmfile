@@ -1,0 +1,3 @@
+config:
+  githubOwner: szymonrychu
+  githubRepository: helmfile-cluster

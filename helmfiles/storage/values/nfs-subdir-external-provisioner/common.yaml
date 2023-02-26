@@ -1,0 +1,6 @@
+nfs:
+  server: 192.168.1.32
+  path: /nfs
+
+storageClass:
+  name: nas-nfs

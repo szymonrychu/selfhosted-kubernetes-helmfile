@@ -15,16 +15,6 @@ ingress:
         - qbt.szymonrichert.pl
 
 
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - nuc1
-
 qbittorrent:
   securityContext:
     # capabilities:
@@ -59,33 +49,21 @@ initPermissions:
     #   drop:
     #   - ALL
     # readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
+    # runAsUser: 1000
+    # runAsGroup: 1000
 
 persistence:
-  config:
+  - name: config
     enabled: true
-    storageClass: ceph
-    accessMode: ReadWriteMany
+    storageClass: nas-nfs
     type: pvc
     mountPath: /config
     size: 10Gi
-  movies:
+  - name: media
     enabled: true
     type: hostPath
-    mountPath: /media/movies
-    hostPath: /k8s-data/disk/movies
-  tvshows:
-    enabled: true
-    type: hostPath
-    mountPath: /media/tvshows
-    hostPath: /k8s-data/disk/tvshows
-  music:
-    enabled: true
-    type: hostPath
-    mountPath: /media/music
-    hostPath: /k8s-data/disk/music
+    mountPath: /media
+    hostPath: /samba
 
 
 portal:

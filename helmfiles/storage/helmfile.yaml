@@ -1,10 +1,11 @@
 repositories:
+- name: stable
+  url: https://charts.helm.sh/stable
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
+- name: nfs-subdir-external-provisioner
+  url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
 templates:
-  operators-default:
-    disableValidation: true
-    disableValidationOnInstall: true
   default: &default
     wait: true
     missingFileHandler: Warn
@@ -27,23 +28,25 @@ templates:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
     secrets:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
-
+  operators-default: &operators
+    disableValidation: true
+    disableValidationOnInstall: true
+    <<: *default
 releases:
-
-- name: qbittorrent
-  chart: szymonrychu/qbittorrent
-  version: 0.4.3
-  namespace: media
+- name: local-path-provisioner
+  chart: szymonrychu/local-path-provisioner
+  namespace: storage-system
+  version: 0.0.24
   labels:
-    purpose: media
-    application: qbittorrent
+    purpose: storage
+    application: local-path-provisioner
   <<: *default
 
-- name: jellyfin
-  chart: szymonrychu/jellyfin
-  version: 0.4.2
-  namespace: media
+- name: nfs-subdir-external-provisioner
+  chart: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
+  namespace: storage-system
+  version: 4.0.17
   labels:
-    purpose: media
-    application: jellyfin
+    purpose: nfs
+    application: nfs-subdir-external-provisioner
   <<: *default

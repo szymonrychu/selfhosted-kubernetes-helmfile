@@ -51,7 +51,7 @@ initResources:
 
 persistence:
   enabled: true
-  storageClass: ceph
+  storageClass: nas-nfs
   accessMode: ReadWriteMany
   size: 8Gi
 
@@ -119,7 +119,7 @@ influxdb:
         cpu: 250m
   persistence:
     enabled: true
-    storageClass: ceph
+    storageClass: nas-nfs
     accessModes: 
       - ReadWriteMany
   volumePermissions:
@@ -226,94 +226,94 @@ influxdb:
       ##
       honorLabels: false
 
-postgresql:
-  enabled: true
-  auth:
-    username: home-assistant
-    database: home-assistant
-  architecture: replication # standalone
-  primary:
-    podSecurityContext:
-      enabled: true
-      fsGroup: 1000
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsNonRoot: true
-    podLabels:
-      application: postgresql-primary
-    persistence:
-      enabled: true
-      storageClass: ceph
-      accessModes: 
-        - ReadWriteMany
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: application
-              operator: In
-              values:
-              - postgresql-primary
-          topologyKey: "kubernetes.io/hostname"
-    resources:
-      requests:
-        memory: 64Mi
-        cpu: 10m
-      limits:
-        memory: 256Mi
-        cpu: 100m
-  readReplicas:
-    replicaCount: 3
-    podSecurityContext:
-      enabled: true
-      fsGroup: 1000
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsNonRoot: true
-    podLabels:
-      application: postgresql-readonly
-    persistence:
-      enabled: true
-      storageClass: ceph
-      accessModes: 
-        - ReadWriteMany
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: application
-              operator: In
-              values:
-              - postgresql-readonly
-          topologyKey: "kubernetes.io/hostname"
-    resources:
-      requests:
-        memory: 64Mi
-        cpu: 10m
-      limits:
-        memory: 256Mi
-        cpu: 100m
+# postgresql:
+#   enabled: true
+#   auth:
+#     username: home-assistant
+#     database: home-assistant
+#   architecture: replication # standalone
+#   primary:
+#     podSecurityContext:
+#       enabled: true
+#       fsGroup: 1000
+#     containerSecurityContext:
+#       enabled: true
+#       runAsUser: 1000
+#       runAsNonRoot: true
+#     podLabels:
+#       application: postgresql-primary
+#     persistence:
+#       enabled: true
+#       storageClass: nas-nfs
+#       accessModes: 
+#         - ReadWriteMany
+#     affinity:
+#       nodeAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#           nodeSelectorTerms:
+#           - matchExpressions:
+#             - key: "kubernetes.io/hostname"
+#               operator: In
+#               values:
+#                 - nuc1
+#                 - nuc2
+#                 - nuc3
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: application
+#               operator: In
+#               values:
+#               - postgresql-primary
+#           topologyKey: "kubernetes.io/hostname"
+#     resources:
+#       requests:
+#         memory: 64Mi
+#         cpu: 10m
+#       limits:
+#         memory: 256Mi
+#         cpu: 100m
+#   readReplicas:
+#     replicaCount: 3
+#     podSecurityContext:
+#       enabled: true
+#       fsGroup: 1000
+#     containerSecurityContext:
+#       enabled: true
+#       runAsUser: 1000
+#       runAsNonRoot: true
+#     podLabels:
+#       application: postgresql-readonly
+#     persistence:
+#       enabled: true
+#       storageClass: nas-nfs
+#       accessModes: 
+#         - ReadWriteMany
+#     affinity:
+#       nodeAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#           nodeSelectorTerms:
+#           - matchExpressions:
+#             - key: "kubernetes.io/hostname"
+#               operator: In
+#               values:
+#                 - nuc1
+#                 - nuc2
+#                 - nuc3
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: application
+#               operator: In
+#               values:
+#               - postgresql-readonly
+#           topologyKey: "kubernetes.io/hostname"
+#     resources:
+#       requests:
+#         memory: 64Mi
+#         cpu: 10m
+#       limits:
+#         memory: 256Mi
+#         cpu: 100m

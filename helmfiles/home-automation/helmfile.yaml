@@ -19,7 +19,6 @@ templates:
       command: ../../.hook.sh
       args:
       - '{{`{{ .Event.Name }}`}}'
-      - '{{`{{ .Environment.Name }}`}}'
       - '{{`{{ .Release.Name }}`}}'
       - '{{`{{ .Release.Namespace }}`}}'
     values:
