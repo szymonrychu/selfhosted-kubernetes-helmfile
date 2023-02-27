@@ -11,13 +11,13 @@ metadata:
 #    "delete-clustername": "acid-test-cluster"  # can only be deleted when name matches if "delete-clustername" key is configured
 spec:
   dockerImage: ghcr.io/zalando/spilo-15:2.1-p9
-  teamId: home-assistant
+  teamId: homeassistant
   numberOfInstances: 1
   users:  # Application/Robot users
     superuser:
     - superuser
     - createdb
-    home-assistant: []
+    homeassistant: []
   enableMasterLoadBalancer: false
   enableReplicaLoadBalancer: false
   enableConnectionPooler: false # enable/disable connection pooler deployment
@@ -25,7 +25,7 @@ spec:
   # allowedSourceRanges:  # load balancers' source ranges for both master and replica services
   # - 127.0.0.1/32
   databases:
-    home-assistant: home-assistant
+    homeassistant: homeassistant
   postgresql:
     version: "14"
     parameters:  # Expert section

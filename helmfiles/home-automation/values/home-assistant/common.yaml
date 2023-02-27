@@ -17,6 +17,10 @@ initSecurityContext:
   runAsUser: 1000
   runAsNonRoot: true
 
+initWaitForPostgres:
+  enabled: true
+  host: home-assistant-postgresql
+
 ingress:
   enabled: true
   className: nginx
