@@ -62,8 +62,8 @@ persistence:
   - name: media
     enabled: true
     type: hostPath
-    mountPath: /media
-    hostPath: /downloads
+    mountPath: /downloads
+    hostPath: /data
 
 
 portal:
