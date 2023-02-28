@@ -63,7 +63,7 @@ persistence:
     enabled: true
     type: hostPath
     mountPath: /media
-    hostPath: /samba
+    hostPath: /downloads
 
 
 portal:
