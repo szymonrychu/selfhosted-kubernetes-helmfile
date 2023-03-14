@@ -62,8 +62,8 @@ persistence:
   - name: media
     enabled: true
     type: hostPath
-    mountPath: /downloads
-    hostPath: /data
+    mountPath: /samba
+    hostPath: /samba
 
 
 portal:

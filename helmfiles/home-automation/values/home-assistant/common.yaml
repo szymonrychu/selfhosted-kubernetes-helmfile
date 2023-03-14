@@ -1,3 +1,11 @@
+config:
+  http:
+    trusted_proxies:
+      - 127.0.0.1/32
+      - 10.8.0.0/16
+      - 10.42.0.0/16
+      - 192.168.8.0/24
+
 podSecurityContext:
   fsGroup: 1000
 

@@ -1,5 +1,5 @@
 nfs:
-  server: 192.168.1.32
+  server: 192.168.8.32
   path: /nfs
 
 storageClass:
