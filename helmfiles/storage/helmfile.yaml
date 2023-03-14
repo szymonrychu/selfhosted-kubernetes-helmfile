@@ -46,7 +46,7 @@ releases:
 - name: nfs-subdir-external-provisioner
   chart: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
   namespace: storage-system
-  version: 4.0.17
+  version: 4.0.18
   labels:
     purpose: nfs
     application: nfs-subdir-external-provisioner
