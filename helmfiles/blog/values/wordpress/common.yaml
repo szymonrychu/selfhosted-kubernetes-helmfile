@@ -1,0 +1,88 @@
+wordpressEmail: szymon.rychu@gmail.com
+wordpressFirstName: Szymon
+wordpressLastName: Richert
+wordpressBlogName: szymonrichert.pl
+wordpressScheme: https
+
+smtpHost: pro.eu.turbo-smtp.com
+smtpPort: 465
+smtpProtocol: tls
+
+ingress:
+  enabled: true
+  pathType: Prefix
+  ingressClassName: nginx
+  hostname: blog.szymonrichert.pl
+  path: /
+  tls: true
+  extraHosts:
+    - name: szymonrichert.pl
+      path: /
+  extraTls:
+    - hosts:
+        - szymonrichert.pl
+      secretName: szymonrichert.pl-tls
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "100m"
+    nginx.org/client-max-body-size: "100m"
+
+podSecurityContext:
+  enabled: true
+  fsGroup: 1000
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1000
+  runAsNonRoot: true
+
+resources:
+  limits:
+    memory: 1Gi
+    cpu: 500m
+  requests:
+    memory: 512Mi
+    cpu: 300m
+
+service:
+  type: ClusterIP
+
+metrics:
+  enabled: true
+  resources:
+    limits:
+      memory: 128Mi
+      cpu: 100m
+    requests:
+      memory: 128Mi
+      cpu: 100m
+
+persistence:
+  enabled: true
+  storageClass: nas-nfs
+  accessModes:
+    - ReadWriteOnce
+  size: 20Gi
+
+mariadb:
+  primary:
+    podSecurityContext:
+      enabled: true
+      fsGroup: 1000
+    containerSecurityContext:
+      enabled: true
+      runAsUser: 1000
+      runAsNonRoot: true
+    persistence:
+      enabled: true
+      storageClass: nas-nfs
+      accessModes:
+        - ReadWriteOnce
+      size: 8Gi
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 500m
+      requests:
+        memory: 128Mi
+        cpu: 100m
