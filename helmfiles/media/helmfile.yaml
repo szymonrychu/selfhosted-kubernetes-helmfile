@@ -31,13 +31,13 @@ templates:
 
 releases:
 
-- name: qbittorrent
-  chart: szymonrychu/qbittorrent
-  version: 0.4.3
+- name: flood-rtorrent
+  chart: szymonrychu/flood-rtorrent
+  version: 0.2.0
   namespace: media
   labels:
     purpose: media
-    application: qbittorrent
+    application: flood-rtorrent
   <<: *default
 
 - name: jellyfin
