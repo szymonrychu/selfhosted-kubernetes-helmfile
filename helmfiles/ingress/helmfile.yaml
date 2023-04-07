@@ -51,7 +51,7 @@ releases:
 - name: cert-manager
   chart: jetstack/cert-manager
   namespace: ingress-system
-  version: 1.11.0
+  version: 1.11.1
   labels:
     purpose: backbone
     application: cert-manager
@@ -71,7 +71,7 @@ releases:
 
 - name: external-dns
   chart: bitnami/external-dns
-  version: 6.16.0
+  version: 6.17.0
   namespace: ingress-system
   needs:
   - ingress-system/ingress-nginx
