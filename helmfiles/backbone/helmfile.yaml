@@ -78,7 +78,7 @@ releases:
 - name: postgres-operator
   chart: postgres-operator-charts/postgres-operator
   namespace: postgres-operator
-  version: 1.9.0
+  version: 1.10.0
   force: true
   labels:
     purpose: backbone
