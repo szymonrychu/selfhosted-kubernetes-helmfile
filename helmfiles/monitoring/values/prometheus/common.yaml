@@ -84,7 +84,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    storageClassName: local-path
+    storageClassName: nas-nfs
     accessModes:
       - ReadWriteOnce
     size: 2Gi
