@@ -1,3 +1,6 @@
+image:
+  tag: "2023.5.3"
+
 config:
   http:
     trusted_proxies:

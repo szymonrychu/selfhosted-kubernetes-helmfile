@@ -90,8 +90,8 @@ grafana:
     size: 2Gi
   ingress:
     enabled: true
+    ingressClassName: nginx
     annotations:
-      kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: letsencrypt-prod
       kubernetes.io/tls-acme: "true"
     hosts:
@@ -106,7 +106,10 @@ grafana:
       oauth_auto_login: true
     "auth.generic_oauth":
       enabled: true
-      scopes: profile,email,groups,openid,offline_access
+      scopes: openid,profile,email,offline_access,groups
+      email_attribute_path: email
+      login_attribute_path: username
+      name_attribute_path: full_name
       name: Keycloak
       allow_sign_up: true
       auth_url: https://auth.szymonrichert.pl/realms/master/protocol/openid-connect/auth
@@ -119,16 +122,6 @@ grafana:
       enabled: true
       host: "pro.eu.turbo-smtp.com:465"
       from_address: "monitoring@szymonrichert.pl"
-  
-  additionalDataSources:
-    - name: Loki
-      editable: false
-      isDefault: false
-      orgId: 1
-      access: proxy
-      type: loki
-      url: http://loki:3100
-      version: 1
 
 alertmanager:
   resources:
