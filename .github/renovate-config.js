@@ -5,7 +5,7 @@ module.exports = {
     onboarding: false,
     platform: 'github',
     repositories: [
-      'szymonrychu/containers',
+      'szymonrychu/helmfile-cluster',
     ],
     packageRules: [
       {
