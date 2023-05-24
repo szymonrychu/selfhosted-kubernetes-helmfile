@@ -1,0 +1,20 @@
+name: Renovate
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
+        with:
+          token: ${{ secrets.RENOVATE_TOKEN }}
+      - name: Renovate
+        uses: renovatebot/github-action@39e2c46b45e5f435a422aa850d5288a35a2341d4 # v34.63.2
+        with:
+          configurationFile: .github/renovate-config.js
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          RENOVATE_AUTOMERGE: true
