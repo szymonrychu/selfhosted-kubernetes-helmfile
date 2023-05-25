@@ -37,6 +37,14 @@ rtorrent:
       cpu: 100m
       memory: 128Mi
 
+oauth2proxy:
+  config:
+    clientId: flood
+    redirectUrl: https://flood.szymonrichert.pl/oauth2/callback
+    realmUrl: https://auth.szymonrichert.pl/realms/master
+    cookieName: oauth2-authorization-cookie
+    cookieDomain: flood.szymonrichert.pl
+
 persistence:
   config:
     enabled: true
