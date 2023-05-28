@@ -5,7 +5,7 @@ controller:
   updateStrategy:
     type: Recreate
 
-  replicaCount: 1
+  replicaCount: 3
 
   resources:
     requests:
