@@ -47,6 +47,10 @@ prometheusOperator:
         memory: 200Mi
 
 grafana:
+  # disable sidecar due to error loading datasources.yaml at grafana pod start
+  sidecar:
+    datasources:
+      enabled: false
   deploymentStrategy:
     type: Recreate
   securityContext:
