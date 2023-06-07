@@ -33,7 +33,7 @@ releases:
 
 - name: keycloak
   timeout: 600
-  version: 15.1.2
+  version: 15.1.3
   chart: bitnami/keycloak
   namespace: keycloak
   labels:
