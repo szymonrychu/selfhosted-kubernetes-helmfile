@@ -52,7 +52,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.5.5
+  version: 0.5.6
   namespace: home-assistant
   labels:
     purpose: home-automation
