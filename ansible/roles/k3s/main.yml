@@ -1,9 +1,0 @@
----
-  
-- name: "Setup Docker"
-  ansible.builtin.include_tasks:
-    file: docker.yml
-
-- name: "Setup Kubeadm"
-  ansible.builtin.include_tasks:
-    file: kubeadm.yml

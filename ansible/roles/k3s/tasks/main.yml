@@ -1,8 +1,0 @@
----
-- name: "Setup Docker"
-  ansible.builtin.include_tasks:
-    file: docker.yml
-
-- name: "Setup Kuberbetes binaries"
-  ansible.builtin.include_tasks:
-    file: k3s.yml

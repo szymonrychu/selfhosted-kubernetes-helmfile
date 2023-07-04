@@ -1,0 +1,3 @@
+[submodule "ansible/roles/kubeadm-ha"]
+	path = ansible/roles/kubeadm-ha
+	url = git@github.com:szymonrychu/ansible-role-kubeadm-ha.git

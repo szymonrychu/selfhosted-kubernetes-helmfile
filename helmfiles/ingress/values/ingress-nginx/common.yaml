@@ -40,7 +40,7 @@ controller:
 
   service:
     annotations:
-      metallb.universe.tf/loadBalancerIPs: 188.166.16.229
+      metallb.universe.tf/loadBalancerIPs: 178.183.206.26
 
 metrics:
     enabled: true

@@ -4,32 +4,35 @@
   become: true
   become_method: sudo
   gather_facts: true
+  roles:
+    # - geerlingguy.docker
+    - kubeadm-ha
 
-  tasks:
+  # tasks:
+
+
     # - name: inventory_hostname
     #   debug:
     #     var: inventory_hostname
     #   tags: debug_info
     
-    - name: Include global variables
-      ansible.builtin.include_vars:
-        file: k8s.yml
+    # - name: 
       
-    # - name: Install Consul
+    # # - name: Install Consul
+    # #   ansible.builtin.include_role:
+    # #     name: consul
+    # #   when: inventory_hostname in k8s_master_nodes
+      
+    # # - name: Install kubernetes
+    # #   ansible.builtin.include_role:
+    # #     name: k3s
+    # #   when: inventory_hostname in k8s_master_nodes
+      
+    # - name: Install OpenVPN Server
     #   ansible.builtin.include_role:
-    #     name: consul
-    #   when: inventory_hostname in k8s_master_nodes
+    #     name: openvpn
       
-    # - name: Install kubernetes
+    # - name: Install Loadbalancer
     #   ansible.builtin.include_role:
-    #     name: k3s
-    #   when: inventory_hostname in k8s_master_nodes
-      
-    - name: Install OpenVPN Server
-      ansible.builtin.include_role:
-        name: openvpn
-      
-    - name: Install Loadbalancer
-      ansible.builtin.include_role:
-        name: nginx
-      when: vpn_master_hostname == inventory_hostname
+    #     name: nginx
+    #   when: vpn_master_hostname == inventory_hostname

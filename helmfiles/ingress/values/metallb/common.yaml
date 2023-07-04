@@ -3,7 +3,7 @@ configInline:
     - name: default
       protocol: layer2
       addresses:
-      - 188.166.16.229/32
+      - 178.183.206.26/32
 
 controller:
   resources:

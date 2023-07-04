@@ -19,6 +19,10 @@ jobs:
 
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        repository: szymonrychu/helmfile-cluster
+        token: ${{ secrets.BOT_TOKEN }}
+        submodules: recursive
 
     - name: Sync
       env:
