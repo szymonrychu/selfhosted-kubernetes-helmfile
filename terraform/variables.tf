@@ -4,6 +4,12 @@ variable "grafana_client_secret" {
   default     = null
 }
 
+variable "flood_client_secret" {
+  description = "Client secret for 'grafana' client"
+  type        = string
+  default     = null
+}
+
 variable "keycloak_url" {
   description = "Url to keycloak"
   type        = string
