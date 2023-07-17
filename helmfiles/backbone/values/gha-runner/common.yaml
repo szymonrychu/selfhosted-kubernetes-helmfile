@@ -1,3 +1,5 @@
+replicaCount: 3
+
 config:
   githubOwner: szymonrychu
   githubRepository: helmfile-cluster
