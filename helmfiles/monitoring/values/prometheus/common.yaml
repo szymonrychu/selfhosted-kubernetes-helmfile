@@ -47,19 +47,6 @@ prometheusOperator:
         memory: 200Mi
 
 grafana:
-  # enabled: false
-  # disable sidecar due to error loading datasources.yaml at grafana pod start
-  sidecar:
-    dashboards:
-      skipReload: true
-      # reloadURL: "http://localhost:3000/api/admin/provisioning/dashboards/reload"
-      provider:
-        allowUiUpdates: true
-        foldersFromFilesStructure: true
-    datasources:
-      skipReload: true
-      initDatasources: true
-      # reloadURL: "http://localhost:3000/api/admin/provisioning/datasources/reload"
   deploymentStrategy:
     type: Recreate
   securityContext:
@@ -138,46 +125,6 @@ grafana:
       host: "pro.eu.turbo-smtp.com:465"
       from_address: "monitoring@szymonrichert.pl"
 
-alertmanager:
-  resources:
-    limits:
-      cpu: 200m
-      memory: 200Mi
-    requests:
-      cpu: 10m
-      memory: 100Mi
-  securityContext:
-    fsGroup: 1000
-    runAsGroup: 1000
-    runAsNonRoot: true
-    runAsUser: 1000
-  config:
-    global:
-      smtp_smarthost: "pro.eu.turbo-smtp.com:465"
-      smtp_from: "monitoring@szymonrichert.pl"
-  alertmanagerSpec:
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: app.kubernetes.io/name
-              operator: In
-              values:
-              - alertmanager
-          topologyKey: "kubernetes.io/hostname"
-
-
 prometheus:
   service:
     sessionAffinity: "ClientIP"
@@ -216,3 +163,6 @@ prometheus:
 
 prometheus-node-exporter:
   hostNetwork: false
+
+alertmanager:
+  enabled: false
