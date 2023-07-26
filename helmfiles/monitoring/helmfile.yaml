@@ -35,7 +35,7 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
-  version: 48.2.0
+  version: 48.2.1
   labels:
     purpose: monitoring
     application: prometheus
