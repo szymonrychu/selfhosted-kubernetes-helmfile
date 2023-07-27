@@ -47,6 +47,20 @@ prometheusOperator:
         memory: 200Mi
 
 grafana:
+  plugins:
+    - grafana-image-renderer
+  imageRenderer:
+    enabled: true
+    env:
+      HTTP_HOST: "0.0.0.0"
+      RENDERING_ARGS: --no-sandbox,--disable-gpu,--window-size=1280x758
+  sidecar:
+    plugins:
+      enabled: true
+    notifiers:
+      enabled: true
+    alerts:
+      enabled: true
   deploymentStrategy:
     type: Recreate
   securityContext:
