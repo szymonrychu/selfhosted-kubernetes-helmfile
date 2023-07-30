@@ -1,3 +1,6 @@
+defaultRules:
+  create: false
+
 prometheusOperator:
   manageCrds: true
   affinity:
