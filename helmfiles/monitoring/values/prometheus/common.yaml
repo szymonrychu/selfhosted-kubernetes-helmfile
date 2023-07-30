@@ -49,9 +49,6 @@ prometheusOperator:
 grafana:
   imageRenderer:
     enabled: true
-    env:
-      HTTP_HOST: "0.0.0.0"
-      RENDERING_ARGS: --no-sandbox,--disable-gpu,--window-size=1280x758
   deploymentStrategy:
     type: Recreate
   securityContext:
