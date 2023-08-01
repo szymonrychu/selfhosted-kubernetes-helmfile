@@ -9,6 +9,13 @@ module.exports = {
     ],
     packageRules: [
       {
+        dependencyDashboardApproval: false,
+      },
+      {
+        matchPackagePatterns: ["helm"],
+        groupName: "helm"
+      },
+      {
         description: 'lockFileMaintenance',
         matchUpdateTypes: [
           'pin',
@@ -18,8 +25,7 @@ module.exports = {
           'major',
           'lockFileMaintenance',
         ],
-        dependencyDashboardApproval: false,
-        stabilityDays: 0,
+        stabilityDays: 7,
       },
     ],
   };
