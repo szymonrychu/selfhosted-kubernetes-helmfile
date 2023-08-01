@@ -13,7 +13,9 @@ module.exports = {
       },
       {
         matchPackagePatterns: ["helm"],
-        groupName: "helm"
+        groupName: "helm",
+        automerge: true,
+        automergeType: "branch"
       },
       {
         description: 'lockFileMaintenance',
