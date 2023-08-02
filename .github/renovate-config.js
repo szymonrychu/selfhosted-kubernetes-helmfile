@@ -19,7 +19,6 @@ module.exports = {
           'major'
         ],
         automerge: true,
-        automergeType: "pr",
         addLabels: ["automerge"],
         stabilityDays: 0,
       },
