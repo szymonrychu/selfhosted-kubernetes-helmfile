@@ -1,5 +1,4 @@
 module.exports = {
-    "dryRun": false,
      "username": "szymonrichert.pl bot",
      "gitAuthor": "szymonrichert.pl bot <bot@szymonrichert.pl>",
      "onboarding": false,
