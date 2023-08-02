@@ -20,6 +20,7 @@ module.exports = {
         ],
         automerge: true,
         addLabels: ["automerge"],
+        prCreation: "not-pending",
         stabilityDays: 0,
       },
       {
