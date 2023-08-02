@@ -10,19 +10,26 @@ module.exports = {
     packageRules: [
       {
         dependencyDashboardApproval: false,
-        description: 'lockFileMaintenance',
+        description: 'MinorAutoUpgrade',
         matchUpdateTypes: [
           'pin',
           'digest',
           'patch',
           'minor',
-          'major',
-          'lockFileMaintenance',
+          'major'
         ],
         automerge: true,
-        automergeType: "branch",
+        automergeType: "pr",
         addLabels: ["automerge"],
         stabilityDays: 0,
+      },
+      {
+        dependencyDashboardApproval: false,
+        description: 'MajorUpgrade',
+        matchUpdateTypes: [
+          'major'
+        ],
+        stabilityDays: 7,
       },
     ],
   };
