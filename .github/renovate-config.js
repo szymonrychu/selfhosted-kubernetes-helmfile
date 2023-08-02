@@ -27,7 +27,7 @@ module.exports = {
           'major',
           'lockFileMaintenance',
         ],
-        stabilityDays: 7,
+        stabilityDays: 0,
       },
     ],
   };
