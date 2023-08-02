@@ -1,9 +1,10 @@
 name: diff
 
 on:
-  pull_request:
+  push:
     branches:
-      - main
+      - '**'
+      - '!main'
 
 jobs:
   build:
