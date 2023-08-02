@@ -10,14 +10,6 @@ module.exports = {
     packageRules: [
       {
         dependencyDashboardApproval: false,
-      },
-      {
-        matchPackagePatterns: ["helm"],
-        groupName: "helm",
-        automerge: true,
-        automergeType: "branch"
-      },
-      {
         description: 'lockFileMaintenance',
         matchUpdateTypes: [
           'pin',
@@ -27,6 +19,9 @@ module.exports = {
           'major',
           'lockFileMaintenance',
         ],
+        automerge: true,
+        automergeType: "branch",
+        addLabels: ["automerge"],
         stabilityDays: 0,
       },
     ],
