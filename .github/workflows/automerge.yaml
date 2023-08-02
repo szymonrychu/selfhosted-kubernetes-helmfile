@@ -17,6 +17,9 @@ on:
     types:
       - completed
   status: {}
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
 jobs:
   automerge:
     runs-on: ubuntu-latest
