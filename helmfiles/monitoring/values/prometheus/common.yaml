@@ -158,7 +158,17 @@ grafana:
       enabled: true
       host: "pro.eu.turbo-smtp.com:465"
       from_address: "monitoring@szymonrichert.pl"
-
+    database:
+      type: postgres
+      host: grafana-postgresql:5432
+      user: grafana
+      password: "${POSTGRESQL_PASSWORD}"
+      ssl_mode: require
+  envValueFrom:
+    POSTGRESQL_PASSWORD:
+      secretKeyRef:
+        name: grafana.grafana-postgresql.credentials.postgresql.acid.zalan.do
+        key: password
 prometheus:
   service:
     sessionAffinity: "ClientIP"
