@@ -1,14 +1,21 @@
-name: diff
+name: Helmfile Apply
 
 on:
-  workflow_dispatch:
-  pull_request:
+  push:
     branches:
       - main
+  release:
+    types:
+      - created
+  schedule:
+    - cron: "0 9 * * 0,1,2,3,4"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
 
 jobs:
   build:
-    name: Helmfile Diff
     runs-on: [self-hosted, linux, X64]
     steps:
 
@@ -19,11 +26,11 @@ jobs:
         token: ${{ secrets.BOT_TOKEN }}
         submodules: recursive
 
-    - name: Diff
+    - name: Sync
       env:
         ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
       run: |
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        helmfile diff || true
+        helmfile apply
