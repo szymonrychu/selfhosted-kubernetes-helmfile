@@ -58,4 +58,3 @@ releases:
     purpose: home-automation
     application: home-assistant
   <<: *default
-git 
