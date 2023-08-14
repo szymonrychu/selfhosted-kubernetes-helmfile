@@ -41,14 +41,14 @@ releases:
 #     application: speedtest-exporter
 #   <<: *default
 
-# - name: esphome
-#   chart: truecharts/esphome
-#   version: 11.0.53
-#   namespace: esphome
-#   labels:
-#     purpose: home-automation
-#     application: esphome
-#   <<: *default
+- name: esphome
+  chart: szymonrychu/esphome
+  version: 0.1.0
+  namespace: home-assistant
+  labels:
+    purpose: home-automation
+    application: esphome
+  <<: *default
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
@@ -58,3 +58,4 @@ releases:
     purpose: home-automation
     application: home-assistant
   <<: *default
+git 
