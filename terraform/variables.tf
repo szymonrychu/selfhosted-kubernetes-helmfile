@@ -5,7 +5,13 @@ variable "grafana_client_secret" {
 }
 
 variable "flood_client_secret" {
-  description = "Client secret for 'grafana' client"
+  description = "Client secret for 'flood' client"
+  type        = string
+  default     = null
+}
+
+variable "esphome_client_secret" {
+  description = "Client secret for 'esphome' client"
   type        = string
   default     = null
 }

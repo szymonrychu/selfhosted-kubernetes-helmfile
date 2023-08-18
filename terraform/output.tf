@@ -21,3 +21,15 @@ output "flood_client_secret" {
   value       = keycloak_openid_client.flood.client_secret
   sensitive   = true
 }
+
+output "esphome_client_id" {
+  description = "'esphome' client id"
+  value       = keycloak_openid_client.esphome.client_id
+  sensitive   = true
+}
+
+output "esphome_client_secret" {
+  description = "'esphome' client secret"
+  value       = keycloak_openid_client.esphome.client_secret
+  sensitive   = true
+}
