@@ -24,7 +24,7 @@ resource "keycloak_openid_client" "flood" {
   ]
 }
 
-resource "keycloak_openid_audience_protocol_mapper" "audience_mapper" {
+resource "keycloak_openid_audience_protocol_mapper" "flood_audience_mapper" {
   realm_id  = data.keycloak_realm.master.id
   client_id = keycloak_openid_client.flood.id
   name      = "aud"

@@ -15,6 +15,14 @@ ingress:
         - esphome.szymonrichert.pl
 
 
+oauth2proxy:
+  enabled: true
+  config:
+    clientId: esphome
+    redirectUrl: https://esphome.szymonrichert.pl/oauth2/callback
+    realmUrl: http://auth.szymonrichert.pl/realms/master
+    cookieName: oauth2-authorization-cookie
+    cookieDomain: esphome.szymonrichert.pl
 
 # affinity:
 #   nodeAffinity:
@@ -26,16 +34,14 @@ ingress:
 #           values:
 #           - laptop1
 
-# podSecurityContext:
-#   fsGroup: 1000
+podSecurityContext:
+  fsGroup: 1000
 
-# containerSecurityContext:
-#   capabilities:
-#     drop:
-#     - ALL
-#   enabled: true
-#   runAsUser: 1000
-#   runAsNonRoot: true
+securityContext:
+  privileged: true
+  # runAsUser: 1000
+  # runAsGroup: 1000
+  # runAsNonRoot: true
 
 resources:
   limits:

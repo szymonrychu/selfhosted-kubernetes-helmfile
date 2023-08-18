@@ -3,6 +3,8 @@ repositories:
   url: https://charts.bitnami.com/bitnami
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
+- name: node-red
+  url: https://schwarzit.github.io/node-red-chart/
 environments:
   lab: {}
 templates:
@@ -32,18 +34,9 @@ templates:
 
 releases:
 
-# - name: speedtest-exporter
-#   chart: k8s-at-home/speedtest-exporter
-#   version: 5.3.3
-#   namespace: monitoring
-#   labels:
-#     purpose: monitoring
-#     application: speedtest-exporter
-#   <<: *default
-
 - name: esphome
   chart: szymonrychu/esphome
-  version: 0.1.0
+  version: 1.1.0
   namespace: home-assistant
   labels:
     purpose: home-automation
@@ -58,3 +51,12 @@ releases:
     purpose: home-automation
     application: home-assistant
   <<: *default
+
+# - name: node-red
+#   chart: node-red/node-red
+#   version: 0.26.0
+#   namespace: home-assistant
+#   labels:
+#     purpose: home-automation
+#     application: node-red
+#   <<: *default
