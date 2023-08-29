@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: "Request review from @szymonrychu-bot"
-        uses: "actions/github-script@v5"
+        uses: "actions/github-script@211cb3fefb35a799baa5156f9321bb774fe56294" # v5
         with:
           github-token: "${{ secrets.SZYMONRYCHU_BOT_TOKEN }}"
           script: |
@@ -42,7 +42,7 @@ jobs:
             })
 
       - name: "Assign @szymonrychu-bot"
-        uses: "actions/github-script@v5"
+        uses: "actions/github-script@211cb3fefb35a799baa5156f9321bb774fe56294" # v5
         with:
           github-token: "${{ secrets.SZYMONRYCHU_BOT_TOKEN }}"
           script: |
@@ -61,7 +61,7 @@ jobs:
             })
 
       - name: "Approve pull request"
-        uses: "actions/github-script@v5"
+        uses: "actions/github-script@211cb3fefb35a799baa5156f9321bb774fe56294" # v5
         with:
           github-token: "${{ secrets.SZYMONRYCHU_BOT_TOKEN }}"
           script: |
@@ -76,7 +76,7 @@ jobs:
             })
 
       - name: "Merge pull request"
-        uses: "actions/github-script@v5"
+        uses: "actions/github-script@211cb3fefb35a799baa5156f9321bb774fe56294" # v5
         with:
           github-token: "${{ secrets.SZYMONRYCHU_BOT_TOKEN }}"
           script: |
