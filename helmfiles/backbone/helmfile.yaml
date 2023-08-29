@@ -68,7 +68,7 @@ releases:
 
 - name: availability-checker
   chart: szymonrychu/availability-checker
-  version: 0.0.2
+  version: 0.0.3
   namespace: kube-system
   labels:
     purpose: backbone
