@@ -1,10 +1,18 @@
-name: diff
+name: Helmfile Apply
 
 on:
   push:
     branches:
-      - '**'
-      - '!main'
+      - main
+  release:
+    types:
+      - created
+  schedule:
+    - cron: "0 9 * * 0,1,2,3,4"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
 
 jobs:
   build:
@@ -12,17 +20,17 @@ jobs:
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
       with:
         repository: szymonrychu/helmfile-cluster
         token: ${{ secrets.BOT_TOKEN }}
         submodules: recursive
 
-    - name: Diff
+    - name: Sync
       env:
         ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
       run: |
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        helmfile diff || true
+        helmfile apply
