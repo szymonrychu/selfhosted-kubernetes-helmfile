@@ -18,6 +18,15 @@ jobs:
   build:
     runs-on: [self-hosted, linux, X64]
     steps:
+    
+    - name: Turnstyle
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/turnstyle@v1
+      with:
+        continue-after-seconds: 180
+        poll-interval-seconds: 10
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
     - name: Checkout code
       uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
