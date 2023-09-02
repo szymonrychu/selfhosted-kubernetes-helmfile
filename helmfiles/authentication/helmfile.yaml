@@ -32,7 +32,7 @@ templates:
 releases:
 
 - name: keycloak
-  timeout: 600
+  timeout: 1200
   version: 16.1.1
   chart: bitnami/keycloak
   namespace: keycloak
