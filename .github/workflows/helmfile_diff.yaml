@@ -11,6 +11,15 @@ jobs:
     name: Helmfile Diff
     runs-on: [self-hosted, linux, X64]
     steps:
+    
+    - name: Turnstyle
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/turnstyle@8db075d65b19bf94e6e8687b504db69938dc3c65 # v1
+      with:
+        continue-after-seconds: 180
+        poll-interval-seconds: 10
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
 
     - name: Checkout code
       uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
