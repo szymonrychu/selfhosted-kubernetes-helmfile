@@ -39,12 +39,3 @@ releases:
     purpose: media
     application: flood-rtorrent
   <<: *default
-
-# - name: jellyfin
-#   chart: szymonrychu/jellyfin
-#   version: 0.4.2
-#   namespace: media
-#   labels:
-#     purpose: media
-#     application: jellyfin
-#   <<: *default
