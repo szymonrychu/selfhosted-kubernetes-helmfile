@@ -38,10 +38,6 @@ controller:
     enabled: false
     timeoutSeconds: 10
 
-  service:
-    annotations:
-      metallb.universe.tf/loadBalancerIPs: 178.183.206.26
-
 metrics:
     enabled: true
     serviceMonitor:

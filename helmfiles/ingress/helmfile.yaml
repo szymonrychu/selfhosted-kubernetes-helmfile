@@ -42,7 +42,7 @@ releases:
 - name: metallb
   chart: szymonrychu/metallb
   namespace: ingress-system
-  version: 3.0.13
+  version: 3.0.12
   labels:
     purpose: backbone
     application: metallb
