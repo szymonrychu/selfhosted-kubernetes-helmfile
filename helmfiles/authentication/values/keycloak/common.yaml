@@ -13,6 +13,16 @@ resources:
     memory: 3Gi
     cpu: 750m
 
+proxy: edge
+
+extraEnvVars:
+- name: KC_HOSTNAME_URL
+  value: https://auth.szymonrichert.pl/
+- name: KC_HOSTNAME_ADMIN_URL
+  value: https://auth.szymonrichert.pl/
+- name: KEYCLOAK_ENABLE_HTTPS
+  value: "false"
+
 podLabels:
   application: keycloak
 
@@ -76,92 +86,5 @@ externalDatabase:
 postgresql:
   enabled: false
 
-# postgresql:
-#   enabled: true
-#   auth:
-#     username: bn_keycloak
-#     database: bitnami_keycloak
-#   architecture: replication # standalone
-#   primary:
-#     podSecurityContext:
-#       enabled: true
-#       fsGroup: 1000
-#     containerSecurityContext:
-#       enabled: true
-#       runAsUser: 1000
-#       runAsNonRoot: true
-#     podLabels:
-#       application: postgresql-primary
-#     persistence:
-#       enabled: true
-#       storageClass: local-path
-#     affinity:
-#       nodeAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#           nodeSelectorTerms:
-#           - matchExpressions:
-#             - key: "kubernetes.io/hostname"
-#               operator: In
-#               values:
-#                 - nuc1
-#                 - nuc2
-#                 - nuc3
-#       podAntiAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#         - labelSelector:
-#             matchExpressions:
-#             - key: application
-#               operator: In
-#               values:
-#               - postgresql-primary
-#           topologyKey: "kubernetes.io/hostname"
-#     resources:
-#       requests:
-#         memory: 64Mi
-#         cpu: 10m
-#       limits:
-#         memory: 512Mi
-#         cpu: 500m
-#   readReplicas:
-#     replicaCount: 3
-#     podSecurityContext:
-#       enabled: true
-#       fsGroup: 1000
-#     containerSecurityContext:
-#       enabled: true
-#       runAsUser: 1000
-#       runAsNonRoot: true
-#     podLabels:
-#       application: postgresql-readonly
-#     persistence:
-#       enabled: true
-#       storageClass: local-path
-#     affinity:
-#       nodeAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#           nodeSelectorTerms:
-#           - matchExpressions:
-#             - key: "kubernetes.io/hostname"
-#               operator: In
-#               values:
-#                 - nuc1
-#                 - nuc2
-#                 - nuc3
-#       podAntiAffinity:
-#         requiredDuringSchedulingIgnoredDuringExecution:
-#         - labelSelector:
-#             matchExpressions:
-#             - key: application
-#               operator: In
-#               values:
-#               - postgresql-readonly
-#           topologyKey: "kubernetes.io/hostname"
-#     resources:
-#       requests:
-#         memory: 64Mi
-#         cpu: 10m
-#       limits:
-#         memory: 512Mi
-#         cpu: 500m
 cache:
   enabled: true

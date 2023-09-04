@@ -10,6 +10,12 @@ variable "flood_client_secret" {
   default     = null
 }
 
+variable "jupyterhub_client_secret" {
+  description = "Client secret for 'jupyterhub' client"
+  type        = string
+  default     = null
+}
+
 variable "esphome_client_secret" {
   description = "Client secret for 'esphome' client"
   type        = string

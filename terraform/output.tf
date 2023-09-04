@@ -22,6 +22,18 @@ output "flood_client_secret" {
   sensitive   = true
 }
 
+output "jupyterhub_client_id" {
+  description = "'jupyterhub' client id"
+  value       = keycloak_openid_client.jupyterhub.client_id
+  sensitive   = true
+}
+
+output "jupyterhub_client_secret" {
+  description = "'jupyterhub' client secret"
+  value       = keycloak_openid_client.flood.client_secret
+  sensitive   = true
+}
+
 output "esphome_client_id" {
   description = "'esphome' client id"
   value       = keycloak_openid_client.esphome.client_id

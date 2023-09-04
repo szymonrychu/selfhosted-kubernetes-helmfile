@@ -1,7 +1,7 @@
 apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
-  name: keycloak-postgresql
+  name: jupyterhub-postgresql
 #  labels:
 #    application: test-app
 #    environment: demo
@@ -11,13 +11,13 @@ metadata:
 #    "delete-clustername": "acid-test-cluster"  # can only be deleted when name matches if "delete-clustername" key is configured
 spec:
   dockerImage: ghcr.io/zalando/spilo-15:2.1-p9
-  teamId: keycloak
+  teamId: jupyterhub
   numberOfInstances: 1
   users:  # Application/Robot users
     superuser:
     - superuser
     - createdb
-    keycloak: []
+    jupyterhub: []
   enableMasterLoadBalancer: false
   enableReplicaLoadBalancer: false
   enableConnectionPooler: false # enable/disable connection pooler deployment
@@ -25,14 +25,14 @@ spec:
   allowedSourceRanges:  # load balancers' source ranges for both master and replica services
   - 127.0.0.1/32
   databases:
-    keycloak: keycloak
+    jupyterhub: jupyterhub
   postgresql:
     version: "14"
     parameters:  # Expert section
       shared_buffers: "32MB"
       max_connections: "60"
       log_statement: "all"
-#  env:
+#  env:k
 #  - name: wal_s3_bucket
 #    value: my-custom-bucket
 

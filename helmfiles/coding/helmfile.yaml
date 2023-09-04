@@ -1,0 +1,38 @@
+repositories:
+  - name: jupyterhub
+    url: https://hub.jupyter.org/helm-chart/
+templates:
+  default: &default
+    disableValidation: true
+    disableValidationOnInstall: true
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - monitoring
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: jupyterhub
+  timeout: 600
+  namespace: coding
+  chart: jupyterhub/jupyterhub
+  version: 3.0.3
+  <<: *default
