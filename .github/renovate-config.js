@@ -4,18 +4,14 @@ module.exports = {
      "onboarding": false,
      "platform": "github",
      "repositories": ["szymonrychu/helmfile-cluster"],
+     "dependencyDashboard": false,
      "packageRules": [
        {
-         "dependencyDashboardApproval": false,
          "description": "MinorAutoUpgrade",
          "matchUpdateTypes": ["pin", "digest", "patch", "minor", "major"],
-         "automerge": true,
-         "addLabels": ["automerge"],
-         "prCreation": "not-pending",
          "stabilityDays": 0
        },
        {
-         "dependencyDashboardApproval": false,
          "description": "MajorUpgrade",
          "matchUpdateTypes": ["major"],
          "stabilityDays": 7
