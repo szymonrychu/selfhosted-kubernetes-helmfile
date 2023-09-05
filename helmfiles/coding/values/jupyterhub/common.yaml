@@ -3,6 +3,8 @@ hub:
     type: postgres
     url: postgresql+psycopg2://<db-username>:<db-password>@<db-hostname>:<db-port>/<db-name>
   config:
+    JupyterHub:
+      authenticator_class: generic-oauth
     GenericOAuthenticator:
       auto_login: true
       oauth_callback_url: https://jupyterhub.szymonrichert.pl/hub/oauth_callback
@@ -13,8 +15,15 @@ hub:
       username_key: preferred_username
       userdata_params:
         state: state
-    JupyterHub:
-      authenticator_class: generic-oauth
+      claim_groups_key: groups
+      allowed_groups:
+        - jupyterhub-user
+      admin_groups:
+        - jupyterhub-admin
+      scope:
+        - openid
+        - profile
+        - email
   resources:
     limits:
       cpu: 200m

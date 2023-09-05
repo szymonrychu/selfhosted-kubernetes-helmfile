@@ -41,12 +41,15 @@ resource "keycloak_openid_client_default_scopes" "jupyterhub" {
     "email",
     "aud",
     keycloak_openid_client_scope.groups.name,
-    keycloak_openid_client_scope.groups.name,
   ]
 }
 
-resource "keycloak_group" "jupyterhub" {
+resource "keycloak_group" "jupyterhub_admin" {
   realm_id = data.keycloak_realm.master.id
-  name     = "jupyterhub"
+  name     = "jupyterhub-admin"
 }
 
+resource "keycloak_group" "jupyterhub_user" {
+  realm_id = data.keycloak_realm.master.id
+  name     = "jupyterhub-user"
+}
