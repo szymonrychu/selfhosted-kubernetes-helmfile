@@ -8,6 +8,28 @@ smtpHost: pro.eu.turbo-smtp.com
 smtpPort: "465"
 smtpProtocol: tls
 
+initContainers:
+  - name: init-chown-data
+    image: docker.io/library/busybox:1.31.1
+    imagePullPolicy: IfNotPresent
+    command:
+      - chown
+      - -R
+      - 1000:1000
+      - /bitnami/wordpress
+    securityContext:
+      capabilities:
+        add:
+        - CHOWN
+      runAsNonRoot: false
+      runAsUser: 0
+      seccompProfile:
+        type: RuntimeDefault
+    volumeMounts:
+    - mountPath: /bitnami/wordpress
+        name: wordpress-data
+        subPath: wordpress
+
 ingress:
   enabled: true
   pathType: Prefix
@@ -34,6 +56,7 @@ podSecurityContext:
 containerSecurityContext:
   enabled: true
   runAsUser: 1000
+  runAsGroup: 1000
   runAsNonRoot: true
 
 resources:
