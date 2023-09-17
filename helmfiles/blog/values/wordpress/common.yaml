@@ -15,7 +15,7 @@ initContainers:
     command:
       - chown
       - -R
-      - 1000:1000
+      - 1001:0
       - /bitnami/wordpress
     securityContext:
       capabilities:
@@ -50,13 +50,12 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: "100m"
     nginx.org/client-max-body-size: "100m"
 
-podSecurityContext:
-  enabled: true
-  fsGroup: 1000
+# podSecurityContext:
+#   enabled: true
+#   fsGroup: 1000
 containerSecurityContext:
   enabled: true
-  runAsUser: 1000
-  runAsGroup: 1000
+  runAsUser: 1001
   runAsNonRoot: true
 
 resources:
