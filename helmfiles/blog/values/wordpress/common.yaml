@@ -53,10 +53,10 @@ ingress:
 # podSecurityContext:
 #   enabled: true
 #   fsGroup: 1000
-containerSecurityContext:
-  enabled: true
-  runAsUser: 1001
-  runAsNonRoot: true
+# containerSecurityContext:
+#   enabled: true
+#   runAsUser: 1001
+#   runAsNonRoot: true
 
 resources:
   limits:
