@@ -26,7 +26,7 @@ initContainers:
       seccompProfile:
         type: RuntimeDefault
     volumeMounts:
-    - mountPath: /bitnami/wordpress
+      - mountPath: /bitnami/wordpress
         name: wordpress-data
         subPath: wordpress
 
