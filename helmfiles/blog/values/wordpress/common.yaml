@@ -5,7 +5,7 @@ wordpressBlogName: szymonrichert.pl
 wordpressScheme: https
 
 smtpHost: pro.eu.turbo-smtp.com
-smtpPort: 465
+smtpPort: "465"
 smtpProtocol: tls
 
 ingress:
