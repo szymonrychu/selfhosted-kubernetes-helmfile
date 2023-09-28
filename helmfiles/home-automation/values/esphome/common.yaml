@@ -34,8 +34,6 @@ oauth2proxy:
 #           values:
 #           - laptop1
 
-podSecurityContext:
-  fsGroup: 1000
 
 securityContext:
   privileged: true
@@ -44,9 +42,6 @@ securityContext:
   # runAsNonRoot: true
 
 resources:
-  limits:
-    cpu: 500m
-    memory: 1Gi
   requests:
     cpu: 10m
     memory: 320Mi
