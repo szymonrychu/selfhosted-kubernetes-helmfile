@@ -13,15 +13,15 @@ resources:
     memory: 3Gi
     cpu: 750m
 
-# proxy: edge
+proxy: edge
 
-# extraEnvVars:
-# - name: KC_HOSTNAME_URL
-#   value: https://auth.szymonrichert.pl/
-# - name: KC_HOSTNAME_ADMIN_URL
-#   value: https://auth.szymonrichert.pl/
-# - name: KEYCLOAK_ENABLE_HTTPS
-#   value: "false"
+extraEnvVars:
+- name: KC_HOSTNAME_URL
+  value: https://auth.szymonrichert.pl/
+- name: KC_HOSTNAME_ADMIN_URL
+  value: https://auth.szymonrichert.pl/
+- name: KEYCLOAK_ENABLE_HTTPS
+  value: "false"
 
 podLabels:
   application: keycloak
