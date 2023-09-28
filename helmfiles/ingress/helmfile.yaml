@@ -51,7 +51,7 @@ releases:
 - name: cert-manager
   chart: jetstack/cert-manager
   namespace: ingress-system
-  version: v1.13.0
+  version: v1.13.1
   labels:
     purpose: backbone
     application: cert-manager
