@@ -88,11 +88,11 @@ proxy:
 singleuser:
   defaultUrl: /lab
   image:
-    name: jupyter/datascience-notebook
-    tag: latest
+    name: szymonrychu/jupyter-notebook
+    tag: 0.0.3
   # initContainers:
   #   - name: setup-secrets
-  #     image: szymonrychu/kubernetes-jupyter-notebook:0.0.2
+  #     image: bash:5.2.15
   #     imagePullPolicy: IfNotPresent
   #     command:
   #       - bash
@@ -138,8 +138,6 @@ singleuser:
   #         mountPath: /home/docker/.gnupg
   #       - name: ssh
   #         mountPath: /home/docker/.ssh
-  #       - name: openvpn-certs
-  #         mountPath: /openvpn
   # storage:
   #   extraVolumes:
   #     - name: worker-secrets
@@ -177,6 +175,6 @@ singleuser:
     #     environment:
     #       ROS_HOSTNAME: cmc
     #       ROS_MASTER_URI: http://robot:11311
-    - description: jupyter/datascience-notebook:latest
+    - description: base notebook
       display_name: datascience
       default: true

@@ -89,57 +89,51 @@ affinity:
       topologyKey: "kubernetes.io/hostname"
 
 influxdb:
-  enabled: true
-  auth:
+  enabled: falsegi
+  setDefaultUser:
     enabled: true
-    admin:
-      org: home-assistant
-      bucket: home-assistant
-  updateStrategy:
-    type: Recreate
-  influxdb:
-    affinity: 
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: "kubernetes.io/hostname"
-              operator: In
-              values:
-                - nuc1
-                - nuc2
-                - nuc3
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-            - key: app.kubernetes.io/instance
-              operator: In
-              values:
-              - home-assistant-influxdb
-          topologyKey: "kubernetes.io/hostname"
-    podSecurityContext:
-      fsGroup: 1000
-    containerSecurityContext:
-      enabled: true
-      runAsUser: 1000
-      runAsNonRoot: true
-    resources:
-      requests:
-        memory: 256Mi
-        cpu: 10m
-      limits:
-        memory: 512Mi
-        cpu: 250m
+    user:
+      username: "admin"
+      password:
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 10m
+    limits:
+      memory: 512Mi
+      cpu: 250m
+
+  affinity: 
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "kubernetes.io/hostname"
+            operator: In
+            values:
+              - nuc1
+              - nuc2
+              - nuc3
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/instance
+            operator: In
+            values:
+            - home-assistant-influxdb
+        topologyKey: "kubernetes.io/hostname"
+    
+  securityContext:
+    enabled: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
   persistence:
     enabled: true
     storageClass: nas-nfs
     accessModes: 
       - ReadWriteMany
-  volumePermissions:
-    enabled: true
-  metrics:
-    enabled: true
 
 zalandoPostgresql:
   enabled: true
