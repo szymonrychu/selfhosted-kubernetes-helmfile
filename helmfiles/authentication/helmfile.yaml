@@ -8,7 +8,7 @@ templates:
   default: &default
     wait: true
     missingFileHandler: Warn
-    timeout: 600
+    timeout: 1200
     hooks:
     - events:
       - prepare
