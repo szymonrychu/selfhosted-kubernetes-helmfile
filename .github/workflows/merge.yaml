@@ -5,7 +5,7 @@ on:
     types:
       - "completed"
     workflows:
-      - "Helmfile Diff"
+      - "Helmfile"
 
 jobs:
   merge:
