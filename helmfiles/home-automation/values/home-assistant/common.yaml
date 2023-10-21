@@ -89,7 +89,7 @@ affinity:
       topologyKey: "kubernetes.io/hostname"
 
 influxdb:
-  enabled: falsegi
+  enabled: false
   setDefaultUser:
     enabled: true
     user:
