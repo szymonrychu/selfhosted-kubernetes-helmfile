@@ -1,0 +1,87 @@
+name: Helmfile
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  release:
+    types:
+      - created
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+
+
+jobs:
+  list_changed_releases:
+    runs-on: ubuntu-latest
+    name: List changed releases
+    outputs:
+      changed_releases: ${{ steps.changed_releases.outputs.changed_releases }}
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      
+      - name: Get all test, doc and src files that have changed
+        id: changed_files
+        uses: tj-actions/changed-files@95690f9ece77c1740f4a55b7f1de9023ed6b1f87 # v39
+        with:
+          files: |
+            helmfiles/
+          json: true
+          escape_json: false
+      
+      - name: Filter release names
+        id: changed_releases
+        run: |
+          ./.github/get_changed_releases.py '${{ steps.changed_files.outputs.all_changed_files }}' >> "$GITHUB_OUTPUT"
+
+  build:
+    runs-on: [self-hosted, linux, X64]
+    name: ${{ matrix.helmfile_label }}
+    needs: list_changed_releases
+    if: needs.list_changed_releases.outputs.changed_releases != '[]'
+    strategy:
+      fail-fast: true
+      matrix:
+        helmfile_label: ${{ fromJson(needs.list_changed_releases.outputs.changed_releases) }}
+    steps:
+    
+    - name: Turnstyle
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/turnstyle@8db075d65b19bf94e6e8687b504db69938dc3c65 # v1
+      with:
+        continue-after-seconds: 1200
+        poll-interval-seconds: 60
+      env:
+        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
+    - name: Checkout code
+      uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      with:
+        repository: szymonrychu/helmfile-cluster
+        token: ${{ secrets.BOT_TOKEN }}
+        submodules: recursive
+
+    - name: helmfile diff
+      if: github.ref != 'refs/heads/main'
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        set -e
+        echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
+        gpg --import encryption_key.gpg
+        helmfile --selector ${{ matrix.helmfile_label }} diff
+
+    - name: helmfile apply
+      if: github.ref == 'refs/heads/main'
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        set -e
+        echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
+        gpg --import encryption_key.gpg
+        helmfile --selector ${{ matrix.helmfile_label }} apply
