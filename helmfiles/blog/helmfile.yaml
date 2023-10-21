@@ -32,7 +32,7 @@ templates:
 releases:
 
 - name: wordpress
-  version: 17.1.17
+  version: 18.0.6
   chart: bitnami/wordpress
   namespace: blog
   labels:
