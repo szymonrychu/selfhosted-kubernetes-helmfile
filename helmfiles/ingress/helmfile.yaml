@@ -60,7 +60,7 @@ releases:
 - name: ingress-nginx
   chart: ingress-nginx/ingress-nginx
   namespace: ingress-system
-  version: 4.8.2
+  version: 4.8.3
   needs:
   - ingress-system/metallb
   - ingress-system/cert-manager
