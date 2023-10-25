@@ -11,7 +11,6 @@ containerSecurityContext:
   capabilities:
     drop:
     - ALL
-  enabled: true
   runAsUser: 1000
   runAsGroup: 1000
   runAsNonRoot: true
@@ -20,7 +19,6 @@ initSecurityContext:
   capabilities:
     drop:
     - ALL
-  enabled: true
   runAsUser: 1000
   runAsGroup: 1000
   runAsNonRoot: true

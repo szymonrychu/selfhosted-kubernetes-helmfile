@@ -38,7 +38,9 @@ def main():
         else:
             helmfile_root = os.path.sep.join(f.split(os.path.sep)[:2])
             helmfile_path = os.path.join(helmfile_root, 'helmfile.yaml')
-            result.extend(get_helmfile_releases(helmfile_path, f))
+            for path in get_helmfile_releases(helmfile_path, f):
+                if path not in result:
+                    result.append(path)
 
 
     changed_releases = json.dumps(result)
