@@ -85,3 +85,11 @@ jobs:
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
         helmfile --selector ${{ matrix.helmfile_label }} apply
+  
+  helmfile_completed:
+    needs: [build]
+    name: Helmfile Completed
+    runs-on: ubuntu-latest
+    steps:
+      - name: complete message
+        run: echo "Completed"
