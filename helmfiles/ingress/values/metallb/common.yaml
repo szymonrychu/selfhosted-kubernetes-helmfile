@@ -1,9 +1,9 @@
-configInline:
-  address-pools:
-    - name: default
-      protocol: layer2
-      addresses:
-      - 178.183.206.26/32
+# configInline:
+#   address-pools:
+#     - name: default
+#       protocol: layer2
+#       addresses:
+#       - 178.183.206.26/32
 
 controller:
   resources:

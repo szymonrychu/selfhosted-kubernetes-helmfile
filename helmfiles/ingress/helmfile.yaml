@@ -9,6 +9,8 @@ repositories:
   url: https://kubernetes.github.io/ingress-nginx
 - name: szymonrychu
   url: https://szymonrychu.github.io/charts
+- name: metallb
+  url: https://metallb.github.io/metallb
 templates:
   default: &default
     wait: true
@@ -40,9 +42,9 @@ templates:
 releases:
 
 - name: metallb
-  chart: szymonrychu/metallb
+  chart: metallb/metallb
   namespace: ingress-system
-  version: 3.0.12
+  version: 0.13.12
   labels:
     purpose: backbone
     application: metallb
