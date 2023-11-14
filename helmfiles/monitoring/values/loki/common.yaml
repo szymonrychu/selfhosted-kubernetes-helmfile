@@ -1,5 +1,5 @@
 loki:
-  isDefault: true
+  isDefault: false
   auth_enabled: false
   ingester:
     chunk_idle_period: 3m

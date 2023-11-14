@@ -18,10 +18,12 @@ def get_helmfile_releases(helmfile_fpath, changed_f_path=None):
     for release in helmfile['releases']:
         release_subpath = os.path.join(helmfile_dir, 'values', release['name'])
         if not changed_f_path or release_subpath in changed_f_path:
-            label = f"application={release['labels']['application']}"
-            if label not in result:
-                result.append(label)
-    
+            try:
+                label = f"application={release['labels']['application']}"
+                if label not in result:
+                    result.append(label)
+            except KeyError as _key_error:
+                print(f"Missing 'application' label for release:{release['name']} in {helmfile_fpath}", file=sys.stderr)
     return result
         
 

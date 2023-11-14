@@ -37,7 +37,7 @@ spec:
 
   volume:
     size: 5Gi
-    storageClass: local-path
+    storageClass: nas-nfs
 
   enableShmVolume: true
   resources:

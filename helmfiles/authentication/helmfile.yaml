@@ -35,7 +35,7 @@ releases:
   timeout: 1200
   version: 17.3.0
   chart: bitnami/keycloak
-  namespace: keycloak
+  namespace: authentication
   labels:
     purpose: authentication
     application: keycloak

@@ -135,3 +135,6 @@ influxdb:
 
 zalandoPostgresql:
   enabled: true
+  persistence:
+    size: 20Gi
+    storageClass: nas-nfs
