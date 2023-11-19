@@ -1,4 +1,4 @@
-module.exports = {
+{
   "semanticCommits": "enabled",
   "extends": ["config:recommended", ":rebaseStalePrs"],
   "dependencyDashboard": false,
@@ -14,11 +14,10 @@ module.exports = {
   "onboarding": false,
   "platform": "github",
   "repositories": ["szymonrychu/helmfile-cluster"],
-  "dependencyDashboard": false,
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
-      "commitMessageTopic": "github-action {{depName}}",
+      "commitMessageTopic": "github-action {{depName}}"
     },
     {
       "description": "MinorAutoUpgrade",
@@ -31,4 +30,4 @@ module.exports = {
       "minimumReleaseAge": "7 days"
     }
   ]
-};
+}

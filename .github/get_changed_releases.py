@@ -5,6 +5,25 @@ import sys
 import yaml
 import os
 
+def read_main_helmfile_paths():
+    this_path = os.path.abspath(__file__)
+    repo_root = os.path.dirname(os.path.dirname(this_path))
+    helmfile_fpath = os.path.join(repo_root, 'helmfile.yaml')
+    helmfile = {}
+    with open(helmfile_fpath, 'r') as helmfile_fd:
+        helmfile = yaml.safe_load(helmfile_fd)
+    if not helmfile:
+        raise ValueError('Helmfile not loaded!')
+    
+    enabled_paths = []
+    for sub_helmfile in helmfile['helmfiles']:
+        sub_helmfile_path = sub_helmfile['path']
+        sub_path = os.path.dirname(sub_helmfile_path)
+        enabled_paths.append(sub_path)
+
+    return enabled_paths
+
+
 def get_helmfile_releases(helmfile_fpath, changed_f_path=None):
     helmfile = {}
     with open(helmfile_fpath, 'r') as helmfile_fd:
@@ -13,6 +32,9 @@ def get_helmfile_releases(helmfile_fpath, changed_f_path=None):
         raise ValueError('Helmfile not loaded!')
     
     helmfile_dir = os.path.dirname(helmfile_fpath)
+    
+    if helmfile_dir not in read_main_helmfile_paths():
+        return []
     
     result = []
     for release in helmfile['releases']:
