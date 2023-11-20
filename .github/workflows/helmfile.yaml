@@ -27,9 +27,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
-          repository: szymonrychu/helmfile-cluster
-          token: ${{ secrets.BOT_TOKEN }}
-          submodules: recursive
+          token: "${{ secrets.SZYMONRYCHU_TOKEN }}"
 
       - name: Get all test, doc and src files that have changed
         id: changed_files
@@ -39,7 +37,7 @@ jobs:
             helmfiles/
           json: true
           escape_json: false
-      
+
       - name: Filter release names
         id: changed_releases
         run: |
@@ -55,7 +53,7 @@ jobs:
       matrix:
         helmfile_label: ${{ fromJson(needs.list_changed_releases.outputs.changed_releases) }}
     steps:
-    
+
     - name: Turnstyle
       if: github.ref == 'refs/heads/main'
       uses: softprops/turnstyle@8db075d65b19bf94e6e8687b504db69938dc3c65 # v1
@@ -63,14 +61,12 @@ jobs:
         continue-after-seconds: 1200
         poll-interval-seconds: 60
       env:
-        GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.SZYMONRYCHU_TOKEN }}
 
     - name: Checkout code
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       with:
-        repository: szymonrychu/helmfile-cluster
-        token: ${{ secrets.BOT_TOKEN }}
-        submodules: recursive
+        token: "${{ secrets.SZYMONRYCHU_TOKEN }}"
 
     - name: helmfile diff
       if: github.ref != 'refs/heads/main'
@@ -91,7 +87,7 @@ jobs:
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
         helmfile --selector ${{ matrix.helmfile_label }} apply
-  
+
   helmfile_completed:
     needs: [build]
     name: Helmfile Completed
