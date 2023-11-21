@@ -13,7 +13,7 @@ module.exports = {
   "gitAuthor": "szymonrichert.pl bot <bot@szymonrichert.pl>",
   "onboarding": false,
   "platform": "github",
-  "repositories": ["szymonrychu/helmfile-cluster"],
+  "repositories": ["szymonrychu/selfhosted-kubernetes-helmfile"],
   "dependencyDashboard": false,
   "packageRules": [
     {
