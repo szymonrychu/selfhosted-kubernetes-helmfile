@@ -4,7 +4,7 @@ repositories:
 - name: kubereboot
   url: https://kubereboot.github.io/charts
 - name: szymonrychu
-  url: https://szymonrychu.github.io/charts
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: postgres-operator-charts
   url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
 templates:

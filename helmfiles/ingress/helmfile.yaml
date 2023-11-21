@@ -8,7 +8,7 @@ repositories:
 - name: ingress-nginx
   url: https://kubernetes.github.io/ingress-nginx
 - name: szymonrychu
-  url: https://szymonrychu.github.io/charts
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: metallb
   url: https://metallb.github.io/metallb
 templates:

@@ -1,6 +1,6 @@
 repositories:
 - name: szymonrychu
-  url: https://szymonrychu.github.io/charts
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 templates:
   operators-default:
     disableValidation: true

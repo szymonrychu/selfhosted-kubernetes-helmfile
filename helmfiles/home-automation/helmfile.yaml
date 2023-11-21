@@ -2,7 +2,7 @@ repositories:
 - name: bitnami
   url: https://charts.bitnami.com/bitnami
 - name: szymonrychu
-  url: https://szymonrychu.github.io/charts
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: node-red
   url: https://schwarzit.github.io/node-red-chart/
 environments:

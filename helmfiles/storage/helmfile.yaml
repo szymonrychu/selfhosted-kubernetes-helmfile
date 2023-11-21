@@ -2,7 +2,7 @@ repositories:
 - name: stable
   url: https://charts.helm.sh/stable
 - name: szymonrychu
-  url: https://szymonrychu.github.io/charts
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: nfs-subdir-external-provisioner
   url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
 templates:
