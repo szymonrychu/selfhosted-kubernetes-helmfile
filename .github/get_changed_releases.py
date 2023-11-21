@@ -14,7 +14,7 @@ def read_main_helmfile_paths():
         helmfile = yaml.safe_load(helmfile_fd)
     if not helmfile:
         raise ValueError('Helmfile not loaded!')
-    
+
     enabled_paths = []
     for sub_helmfile in helmfile['helmfiles']:
         sub_helmfile_path = sub_helmfile['path']
@@ -30,12 +30,12 @@ def get_helmfile_releases(helmfile_fpath, changed_f_path=None):
         helmfile = yaml.safe_load(helmfile_fd)
     if not helmfile:
         raise ValueError('Helmfile not loaded!')
-    
+
     helmfile_dir = os.path.dirname(helmfile_fpath)
-    
+
     if helmfile_dir not in read_main_helmfile_paths():
         return []
-    
+
     result = []
     for release in helmfile['releases']:
         release_subpath = os.path.join(helmfile_dir, 'values', release['name'])
@@ -47,7 +47,7 @@ def get_helmfile_releases(helmfile_fpath, changed_f_path=None):
             except KeyError as _key_error:
                 print(f"Missing 'application' label for release:{release['name']} in {helmfile_fpath}", file=sys.stderr)
     return result
-        
+
 
 
 def main():
@@ -57,6 +57,8 @@ def main():
 
     result = []
     for f in changed_files:
+        if not f.startswith('helmfiles'):
+            continue
         if f.endswith('helmfile.yaml'):
             result.extend(get_helmfile_releases(f))
         else:
