@@ -32,7 +32,7 @@ templates:
 releases:
 
 - name: keycloak
-  timeout: 1200
+  timeout: 2400
   version: 17.3.3
   chart: bitnami/keycloak
   namespace: authentication
