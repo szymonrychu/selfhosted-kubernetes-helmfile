@@ -1,6 +1,6 @@
 # Helmfile Cluster
 
-[![sync](https://github.com/szymonrychu/helmfile-cluster/actions/workflows/main.yaml/badge.svg?branch=main)](https://github.com/szymonrychu/helmfile-cluster/actions/workflows/main.yaml)
+[![Helmfile](https://github.com/szymonrychu/selfhosted-kubernetes-helmfile/actions/workflows/helmfile.yaml/badge.svg?event=push)](https://github.com/szymonrychu/selfhosted-kubernetes-helmfile/actions/workflows/helmfile.yaml)
 
 ## Description
 

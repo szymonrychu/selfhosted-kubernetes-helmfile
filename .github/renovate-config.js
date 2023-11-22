@@ -14,21 +14,5 @@ module.exports = {
   "onboarding": false,
   "platform": "github",
   "repositories": ["szymonrychu/selfhosted-kubernetes-helmfile"],
-  "dependencyDashboard": false,
-  "packageRules": [
-    {
-      "matchManagers": ["github-actions"],
-      "commitMessageTopic": "github-action {{depName}}",
-    },
-    {
-      "description": "MinorAutoUpgrade",
-      "matchUpdateTypes": ["pin", "digest", "patch", "minor", "major"],
-      "minimumReleaseAge": null
-    },
-    {
-      "description": "MajorUpgrade",
-      "matchUpdateTypes": ["major"],
-      "minimumReleaseAge": "7 days"
-    }
-  ]
+  "dependencyDashboard": false
 };
