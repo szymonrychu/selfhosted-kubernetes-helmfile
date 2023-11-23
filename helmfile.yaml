@@ -4,7 +4,7 @@ helmfiles:
 - path: helmfiles/backbone/helmfile.yaml
 - path: helmfiles/monitoring/helmfile.yaml
 - path: helmfiles/authentication/helmfile.yaml
-# - path: helmfiles/media/helmfile.yaml
+- path: helmfiles/media/helmfile.yaml
 - path: helmfiles/home-automation/helmfile.yaml
 - path: helmfiles/blog/helmfile.yaml
 # - path: helmfiles/coding/helmfile.yaml

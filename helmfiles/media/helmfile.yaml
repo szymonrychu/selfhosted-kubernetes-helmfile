@@ -31,11 +31,24 @@ templates:
 
 releases:
 
-- name: flood-rtorrent
-  chart: szymonrychu/flood-rtorrent
-  version: 0.3.5
+- name: qbittorrent
+  # chart: szymonrychu/qbittorrent
+  # version: 0.0.1
+  chart: ../../../selfhosted-kubernetes-charts/charts/qbittorrent
   namespace: media
   labels:
     purpose: media
-    application: flood-rtorrent
+    application: qbittorrent
   <<: *default
+
+
+  # "qbittorrent_client_id": {
+  #   "sensitive": true,
+  #   "type": "string",
+  #   "value": "qbittorrent"
+  # },
+  # "qbittorrent_client_secret": {
+  #   "sensitive": true,
+  #   "type": "string",
+  #   "value": "5mBIfUMV7thDQOjgVcXbXmnr0Cgz5A7g"
+  # }

@@ -4,8 +4,8 @@ variable "grafana_client_secret" {
   default     = null
 }
 
-variable "flood_client_secret" {
-  description = "Client secret for 'flood' client"
+variable "qbittorrent_client_secret" {
+  description = "Client secret for 'qbittorrent' client"
   type        = string
   default     = null
 }

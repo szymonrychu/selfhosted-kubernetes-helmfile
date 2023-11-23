@@ -5,14 +5,14 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: flood.szymonrichert.pl
+    - host: qbt.szymonrichert.pl
       paths:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: flood-tls
+    - secretName: qbt-tls
       hosts:
-        - flood.szymonrichert.pl
+        - qbt.szymonrichert.pl
 
 podSecurityContext:
   fsGroup: 1000
@@ -20,30 +20,21 @@ podSecurityContext:
   # runAsNonRoot: true
   runAsUser: 1000
 
-flood:
-  resources:
-    limits:
-      cpu: 250m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-rtorrent:
-  resources:
-    limits:
-      cpu: "1"
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
+resources:
+  limits:
+    cpu: "1"
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 oauth2proxy:
   config:
-    clientId: flood
-    redirectUrl: https://flood.szymonrichert.pl/oauth2/callback
+    clientId: qbittorrent
+    redirectUrl: https://qbt.szymonrichert.pl/oauth2/callback
     realmUrl: https://auth.szymonrichert.pl/realms/master
     cookieName: oauth2-authorization-cookie
-    cookieDomain: flood.szymonrichert.pl
+    cookieDomain: qbt.szymonrichert.pl
 
 persistence:
   config:
@@ -51,13 +42,7 @@ persistence:
     storageClass: nas-nfs
     type: pvc
     size: 10Gi
-  data:
-    enabled: true
-    storageClass: nas-nfs
-    type: pvc
-    size: 10Gi
-  media:
+  downloads:
     enabled: true
     type: hostPath
     hostPath: /samba
-
