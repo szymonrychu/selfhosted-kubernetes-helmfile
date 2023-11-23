@@ -3,6 +3,10 @@ config:
   network:
     trustedProxies:
       - 0.0.0.0/0
+  postgresql:
+    enabled: true
+  prometheus:
+    enabled: true
 
 podSecurityContext:
   fsGroup: 1000
@@ -101,7 +105,7 @@ influxdb:
       memory: 512Mi
       cpu: 250m
 
-  affinity: 
+  affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
@@ -121,7 +125,7 @@ influxdb:
             values:
             - home-assistant-influxdb
         topologyKey: "kubernetes.io/hostname"
-    
+
   securityContext:
     enabled: true
     runAsUser: 1000
@@ -130,7 +134,7 @@ influxdb:
   persistence:
     enabled: true
     storageClass: nas-nfs
-    accessModes: 
+    accessModes:
       - ReadWriteMany
 
 zalandoPostgresql:

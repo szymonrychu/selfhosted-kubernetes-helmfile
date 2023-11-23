@@ -11,7 +11,7 @@ templates:
   default: &default
     wait: true
     missingFileHandler: Warn
-    timeout: 600
+    timeout: 1200
     hooks:
     - events:
       - prepare
@@ -45,7 +45,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.8.6
+  version: 0.9.0
   namespace: home-automation
   labels:
     purpose: home-automation
