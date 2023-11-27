@@ -32,23 +32,10 @@ templates:
 releases:
 
 - name: qbittorrent
-  # chart: szymonrychu/qbittorrent
-  # version: 0.0.1
-  chart: ../../../selfhosted-kubernetes-charts/charts/qbittorrent
+  chart: szymonrychu/qbittorrent
+  version: 0.0.1
   namespace: media
   labels:
     purpose: media
     application: qbittorrent
   <<: *default
-
-
-  # "qbittorrent_client_id": {
-  #   "sensitive": true,
-  #   "type": "string",
-  #   "value": "qbittorrent"
-  # },
-  # "qbittorrent_client_secret": {
-  #   "sensitive": true,
-  #   "type": "string",
-  #   "value": "5mBIfUMV7thDQOjgVcXbXmnr0Cgz5A7g"
-  # }
