@@ -34,7 +34,7 @@ releases:
   timeout: 600
   namespace: coding
   chart: jupyterhub/jupyterhub
-  version: 3.1.0
+  version: 3.2.1
   labels:
     purpose: coding
     application: jupyterhub
