@@ -1,5 +1,7 @@
 
 config:
+  localVoiceProcessing:
+    enabled: true
   network:
     trustedProxies:
       - 0.0.0.0/0
@@ -11,21 +13,49 @@ config:
 podSecurityContext:
   fsGroup: 1000
 
-containerSecurityContext:
-  capabilities:
-    drop:
-    - ALL
-  runAsUser: 1000
-  runAsGroup: 1000
-  runAsNonRoot: true
-
-initSecurityContext:
-  capabilities:
-    drop:
-    - ALL
-  runAsUser: 1000
-  runAsGroup: 1000
-  runAsNonRoot: true
+securityContexts:
+  # homeassistant:
+  #   capabilities:
+  #     drop:
+  #     - ALL
+  #   runAsUser: 1000
+  #   runAsGroup: 1000
+  #   runAsNonRoot: true
+  piper:
+    capabilities:
+      drop:
+      - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+  whisper:
+    capabilities:
+      drop:
+      - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+  openwakeword:
+    capabilities:
+      drop:
+      - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+  initJinjaRenderer:
+    capabilities:
+      drop:
+      - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
+  initWaitForPostgres:
+    capabilities:
+      drop:
+      - ALL
+    runAsUser: 1000
+    runAsGroup: 1000
+    runAsNonRoot: true
 
 initWaitForPostgres:
   enabled: true
@@ -48,26 +78,44 @@ ingress:
         - home-assistant.szymonrichert.pl
 
 resources:
-  limits:
-    cpu: 500m
-    memory: 1Gi
-  requests:
-    cpu: 10m
-    memory: 320Mi
-
-initResources:
-  limits:
-    cpu: 100m
-    memory: 128Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+  homeassistant:
+    limits:
+      cpu: 500m
+      memory: 1Gi
+    requests:
+      cpu: 10m
+      memory: 320Mi
+  initJinjaRenderer:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  initWaitForPostgres:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
 persistence:
-  enabled: true
-  storageClass: nas-nfs
-  accessMode: ReadWriteMany
-  size: 8Gi
+  homeassistant:
+    enabled: true
+    storageClass: nas-nfs
+    accessMode: ReadWriteMany
+    size: 8Gi
+  piper:
+    enabled: true
+    storageClass: nas-nfs
+    accessMode: ReadWriteMany
+    size: 8Gi
+  whisper:
+    enabled: true
+    storageClass: nas-nfs
+    accessMode: ReadWriteMany
+    size: 8Gi
 
 affinity:
   nodeAffinity:
@@ -89,53 +137,6 @@ affinity:
           values:
           - home-assistant-influxdb
       topologyKey: "kubernetes.io/hostname"
-
-influxdb:
-  enabled: false
-  setDefaultUser:
-    enabled: true
-    user:
-      username: "admin"
-      password:
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 10m
-    limits:
-      memory: 512Mi
-      cpu: 250m
-
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: "kubernetes.io/hostname"
-            operator: In
-            values:
-              - nuc1
-              - nuc2
-              - nuc3
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/instance
-            operator: In
-            values:
-            - home-assistant-influxdb
-        topologyKey: "kubernetes.io/hostname"
-
-  securityContext:
-    enabled: true
-    runAsUser: 1000
-    runAsGroup: 1000
-    runAsNonRoot: true
-  persistence:
-    enabled: true
-    storageClass: nas-nfs
-    accessModes:
-      - ReadWriteMany
 
 zalandoPostgresql:
   enabled: true

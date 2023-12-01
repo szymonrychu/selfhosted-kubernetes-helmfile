@@ -1,10 +1,6 @@
 repositories:
-- name: bitnami
-  url: https://charts.bitnami.com/bitnami
 - name: szymonrychu
   url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
-- name: node-red
-  url: https://schwarzit.github.io/node-red-chart/
 environments:
   lab: {}
 templates:
@@ -45,7 +41,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.9.0
+  version: 0.10.0
   namespace: home-automation
   labels:
     purpose: home-automation
