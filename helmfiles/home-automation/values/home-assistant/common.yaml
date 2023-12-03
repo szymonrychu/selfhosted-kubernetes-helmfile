@@ -3,7 +3,7 @@ config:
   localVoiceProcessing:
     enabled: true
     whisperModel: small-int8
-    whisperBeamSize: 5
+    whisperBeamSize: 8
   network:
     trustedProxies:
       - 0.0.0.0/0
