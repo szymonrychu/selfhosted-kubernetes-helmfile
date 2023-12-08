@@ -1,6 +1,6 @@
 repositories:
-  - name: jupyterhub
-    url: https://hub.jupyter.org/helm-chart/
+- name: szymonrychu
+  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 templates:
   default: &default
     disableValidation: true
@@ -30,12 +30,12 @@ templates:
 
 releases:
 
-- name: jupyterhub
-  timeout: 600
-  namespace: coding
-  chart: jupyterhub/jupyterhub
-  version: 3.2.1
+- name: code-server
+  chart: ../../../selfhosted-kubernetes-charts/charts/code-server-oauth2
+  # version: 1.1.2
+  # chart: szymonrychu/code-server-oauth2
+  namespace: code-server
   labels:
-    purpose: coding
-    application: jupyterhub
+    purpose: editor
+    application: code-server
   <<: *default
