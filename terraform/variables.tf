@@ -10,8 +10,8 @@ variable "qbittorrent_client_secret" {
   default     = null
 }
 
-variable "jupyterhub_client_secret" {
-  description = "Client secret for 'jupyterhub' client"
+variable "code_server_client_secret" {
+  description = "Client secret for 'code-server' client"
   type        = string
   default     = null
 }

@@ -31,9 +31,8 @@ templates:
 releases:
 
 - name: code-server
-  chart: ../../../selfhosted-kubernetes-charts/charts/code-server-oauth2
-  # version: 1.1.2
-  # chart: szymonrychu/code-server-oauth2
+  version: 0.0.6
+  chart: szymonrychu/code-server-oauth2
   namespace: code-server
   labels:
     purpose: editor

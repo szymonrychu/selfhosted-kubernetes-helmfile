@@ -22,14 +22,14 @@ output "qbittorrent_client_secret" {
   sensitive   = true
 }
 
-output "jupyterhub_client_id" {
-  description = "'jupyterhub' client id"
-  value       = keycloak_openid_client.jupyterhub.client_id
+output "code_server_client_id" {
+  description = "'code-server' client id"
+  value       = keycloak_openid_client.code-server.client_id
   sensitive   = true
 }
 
-output "jupyterhub_client_secret" {
-  description = "'jupyterhub' client secret"
+output "code_server_client_secret" {
+  description = "'code-server' client secret"
   value       = keycloak_openid_client.qbittorrent.client_secret
   sensitive   = true
 }

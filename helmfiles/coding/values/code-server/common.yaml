@@ -1,4 +1,5 @@
 config:
+  userName: szymonri
   domain: code.szymonrichert.pl
 
   clientId: code-server
@@ -19,9 +20,9 @@ ingress:
         - path: /
           pathType: Prefix
   tls:
-   - secretName: code-tls
-     hosts:
-       - code.szymonrichert.pl
+    - secretName: code-tls
+      hosts:
+        - code.szymonrichert.pl
 
 podSecurityContext:
   fsGroup: 1000
