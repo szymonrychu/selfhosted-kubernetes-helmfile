@@ -32,7 +32,7 @@ releases:
 
 - name: esphome
   chart: szymonrychu/esphome
-  version: 1.2.6
+  version: 1.2.7
   namespace: home-automation
   labels:
     purpose: home-automation
