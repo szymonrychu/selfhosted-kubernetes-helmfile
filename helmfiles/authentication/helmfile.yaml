@@ -33,7 +33,7 @@ releases:
 
 - name: keycloak
   timeout: 2400
-  version: 18.0.0
+  version: 18.0.2
   chart: bitnami/keycloak
   namespace: authentication
   labels:
