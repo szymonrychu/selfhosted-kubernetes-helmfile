@@ -7,7 +7,7 @@ helmfiles:
 - path: helmfiles/media/helmfile.yaml
 - path: helmfiles/home-automation/helmfile.yaml
 - path: helmfiles/blog/helmfile.yaml
-# - path: helmfiles/coding/helmfile.yaml
+- path: helmfiles/coding/helmfile.yaml
 
 environments:
   default: {}
