@@ -49,6 +49,15 @@ releases:
     application: sonarr
   <<: *default
 
+- name: radarr
+  chart: szymonrychu/radarr
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: radarr
+  <<: *default
+
 - name: jackett
   chart: szymonrychu/jackett
   version: 0.0.1
