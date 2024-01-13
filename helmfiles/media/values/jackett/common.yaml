@@ -5,20 +5,20 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: qbt.szymonrichert.pl
+    - host: jackett.szymonrichert.pl
       paths:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: qbt-tls
+    - secretName: jackett-tls
       hosts:
-        - qbt.szymonrichert.pl
+        - jackett.szymonrichert.pl
 
-podSecurityContext:
-  fsGroup: 1000
-  runAsGroup: 1000
-  # runAsNonRoot: true
-  runAsUser: 1000
+# podSecurityContext:
+#   fsGroup: 1000
+#   runAsGroup: 1000
+#   # runAsNonRoot: true
+#   runAsUser: 1000
 
 resources:
   limits:
@@ -31,10 +31,10 @@ resources:
 oauth2proxy:
   config:
     clientId: qbittorrent
-    redirectUrl: https://qbt.szymonrichert.pl/oauth2/callback
+    redirectUrl: https://jackett.szymonrichert.pl/oauth2/callback
     realmUrl: https://auth.szymonrichert.pl/realms/master
     cookieName: oauth2-authorization-cookie
-    cookieDomain: qbt.szymonrichert.pl
+    cookieDomain: jackett.szymonrichert.pl
 
 persistence:
   config:

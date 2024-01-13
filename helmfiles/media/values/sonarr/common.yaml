@@ -42,7 +42,7 @@ persistence:
     storageClass: nas-nfs
     type: pvc
     size: 10Gi
-  data:
+  media:
     enabled: true
     type: hostPath
     hostPath: /samba

@@ -33,7 +33,7 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.0.3
+  version: 0.0.5
   namespace: media
   labels:
     purpose: media
@@ -42,9 +42,20 @@ releases:
 
 - name: sonarr
   chart: szymonrychu/sonarr
-  version: 0.0.1
+  version: 0.0.2
   namespace: media
   labels:
     purpose: media
     application: sonarr
   <<: *default
+
+- name: jackett
+  chart: szymonrychu/jackett
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: jackett
+  <<: *default
+
+  
