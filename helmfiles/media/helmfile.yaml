@@ -33,9 +33,18 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.4.4
+  version: 0.0.3
   namespace: media
   labels:
     purpose: media
     application: qbittorrent
+  <<: *default
+
+- name: sonarr
+  chart: szymonrychu/sonarr
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: sonarr
   <<: *default
