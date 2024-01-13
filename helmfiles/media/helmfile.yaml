@@ -51,7 +51,7 @@ releases:
 
 - name: radarr
   chart: szymonrychu/radarr
-  version: 0.0.1
+  version: 0.0.2
   namespace: media
   labels:
     purpose: media
