@@ -55,10 +55,21 @@ releases:
     application: nfs-subdir-external-provisioner
   <<: *default
 
+- name: snapshot-controller
+  chart: szymonrychu/snapshot-controller
+  namespace: storage-system
+  version: 2.0.4
+  labels:
+    purpose: storage
+    application: snapshot-controller
+  <<: *default
+
 - name: rook-ceph
   chart: rook-release/rook-ceph
   namespace: rook-ceph
   version: 1.13.1
+  needs:
+  - storage-system/snapshot-controller
   labels:
     purpose: storage
     application: rook-ceph
@@ -69,6 +80,7 @@ releases:
   namespace: rook-ceph
   version: 1.13.1
   needs:
+  - storage-system/snapshot-controller
   - rook-ceph/rook-ceph
   labels:
     purpose: storage

@@ -1,0 +1,72 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rook-ceph-nuc1
+  namespace: storage-system
+spec:
+  capacity:
+    storage: 230Gi
+  volumeMode: Block
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: manual-block-storage
+  local:
+    path: /dev/sda1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - nuc1
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rook-ceph-nuc2
+  namespace: storage-system
+spec:
+  capacity:
+    storage: 230Gi
+  volumeMode: Block
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: manual-block-storage
+  local:
+    path: /dev/sda1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - nuc2
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rook-ceph-nuc3
+  namespace: storage-system
+spec:
+  capacity:
+    storage: 230Gi
+  volumeMode: Block
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: manual-block-storage
+  local:
+    path: /dev/sda1
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - nuc3

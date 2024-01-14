@@ -244,6 +244,8 @@ cephFileSystems:
       name: ceph
       reclaimPolicy: Delete
       allowVolumeExpansion: true
+      fsName: ceph-fs
+      pool: replicated
       parameters:
         csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
         csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
