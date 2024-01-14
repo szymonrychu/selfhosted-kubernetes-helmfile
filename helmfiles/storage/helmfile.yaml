@@ -5,6 +5,8 @@ repositories:
   url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: nfs-subdir-external-provisioner
   url: https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
+- name: rook-release
+  url: https://charts.rook.io/release
 templates:
   default: &default
     wait: true
@@ -51,4 +53,24 @@ releases:
   labels:
     purpose: nfs
     application: nfs-subdir-external-provisioner
+  <<: *default
+
+- name: rook-ceph
+  chart: rook-release/rook-ceph
+  namespace: rook-ceph
+  version: 1.13.1
+  labels:
+    purpose: storage
+    application: rook-ceph
+  <<: *default
+
+- name: rook-ceph-cluster
+  chart: rook-release/rook-ceph-cluster
+  namespace: rook-ceph
+  version: 1.13.1
+  needs:
+  - rook-ceph/rook-ceph
+  labels:
+    purpose: storage
+    application: rook-ceph
   <<: *default
