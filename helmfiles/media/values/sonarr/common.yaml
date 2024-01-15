@@ -39,9 +39,9 @@ oauth2proxy:
 persistence:
   config:
     enabled: true
-    storageClass: local-path
+    storageClass: ceph
     type: pvc
-    size: 10Gi
+    size: 1Gi
   media:
     enabled: true
     type: hostPath
