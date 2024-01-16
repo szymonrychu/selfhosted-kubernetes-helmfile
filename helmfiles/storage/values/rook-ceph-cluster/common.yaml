@@ -3,6 +3,22 @@ operatorNamespace: rook-ceph
 monitoring:
   enabled: true
 
+toolbox:
+  enabled: true
+  containerSecurityContext:
+    runAsNonRoot: true
+    runAsUser: 2016
+    runAsGroup: 2016
+    capabilities:
+      drop: ["ALL"]
+  resources:
+    limits:
+      cpu: "500m"
+      memory: "1Gi"
+    requests:
+      cpu: "50m"
+      memory: "128Mi"
+
 cephClusterSpec:
   mon:
     count: 3
@@ -82,82 +98,6 @@ cephClusterSpec:
     managePodBudgets: true
     osdMaintenanceTimeout: 30
     pgHealthCheckTimeout: 0
-
-  #     - name: nuc1
-  #       count: 1
-  #       portable: false
-  #       encrypted: false
-  #       placement:
-  #         nodeAffinity:
-  #           requiredDuringSchedulingIgnoredDuringExecution:
-  #             nodeSelectorTerms:
-  #             - matchExpressions:
-  #               - key: kubernetes.io/hostname
-  #                 operator: In
-  #                 values:
-  #                 - nuc1
-  #       volumeClaimTemplates:
-  #         - metadata:
-  #             name: rook-ceph-nuc1
-  #           spec:
-  #             resources:
-  #               requests:
-  #                 storage: 800Gi
-  #             storageClassName: block-storage
-  #             volumeMode: Block
-  #             volumeName: rook-ceph-nuc1
-  #             accessModes:
-  #               - ReadWriteOnce
-  #     - name: nuc2
-  #       count: 1
-  #       portable: false
-  #       encrypted: false
-  #       placement:
-  #         nodeAffinity:
-  #           requiredDuringSchedulingIgnoredDuringExecution:
-  #             nodeSelectorTerms:
-  #             - matchExpressions:
-  #               - key: kubernetes.io/hostname
-  #                 operator: In
-  #                 values:
-  #                 - nuc2
-  #       volumeClaimTemplates:
-  #         - metadata:
-  #             name: rook-ceph-nuc2
-  #           spec:
-  #             resources:
-  #               requests:
-  #                 storage: 800Gi
-  #             storageClassName: block-storage
-  #             volumeMode: Block
-  #             volumeName: rook-ceph-nuc2
-  #             accessModes:
-  #               - ReadWriteOnce
-  #     - name: nuc3
-  #       count: 1
-  #       portable: false
-  #       encrypted: false
-  #       placement:
-  #         nodeAffinity:
-  #           requiredDuringSchedulingIgnoredDuringExecution:
-  #             nodeSelectorTerms:
-  #             - matchExpressions:
-  #               - key: kubernetes.io/hostname
-  #                 operator: In
-  #                 values:
-  #                 - nuc3
-  #       volumeClaimTemplates:
-  #         - metadata:
-  #             name: rook-ceph-nuc3
-  #           spec:
-  #             resources:
-  #               requests:
-  #                 storage: 800Gi
-  #             storageClassName: block-storage
-  #             volumeMode: Block
-  #             volumeName: rook-ceph-nuc3
-  #             accessModes:
-  #               - ReadWriteOnce
   resources:
     mgr:
       limits:

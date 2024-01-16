@@ -74,7 +74,7 @@ jobs:
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        helmfile --selector ${{ matrix.helmfile_label }} diff
+        helmfile --selector ${{ matrix.helmfile_label }} diff --include-needs
 
     - name: helmfile apply
       if: github.ref == 'refs/heads/main'
@@ -84,7 +84,7 @@ jobs:
         set -e
         echo $ENCRYPTION_KEY | base64 --decode > encryption_key.gpg
         gpg --import encryption_key.gpg
-        helmfile --selector ${{ matrix.helmfile_label }} apply
+        helmfile --selector ${{ matrix.helmfile_label }} apply --include-needs
 
   helmfile_completed:
     needs: [build]
