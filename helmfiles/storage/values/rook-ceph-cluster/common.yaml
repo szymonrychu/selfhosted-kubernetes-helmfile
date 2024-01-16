@@ -1,5 +1,8 @@
 operatorNamespace: rook-ceph
 
+monitoring:
+  enabled: true
+
 cephClusterSpec:
   mon:
     count: 3
