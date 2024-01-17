@@ -2,11 +2,13 @@ config:
   userName: szymonri
   domain: code.szymonrichert.pl
 
-  clientId: code-server
-  redirectUrl: https://code.szymonrichert.pl/oauth2/callback
-  realmUrl: https://auth.szymonrichert.pl/realms/master
-  cookieName: oauth2-authorization-cookie
-  cookieDomain: code.szymonrichert.pl
+oauth2Proxy:
+  config:
+    clientId: code-server
+    redirectUrl: https://code.szymonrichert.pl/oauth2/callback
+    realmUrl: https://auth.szymonrichert.pl/realms/master
+    cookieName: oauth2-authorization-cookie
+    cookieDomain: code.szymonrichert.pl
 
 ingress:
   enabled: true
