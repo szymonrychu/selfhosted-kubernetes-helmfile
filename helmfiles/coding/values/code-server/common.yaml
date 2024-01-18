@@ -2,6 +2,16 @@ config:
   userName: szymonri
   domain: code.szymonrichert.pl
 
+extraEntrypointScripts:
+  01-init-kubeconfig.sh: |
+    #!/bin/bash
+    mkdir -p "/home/${USER_NAME}/.kube"
+    if [[ ! -e "/home/${USER_NAME}/.kube/config" ]]; then
+      cp -f /secrets/kube-config.yaml "/home/${USER_NAME}/.kube/config"
+      chown "${USER_UID}:${USER_GID}" "/home/${USER_NAME}/.kube/config"
+    fi
+    chmod 0600 "/home/${USER_NAME}/.kube/config"
+
 oauth2Proxy:
   config:
     clientId: code-server
