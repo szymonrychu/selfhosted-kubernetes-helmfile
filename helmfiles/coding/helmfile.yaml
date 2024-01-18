@@ -31,7 +31,7 @@ templates:
 releases:
 
 - name: code-server
-  version: 0.0.19
+  version: 0.0.20
   chart: szymonrychu/code-server-oauth2
   namespace: code-server
   labels:
