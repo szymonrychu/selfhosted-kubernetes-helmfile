@@ -9,8 +9,9 @@ extraEntrypointScripts:
     if [[ ! -e "/home/${USER_NAME}/.kube/config" ]]; then
       cp -f /secrets/kube-config.yaml "/home/${USER_NAME}/.kube/config"
       chown "${USER_UID}:${USER_GID}" "/home/${USER_NAME}/.kube/config"
+
     fi
-    chmod 0600 "/home/${USER_NAME}/.kube/config"
+    echo "chmod 0600 /home/${USER_NAME}/.kube/config" >> /home/${USER_NAME}/.zshrc
 
 oauth2Proxy:
   config:
