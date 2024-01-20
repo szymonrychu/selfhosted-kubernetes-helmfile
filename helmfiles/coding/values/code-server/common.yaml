@@ -3,16 +3,16 @@ config:
   domain: code.szymonrichert.pl
 
 extraEntrypointScripts:
-  00-00.sh: |
-    #!/bin/bash
-    env
   01-init-kubeconfig.sh: |
     #!/bin/bash
+    
     mkdir -p "/home/${USER_NAME}/.kube"
     if [[ ! -e "/home/${USER_NAME}/.kube/config" ]]; then
       cp -f /secrets/kube-config.yaml "/home/${USER_NAME}/.kube/config"
     fi
-    echo "chmod 0600 /home/${USER_NAME}/.kube/config" >> /home/${USER_NAME}/.zshrc
+
+    grep "chmod 0600 /home/${USER_NAME}/.kube/config" "/home/${USER_NAME}/.zshrc" || \
+      echo "chmod 0600 /home/${USER_NAME}/.kube/config" >> "/home/${USER_NAME}/.zshrc"
 
 oauth2Proxy:
   config:
