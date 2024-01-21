@@ -33,7 +33,7 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.0.5
+  version: 0.0.6
   namespace: media
   labels:
     purpose: media
