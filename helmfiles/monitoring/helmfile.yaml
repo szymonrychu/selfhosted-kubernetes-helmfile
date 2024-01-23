@@ -44,7 +44,7 @@ releases:
 - name: loki
   namespace: monitoring
   chart: grafana/loki-stack
-  version: 2.10.0
+  version: 2.10.1
   labels:
     purpose: monitoring
     application: loki
