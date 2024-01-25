@@ -79,8 +79,7 @@ prometheusOperator:
         memory: 200Mi
 
 grafana:
-  imageRenderer:
-    enabled: true
+  assertNoLeakedSecrets: false
   deploymentStrategy:
     type: Recreate
   securityContext:
