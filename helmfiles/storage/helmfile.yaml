@@ -78,7 +78,7 @@ releases:
 - name: rook-ceph-cluster
   chart: rook-release/rook-ceph-cluster
   namespace: rook-ceph
-  version: v1.13.2
+  version: v1.13.3
   needs:
   - storage-system/snapshot-controller
   - rook-ceph/rook-ceph
