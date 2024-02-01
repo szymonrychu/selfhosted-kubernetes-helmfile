@@ -15,6 +15,9 @@ config:
 podSecurityContext:
   fsGroup: 1000
 
+priorityClassName:
+  homeassistant: system-cluster-critical
+
 securityContexts:
   # homeassistant:
   #   capabilities:
