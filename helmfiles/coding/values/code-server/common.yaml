@@ -21,6 +21,13 @@ oauth2Proxy:
     realmUrl: https://auth.szymonrichert.pl/realms/master
     cookieName: oauth2-authorization-cookie
     cookieDomain: code.szymonrichert.pl
+  resources:
+    requests:
+      memory: 396Mi
+      cpu: 10m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 
 ingress:
   enabled: true

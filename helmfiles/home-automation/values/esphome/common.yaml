@@ -44,7 +44,10 @@ securityContext:
 resources:
   requests:
     cpu: 10m
-    memory: 320Mi
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
 
 
 persistence:

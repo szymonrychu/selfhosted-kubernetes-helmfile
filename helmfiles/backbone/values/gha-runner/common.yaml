@@ -1,4 +1,12 @@
-replicaCount: 3
+replicaCount: 1
+
+resources:
+  requests:
+    memory: 128Mi
+    cpu: 10m
+  limits:
+    memory: 1Gi
+    cpu: 1000m
 
 config:
   githubOwner: szymonrychu

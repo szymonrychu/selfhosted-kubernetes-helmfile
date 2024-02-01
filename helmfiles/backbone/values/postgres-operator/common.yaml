@@ -7,6 +7,14 @@ configKubernetes:
   enable_pod_antiaffinity: true
   enable_readiness_probe: true
 
+resources:
+  requests:
+    memory: 64Mi
+    cpu: 10m
+  limits:
+    memory: 64Mi
+    cpu: 10m
+
 # configAwsOrGcp:
 #   # Additional Secret (aws or gcp credentials) to mount in the pod
 #   # additional_secret_mount: "some-secret-name"

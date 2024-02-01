@@ -11,8 +11,8 @@ configuration:
 
 resources:
   requests:
-    memory: 64Mi
+    memory: 256Mi
     cpu: 10m
   limits:
-    memory: 64Mi
-    cpu: 10m
+    memory: 256Mi
+    cpu: 300m

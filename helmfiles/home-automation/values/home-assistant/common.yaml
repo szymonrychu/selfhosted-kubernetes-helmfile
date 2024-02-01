@@ -81,24 +81,45 @@ ingress:
 
 resources:
   homeassistant:
-    limits:
-      cpu: 500m
-      memory: 1Gi
     requests:
       cpu: 10m
       memory: 320Mi
-  initJinjaRenderer:
     limits:
+      cpu: 500m
+      memory: 1Gi
+  openwakeword:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 256Gi
+  piper:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 256Gi
+  whisper:
+    requests:
+      cpu: 10m
+      memory: 396Mi
+    limits:
+      cpu: 500m
+      memory: 512Gi
+  initJinjaRenderer:
+    requests:
       cpu: 100m
       memory: 128Mi
-    requests:
+    limits:
       cpu: 100m
       memory: 128Mi
   initWaitForPostgres:
-    limits:
+    requests:
       cpu: 100m
       memory: 128Mi
-    requests:
+    limits:
       cpu: 100m
       memory: 128Mi
 

@@ -100,32 +100,26 @@ cephClusterSpec:
     pgHealthCheckTimeout: 0
   resources:
     mgr:
-      limits:
-        cpu: "1000m"
-        memory: "1Gi"
       requests:
-        cpu: "10m"
-        memory: "128Mi"
-    mon:
+        cpu: "100m"
+        memory: "512Mi"
       limits:
         cpu: "1000m"
         memory: "1Gi"
+    mon:
       requests:
         cpu: "50m"
-        memory: "128Mi"
+        memory: "396Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
     osd:
+      requests:
+        cpu: "100m"
+        memory: "796Mi"
       limits:
         cpu: "2000m"
         memory: "4Gi"
-      requests:
-        cpu: "10m"
-        memory: "128Mi"
-    prepareosd:
-      # limits: It is not recommended to set limits on the OSD prepare job since it's a one-time burst for memory
-      # that must be allowed to complete without an OOM kill
-      requests:
-        cpu: "200m"
-        memory: "50Mi"
     mgr-sidecar:
       limits:
         cpu: "200m"
@@ -174,12 +168,12 @@ cephFileSystems:
         activeCount: 1
         activeStandby: true
         resources:
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
           limits:
             cpu: "500m"
             memory: "1Gi"
-          requests:
-            cpu: "100m"
-            memory: "256Mi"
         priorityClassName: system-cluster-critical
     storageClass:
       enabled: true
@@ -198,32 +192,6 @@ cephFileSystems:
         csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
         csi.storage.k8s.io/fstype: ext4
 
-# cephBlockPools: []
+cephBlockPools: []
 
-# cephObjectStores:
-#   - name: ceph-objectstore
-#     # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
-#     spec:
-#       metadataPool:
-#         failureDomain: host
-#         replicated:
-#           size: 3
-#       dataPool:
-#         failureDomain: host
-#         erasureCoded:
-#           dataChunks: 2
-#           codingChunks: 1
-#       preservePoolsOnDelete: true
-#       gateway:
-#         port: 80
-#         resources:
-#           limits:
-#             cpu: "500m"
-#             memory: "1Gi"
-#           requests:
-#             cpu: "100m"
-#             memory: "256Mi"
-#         instances: 1
-#         priorityClassName: system-cluster-critical
-#     storageClass:
-#       enabled: false
+cephObjectStores: []
