@@ -41,7 +41,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.10.12
+  version: 0.10.13
   namespace: home-automation
   labels:
     purpose: home-automation
