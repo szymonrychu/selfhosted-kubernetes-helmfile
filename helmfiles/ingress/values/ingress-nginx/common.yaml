@@ -5,7 +5,7 @@ controller:
   updateStrategy:
     type: Recreate
 
-  priorityClassName: system-node-critical
+  priorityClassName: system-cluster-critical
   replicaCount: 3
 
   resources:

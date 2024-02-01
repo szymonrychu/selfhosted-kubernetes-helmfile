@@ -82,7 +82,7 @@ grafana:
   assertNoLeakedSecrets: false
   deploymentStrategy:
     type: Recreate
-  priorityClassName: system-node-critical
+  priorityClassName: system-cluster-critical
   securityContext:
     fsGroup: 1000
     runAsGroup: 1000
@@ -173,7 +173,7 @@ prometheus:
   service:
     sessionAffinity: "ClientIP"
   prometheusSpec:
-    priorityClassName: system-node-critical
+    priorityClassName: system-cluster-critical
     replicas: 3
     ruleSelector: {}
     ruleNamespaceSelector: {}
