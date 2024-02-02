@@ -30,7 +30,7 @@ podSecurityContext:
 
 oauth2proxy:
   config:
-    clientId: qbittorrent
+    clientId: files
     redirectUrl: https://files.szymonrichert.pl/oauth2/callback
     realmUrl: https://auth.szymonrichert.pl/realms/master
     cookieName: oauth2-authorization-cookie

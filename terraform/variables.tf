@@ -10,6 +10,30 @@ variable "qbittorrent_client_secret" {
   default     = null
 }
 
+variable "files_client_secret" {
+  description = "Client secret for 'files' client"
+  type        = string
+  default     = null
+}
+
+variable "jackett_client_secret" {
+  description = "Client secret for 'jackett' client"
+  type        = string
+  default     = null
+}
+
+variable "radarr_client_secret" {
+  description = "Client secret for 'radarr' client"
+  type        = string
+  default     = null
+}
+
+variable "sonarr_client_secret" {
+  description = "Client secret for 'sonarr' client"
+  type        = string
+  default     = null
+}
+
 variable "code_server_client_secret" {
   description = "Client secret for 'code-server' client"
   type        = string

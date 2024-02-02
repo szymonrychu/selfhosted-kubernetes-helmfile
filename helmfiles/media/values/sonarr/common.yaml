@@ -30,7 +30,7 @@ resources:
 
 oauth2proxy:
   config:
-    clientId: qbittorrent
+    clientId: sonarr
     redirectUrl: https://sonarr.szymonrichert.pl/oauth2/callback
     realmUrl: https://auth.szymonrichert.pl/realms/master
     cookieName: oauth2-authorization-cookie
