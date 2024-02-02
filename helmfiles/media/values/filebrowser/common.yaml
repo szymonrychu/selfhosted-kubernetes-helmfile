@@ -1,0 +1,48 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: files.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: files-tls
+      hosts:
+        - files.szymonrichert.pl
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  # runAsNonRoot: true
+  runAsUser: 1000
+
+# resources:
+#   limits:
+#     cpu: "2"
+#     memory: 1024Mi
+#   requests:
+#     cpu: 100m
+#     memory: 128Mi
+
+oauth2proxy:
+  config:
+    clientId: qbittorrent
+    redirectUrl: https://files.szymonrichert.pl/oauth2/callback
+    realmUrl: https://auth.szymonrichert.pl/realms/master
+    cookieName: oauth2-authorization-cookie
+    cookieDomain: files.szymonrichert.pl
+
+persistence:
+  config:
+    enabled: true
+    storageClass: ceph
+    type: pvc
+    size: 1Gi
+  media:
+    enabled: true
+    type: hostPath
+    hostPath: /samba

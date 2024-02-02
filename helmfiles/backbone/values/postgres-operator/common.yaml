@@ -15,22 +15,13 @@ resources:
     memory: 64Mi
     cpu: 10m
 
-# configAwsOrGcp:
-#   # Additional Secret (aws or gcp credentials) to mount in the pod
-#   # additional_secret_mount: "some-secret-name"
-
-#   # Path to mount the above Secret in the filesystem of the container(s)
-#   # additional_secret_mount_path: "/some/dir"
-
-#   # AWS region used to store EBS volumes
-#   aws_region: eu-central-1
-
-#   # GCP credentials that will be used by the operator / pods
-#   # gcp_credentials: ""
-
-#   # AWS IAM role to supply in the iam.amazonaws.com/role annotation of Postgres pods
-#   # kube_iam_role: ""
-
-#   log_s3_bucket: database-backup-szymonrychu
-#   AKIAZU2E2AB4CNRX3OYR
-#   VmdyYk7H5DEB4IHAma5cejyF1SCpef1lNQEO9uDC
+configLogicalBackup:
+  logical_backup_cpu_limit: "100m"
+  logical_backup_cpu_request: "10m"
+  logical_backup_memory_limit: "256Mi"
+  logical_backup_memory_request: "128Mi"
+  logical_backup_job_prefix: "logical-backup-"
+  logical_backup_provider: "s3"
+  logical_backup_s3_bucket: "database-backup-szymonrychu"
+  logical_backup_s3_region: "eu-central-1"
+  logical_backup_s3_retention_time: 7days

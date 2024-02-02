@@ -26,7 +26,3 @@ spec:
               number: 32400
         path: /
         pathType: Prefix
-  # tls:
-  # - hosts:
-  #   - plex.szymonrichert.pl
-  #   secretName: qbt-tls

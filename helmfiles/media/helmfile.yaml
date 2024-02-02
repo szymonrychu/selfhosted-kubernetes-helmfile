@@ -33,7 +33,7 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.4.4
+  version: 0.0.6
   namespace: media
   labels:
     purpose: media
@@ -65,6 +65,15 @@ releases:
   labels:
     purpose: media
     application: jackett
+  <<: *default
+
+- name: filebrowser
+  chart: szymonrychu/filebrowser-oauth2
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: filebrowser
   <<: *default
 
   

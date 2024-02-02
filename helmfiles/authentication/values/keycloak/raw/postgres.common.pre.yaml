@@ -49,8 +49,7 @@ spec:
       cpu: 500m
       memory: 500Mi
 
-  enableLogicalBackup: false
-  # logicalBackupSchedule: "30 00 * * *"
+  enableLogicalBackup: true
 
   maintenanceWindows:
     - 01:00-06:00  #UTC
