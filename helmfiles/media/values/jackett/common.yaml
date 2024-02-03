@@ -29,12 +29,12 @@ resources:
     memory: 128Mi
 
 oauth2proxy:
-  config:
-    clientId: jackett
-    redirectUrl: https://jackett.szymonrichert.pl/oauth2/callback
-    realmUrl: https://auth.szymonrichert.pl/realms/master
-    cookieName: oauth2-authorization-cookie
-    cookieDomain: jackett.szymonrichert.pl
+  clientId: jackett
+  redirectUrl: https://jackett.szymonrichert.pl/oauth2/callback
+  realmUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: jackett.szymonrichert.pl
+  allowedGroups: jackett
 
 persistence:
   config:

@@ -44,12 +44,7 @@ resource "keycloak_openid_client_default_scopes" "code-server" {
   ]
 }
 
-resource "keycloak_group" "code-server_admin" {
+resource "keycloak_group" "code-server" {
   realm_id = data.keycloak_realm.master.id
-  name     = "code-server-admin"
-}
-
-resource "keycloak_group" "code-server_user" {
-  realm_id = data.keycloak_realm.master.id
-  name     = "code-server-user"
+  name     = "code-server"
 }

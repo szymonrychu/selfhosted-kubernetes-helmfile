@@ -33,7 +33,7 @@ releases:
 
 - name: qbittorrent
   chart: szymonrychu/qbittorrent
-  version: 0.0.6
+  version: 1.0.2
   namespace: media
   labels:
     purpose: media
@@ -42,7 +42,7 @@ releases:
 
 - name: sonarr
   chart: szymonrychu/sonarr
-  version: 0.0.2
+  version: 1.0.3
   namespace: media
   labels:
     purpose: media
@@ -51,7 +51,7 @@ releases:
 
 - name: radarr
   chart: szymonrychu/radarr
-  version: 0.0.2
+  version: 1.0.2
   namespace: media
   labels:
     purpose: media
@@ -60,7 +60,7 @@ releases:
 
 - name: jackett
   chart: szymonrychu/jackett
-  version: 0.0.1
+  version: 1.0.2
   namespace: media
   labels:
     purpose: media
@@ -69,11 +69,9 @@ releases:
 
 - name: filebrowser
   chart: szymonrychu/filebrowser-oauth2
-  version: 0.0.1
+  version: 1.0.1
   namespace: media
   labels:
     purpose: media
     application: filebrowser
   <<: *default
-
-  

@@ -41,7 +41,6 @@ resource "keycloak_openid_client_default_scopes" "radarr" {
     "email",
     "aud",
     keycloak_openid_client_scope.groups.name,
-    keycloak_openid_client_scope.groups.name,
   ]
 }
 

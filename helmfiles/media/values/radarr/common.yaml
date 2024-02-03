@@ -29,12 +29,12 @@ resources:
     memory: 128Mi
 
 oauth2proxy:
-  config:
-    clientId: radarr
-    redirectUrl: https://radarr.szymonrichert.pl/oauth2/callback
-    realmUrl: https://auth.szymonrichert.pl/realms/master
-    cookieName: oauth2-authorization-cookie
-    cookieDomain: radarr.szymonrichert.pl
+  clientId: radarr
+  redirectUrl: https://radarr.szymonrichert.pl/oauth2/callback
+  realmUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: radarr.szymonrichert.pl
+  allowedGroups: radarr
 
 persistence:
   config:
