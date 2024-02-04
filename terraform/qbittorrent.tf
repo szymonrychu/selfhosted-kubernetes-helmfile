@@ -39,7 +39,6 @@ resource "keycloak_openid_client_default_scopes" "qbittorrent" {
   default_scopes = [
     "profile",
     "email",
-    "aud",
     keycloak_openid_client_scope.groups.name,
   ]
 }
