@@ -42,7 +42,7 @@ releases:
 
 - name: sonarr
   chart: szymonrychu/sonarr
-  version: 1.0.3
+  version: 1.0.4
   namespace: media
   labels:
     purpose: media
@@ -51,7 +51,7 @@ releases:
 
 - name: radarr
   chart: szymonrychu/radarr
-  version: 1.0.2
+  version: 1.0.3
   namespace: media
   labels:
     purpose: media
@@ -60,7 +60,7 @@ releases:
 
 - name: jackett
   chart: szymonrychu/jackett
-  version: 1.0.2
+  version: 1.0.3
   namespace: media
   labels:
     purpose: media
