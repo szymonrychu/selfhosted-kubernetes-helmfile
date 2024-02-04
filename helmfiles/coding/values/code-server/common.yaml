@@ -5,7 +5,7 @@ config:
 extraEntrypointScripts:
   01-init-kubeconfig.sh: |
     #!/bin/bash
-    
+
     mkdir -p "/home/${USER_NAME}/.kube"
     if [[ ! -e "/home/${USER_NAME}/.kube/config" ]]; then
       cp -f /secrets/kube-config.yaml "/home/${USER_NAME}/.kube/config"
@@ -14,13 +14,13 @@ extraEntrypointScripts:
     grep "chmod 0600 /home/${USER_NAME}/.kube/config" "/home/${USER_NAME}/.zshrc" || \
       echo "chmod 0600 /home/${USER_NAME}/.kube/config" >> "/home/${USER_NAME}/.zshrc"
 
-oauth2Proxy:
-  config:
-    clientId: code-server
-    redirectUrl: https://code.szymonrichert.pl/oauth2/callback
-    realmUrl: https://auth.szymonrichert.pl/realms/master
-    cookieName: oauth2-authorization-cookie
-    cookieDomain: code.szymonrichert.pl
+oauth2proxy:
+  clientId: code-server
+  redirectUrl: https://code.szymonrichert.pl/oauth2/callback
+  realmUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: code.szymonrichert.pl
+  allowedGroups: code-server
   resources:
     requests:
       memory: 396Mi
