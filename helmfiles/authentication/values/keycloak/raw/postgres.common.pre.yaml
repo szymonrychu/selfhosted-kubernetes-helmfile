@@ -13,6 +13,7 @@ spec:
   dockerImage: ghcr.io/zalando/spilo-15:2.1-p9
   teamId: keycloak
   numberOfInstances: 1
+  podPriorityClassName: system-cluster-critical
   users:  # Application/Robot users
     superuser:
     - superuser
