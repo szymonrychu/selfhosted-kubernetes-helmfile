@@ -156,7 +156,7 @@ grafana:
       root_url: https://grafana.szymonrichert.pl/
     smtp:
       enabled: true
-      host: "pro.eu.turbo-smtp.com:465"
+      host: "email-smtp.eu-central-1.amazonaws.com:465"
       from_address: "monitoring@szymonrichert.pl"
     database:
       type: postgres
