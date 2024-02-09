@@ -129,17 +129,17 @@ resources:
 persistence:
   homeassistant:
     enabled: true
-    storageClass: nas-nfs
+    storageClass: ceph
     accessMode: ReadWriteMany
     size: 8Gi
   piper:
     enabled: true
-    storageClass: nas-nfs
+    storageClass: ceph
     accessMode: ReadWriteMany
     size: 8Gi
   whisper:
     enabled: true
-    storageClass: nas-nfs
+    storageClass: ceph
     accessMode: ReadWriteMany
     size: 8Gi
 
@@ -168,4 +168,4 @@ zalandoPostgresql:
   enabled: true
   persistence:
     size: 20Gi
-    storageClass: nas-nfs
+    storageClass: ceph
