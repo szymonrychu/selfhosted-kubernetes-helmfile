@@ -15,6 +15,9 @@ resources:
     memory: 64Mi
     cpu: 10m
 
+configAwsOrGcp:
+  wal_s3_bucket: "database-backup-szymonrychu"
+
 configLogicalBackup:
   logical_backup_cpu_limit: "100m"
   logical_backup_cpu_request: "10m"
@@ -25,3 +28,5 @@ configLogicalBackup:
   logical_backup_s3_bucket: "database-backup-szymonrychu"
   logical_backup_s3_region: "eu-central-1"
   logical_backup_s3_retention_time: 7days
+
+  
