@@ -39,7 +39,7 @@ oauth2proxy:
 persistence:
   config:
     enabled: true
-    storageClass: nas-nfs
+    storageClass: ceph
     type: pvc
     size: 10Gi
   media:

@@ -68,7 +68,7 @@ prometheusOperator:
     requests:
       cpu: 100m
       memory: 32Mi
-    
+
   prometheusConfigReloader:
     resources:
       limits:
@@ -198,7 +198,7 @@ prometheus:
         cpu: 300m
         memory: 1536Mi
     storageSpec:
-      volumeClaimTemplate:    
+      volumeClaimTemplate:
         spec:
           accessModes: [ "ReadWriteOnce" ]
           storageClassName: local-path

@@ -39,7 +39,7 @@ spec:
 
   volume:
     size: 5Gi
-    storageClass: nas-nfs
+    storageClass: ceph
 
   enableShmVolume: true
   resources:
