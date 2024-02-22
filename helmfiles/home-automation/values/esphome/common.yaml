@@ -23,17 +23,6 @@ oauth2proxy:
   cookieDomain: esphome.szymonrichert.pl
   allowedGrous: esphome
 
-# affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#       - matchExpressions:
-#         - key: kubernetes.io/hostname
-#           operator: In
-#           values:
-#           - laptop1
-
-
 securityContext:
   privileged: true
   # runAsUser: 1000

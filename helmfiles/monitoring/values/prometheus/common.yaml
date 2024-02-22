@@ -118,10 +118,10 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    storageClassName: nas-nfs
+    storageClassName: ceph
     accessModes:
       - ReadWriteOnce
-    size: 2Gi
+    size: 5Gi
   ingress:
     enabled: true
     ingressClassName: nginx
