@@ -67,7 +67,7 @@ releases:
 - name: rook-ceph
   chart: rook-release/rook-ceph
   namespace: rook-ceph
-  version: v1.13.4
+  version: v1.13.5
   needs:
   - storage-system/snapshot-controller
   labels:
