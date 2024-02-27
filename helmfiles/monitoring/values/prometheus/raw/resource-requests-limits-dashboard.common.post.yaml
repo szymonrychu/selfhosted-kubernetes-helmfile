@@ -462,7 +462,7 @@ data:
       },
       "timepicker": {},
       "timezone": "",
-      "title": "Resource Usate vs Requests and Limits",
+      "title": "Resource Usage vs Requests and Limits",
       "uid": "c9692a1d-5ec0-451b-976e-974dc0307334",
       "version": 2,
       "weekStart": ""
