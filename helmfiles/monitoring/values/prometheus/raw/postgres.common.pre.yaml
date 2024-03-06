@@ -37,7 +37,7 @@ spec:
 #    value: my-custom-bucket
 
   volume:
-    size: 20Gi
+    size: 50Gi
     storageClass: ceph
 
   enableShmVolume: true
