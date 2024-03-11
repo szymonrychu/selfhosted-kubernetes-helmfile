@@ -6,7 +6,7 @@ metadata:
   namespace: media
 spec:
   type: ExternalName
-  externalName: 192.168.1.32
+  externalName: 192.168.1.72
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -16,13 +16,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: plex.szymonrichert.pl
+  - host: jellyfin.szymonrichert.pl
     http:
       paths:
       - backend:
           service:
             name: plex
             port:
-              number: 32400
+              number: 8096
         path: /
         pathType: Prefix
