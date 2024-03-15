@@ -131,7 +131,7 @@ persistence:
     enabled: true
     storageClass: ceph
     accessMode: ReadWriteMany
-    size: 8Gi
+    size: 50Gi
   piper:
     enabled: true
     storageClass: ceph
