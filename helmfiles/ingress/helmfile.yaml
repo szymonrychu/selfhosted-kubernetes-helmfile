@@ -73,7 +73,7 @@ releases:
 
 - name: external-dns
   chart: bitnami/external-dns
-  version: 6.36.1
+  version: 6.38.0
   namespace: ingress-system
   needs:
   - ingress-system/ingress-nginx
