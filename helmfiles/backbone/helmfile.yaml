@@ -5,8 +5,8 @@ repositories:
   url: https://kubereboot.github.io/charts
 - name: szymonrychu
   url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
-- name: postgres-operator-charts
-  url: https://opensource.zalando.com/postgres-operator/charts/postgres-operator
+- name: cnpg
+  url: https://cloudnative-pg.github.io/charts
 templates:
   default: &default
     wait: true
@@ -66,12 +66,12 @@ releases:
     application: apt-autoupgrade
   <<: *default
 
-- name: postgres-operator
-  chart: postgres-operator-charts/postgres-operator
+- name: cloudnative-pg
+  chart: cnpg/cloudnative-pg
   namespace: postgres-operator
-  version: 1.11.0
+  version: 0.20.2
   force: true
   labels:
     purpose: backbone
-    application: postgres-operator
+    application: cloudnative-pg
   <<: *operators
