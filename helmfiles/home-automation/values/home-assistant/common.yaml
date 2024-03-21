@@ -8,7 +8,7 @@ config:
     trustedProxies:
       - 0.0.0.0/0
   postgresql:
-    enabled: true
+    enabled: false
   prometheus:
     enabled: true
 
