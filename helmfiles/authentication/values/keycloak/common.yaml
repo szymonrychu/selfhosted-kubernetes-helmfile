@@ -78,11 +78,11 @@ metrics:
     enabled: true
 
 externalDatabase:
-  host: keycloak-postgresql
+  host: keycloak-database-cluster-rw
   port: 5432
   user: keycloak
   database: keycloak
-  existingSecret: keycloak.keycloak-postgresql.credentials.postgresql.acid.zalan.do
+  existingSecret: keycloak-database-cluster-app
   existingSecretPasswordKey: password
 
 postgresql:

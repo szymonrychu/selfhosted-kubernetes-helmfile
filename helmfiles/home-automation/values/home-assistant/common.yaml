@@ -165,7 +165,7 @@ affinity:
       topologyKey: "kubernetes.io/hostname"
 
 zalandoPostgresql:
-  enabled: true
+  enabled: false
   persistence:
     size: 20Gi
     storageClass: ceph

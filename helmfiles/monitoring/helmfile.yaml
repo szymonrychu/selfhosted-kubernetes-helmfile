@@ -3,6 +3,8 @@ repositories:
   url: https://prometheus-community.github.io/helm-charts
 - name: grafana
   url: https://grafana.github.io/helm-charts
+- name: cnpg
+  url: https://cloudnative-pg.github.io/charts
 templates:
   default: &default
     disableValidation: true
@@ -32,10 +34,22 @@ templates:
 
 releases:
 
+- name: grafana-database
+  chart: cnpg/cluster
+  namespace: monitoring
+  version: 0.0.3
+  force: true
+  labels:
+    purpose: monitoring
+    application: grafana-database
+  <<: *default
+
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
   version: 57.0.2
+  needs:
+  - monitoring/grafana-database
   labels:
     purpose: monitoring
     application: prometheus

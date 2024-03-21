@@ -4,10 +4,6 @@ terraform {
       source  = "mrparkers/keycloak"
       version = ">=4.3.1"
     }
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = ">=3.12.1"
-    }
     aws = {
       source  = "hashicorp/aws"
       version = ">=4.9.0"

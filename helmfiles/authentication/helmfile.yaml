@@ -1,6 +1,8 @@
 repositories:
 - name: bitnami
   url: https://charts.bitnami.com/bitnami
+- name: cnpg
+  url: https://cloudnative-pg.github.io/charts
 templates:
   operators-default:
     disableValidation: true
@@ -30,11 +32,23 @@ templates:
 
 releases:
 
+- name: keycloak-database
+  chart: cnpg/cluster
+  namespace: authentication
+  version: 0.0.3
+  force: true
+  labels:
+    purpose: authentication
+    application: keycloak-database
+  <<: *default
+
 - name: keycloak
   timeout: 2400
   version: 19.3.0
   chart: bitnami/keycloak
   namespace: authentication
+  needs:
+  - authentication/keycloak-database
   labels:
     purpose: authentication
     application: keycloak

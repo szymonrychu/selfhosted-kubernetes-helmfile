@@ -160,14 +160,14 @@ grafana:
       from_address: "monitoring@szymonrichert.pl"
     database:
       type: postgres
-      host: grafana-postgresql:5432
+      host: grafana-database-cluster-rw:5432
       user: grafana
       password: "${POSTGRESQL_PASSWORD}"
       ssl_mode: require
   envValueFrom:
     POSTGRESQL_PASSWORD:
       secretKeyRef:
-        name: grafana.grafana-postgresql.credentials.postgresql.acid.zalan.do
+        name: grafana-database-cluster-app
         key: password
 prometheus:
   service:
