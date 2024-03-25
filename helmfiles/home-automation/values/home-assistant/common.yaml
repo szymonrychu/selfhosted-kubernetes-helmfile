@@ -1,16 +1,25 @@
 
-config:
-  localVoiceProcessing:
-    enabled: true
-    whisperModel: small-int8
-    whisperBeamSize: 8
-  network:
-    trustedProxies:
-      - 0.0.0.0/0
-  postgresql:
-    enabled: false
-  prometheus:
-    enabled: true
+localVoiceProcessing:
+  enabled: true
+  whisperModel: small-int8
+  whisperBeamSize: 8
+
+network:
+  trustedProxies:
+    - 0.0.0.0/0
+
+postgresql:
+  enabled: true
+  host: home-assistant-database-cluster-rw
+  usernameSecret:
+    name: home-assistant-database-cluster-app
+    key: username
+  passwordSecret:
+    name: home-assistant-database-cluster-app
+    key: password
+
+prometheus:
+  enabled: true
 
 podSecurityContext:
   fsGroup: 1000
@@ -163,9 +172,3 @@ affinity:
           values:
           - home-assistant-influxdb
       topologyKey: "kubernetes.io/hostname"
-
-zalandoPostgresql:
-  enabled: false
-  persistence:
-    size: 20Gi
-    storageClass: ceph

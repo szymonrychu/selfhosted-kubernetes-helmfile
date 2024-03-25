@@ -39,10 +39,22 @@ releases:
     application: esphome
   <<: *default
 
+- name: home-assistant-database
+  chart: cnpg/cluster
+  namespace: home-automation
+  version: 0.0.3
+  force: true
+  labels:
+    purpose: home-automation
+    application: home-assistant-database
+  <<: *default
+
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.10.23
+  version: 0.11.0
   namespace: home-automation
+  needs:
+  - home-automation/home-assistant-database
   labels:
     purpose: home-automation
     application: home-assistant
