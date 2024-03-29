@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: requests-limits-dashboard
+  name: nas-dashboard
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
