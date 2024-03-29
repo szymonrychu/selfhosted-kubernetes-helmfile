@@ -75,3 +75,12 @@ releases:
     purpose: media
     application: filebrowser
   <<: *default
+
+- name: jellyfin
+  chart: szymonrychu/jellyfin
+  version: 0.5.0
+  namespace: media
+  labels:
+    purpose: media
+    application: jellyfin
+  <<: *default

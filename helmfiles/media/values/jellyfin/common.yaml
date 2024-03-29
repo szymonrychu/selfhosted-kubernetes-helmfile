@@ -1,0 +1,81 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: jellyfin.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: jellyfin-tls
+      hosts:
+        - jellyfin.szymonrichert.pl
+
+nvidiaVisibleDevice: GPU-2e5cba96-e2d4-57ca-8b12-7652194abf17
+
+
+podSecurityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  # runAsNonRoot: true
+  runAsUser: 1000
+
+# hostNetwork: true
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 256Mi
+  limits:
+    cpu: "8"
+    memory: 12Gi
+
+persistence:
+  config:
+    enabled: true
+    storageClass: ceph
+    type: pvc
+    size: 10Gi
+  media:
+    enabled: true
+    type: hostPath
+    hostPath: /samba
+
+  # transcoding:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /config/transcoding-temp
+  #   hostPath: /k8s-data/jellyfin-transcoding-temp
+  # nvidia-modeset:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia-modeset
+  #   hostPath: /dev/nvidia-modeset
+  # nvidia0:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia0
+  #   hostPath: /dev/nvidia0
+  # nvidia1:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidia1
+  #   hostPath: /dev/nvidia1
+  # nvidiactl:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvidiactl
+  #   hostPath: /dev/nvidiactl
+  # nvram:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /dev/nvram
+  #   hostPath: /dev/nvram
+  # libcuda:
+  #   enabled: true
+  #   type: hostPath
+  #   mountPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
+  #   hostPath: /usr/lib/x86_64-linux-gnu/libcuda.so.1
