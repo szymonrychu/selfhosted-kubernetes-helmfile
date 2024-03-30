@@ -55,6 +55,17 @@ releases:
     application: prometheus
   <<: *default
 
+- name: smartctl-exporter
+  namespace: monitoring
+  chart: prometheus-community/prometheus-smartctl-exporter
+  version: 0.7.1
+  needs:
+  - monitoring/prometheus
+  labels:
+    purpose: monitoring
+    application: smartctl-exporter
+  <<: *default
+
 - name: loki
   namespace: monitoring
   chart: grafana/loki-stack
