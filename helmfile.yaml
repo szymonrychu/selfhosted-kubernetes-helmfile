@@ -3,6 +3,7 @@ helmfiles:
 - path: helmfiles/storage/helmfile.yaml
 - path: helmfiles/backbone/helmfile.yaml
 - path: helmfiles/monitoring/helmfile.yaml
+- path: helmfiles/security/helmfile.yaml
 - path: helmfiles/authentication/helmfile.yaml
 - path: helmfiles/media/helmfile.yaml
 - path: helmfiles/home-automation/helmfile.yaml

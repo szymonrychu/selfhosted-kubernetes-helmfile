@@ -1,0 +1,40 @@
+repositories:
+- name: cilium
+  url: https://helm.cilium.io
+templates:
+  default: &default
+    disableValidation: true
+    disableValidationOnInstall: true
+    wait: true
+    missingFileHandler: Warn
+    timeout: 600
+    hooks:
+    - events:
+      - prepare
+      - presync
+      - postsync
+      showlogs: true
+      command: ../../.hook.sh
+      args:
+      - monitoring
+      - '{{`{{ .Event.Name }}`}}'
+      - '{{`{{ .Release.Name }}`}}'
+      - '{{`{{ .Release.Namespace }}`}}'
+    values:
+    - values/common.yaml
+    - values/{{`{{ .Environment.Name }}`}}.yaml
+    - values/{{`{{ .Release.Name }}`}}/common.yaml
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.yaml
+    secrets:
+    - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
+
+releases:
+
+- name: tetragon
+  chart: cilium/tetragon
+  namespace: kube-system
+  version: 1.0.3
+  labels:
+    purpose: security
+    application: tetragon
+  <<: *default
