@@ -16,12 +16,16 @@ ingress:
 
 nvidiaVisibleDevice: GPU-2e5cba96-e2d4-57ca-8b12-7652194abf17
 
+securityContext:
+  privileged: true
 
 podSecurityContext:
   fsGroup: 1000
   runAsGroup: 1000
   # runAsNonRoot: true
   runAsUser: 1000
+  supplementalGroups:
+    - 109
 
 # hostNetwork: true
 
@@ -29,16 +33,17 @@ resources:
   requests:
     cpu: 200m
     memory: 256Mi
+    gpu.intel.com/i915: 1
   limits:
     cpu: "8"
     memory: 12Gi
+    gpu.intel.com/i915: 1
 
 persistence:
   config:
     enabled: true
-    storageClass: ceph
-    type: pvc
-    size: 10Gi
+    type: hostPath
+    hostPath: /var/lib/jellyfin
   media:
     enabled: true
     type: hostPath
