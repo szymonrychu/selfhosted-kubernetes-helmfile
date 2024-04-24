@@ -34,6 +34,12 @@ variable "sonarr_client_secret" {
   default     = null
 }
 
+variable "prowlarr_client_secret" {
+  description = "Client secret for 'prowlarr' client"
+  type        = string
+  default     = null
+}
+
 variable "code_server_client_secret" {
   description = "Client secret for 'code-server' client"
   type        = string

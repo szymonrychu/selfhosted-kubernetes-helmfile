@@ -58,6 +58,15 @@ releases:
     application: radarr
   <<: *default
 
+- name: prowlarr
+  chart: szymonrychu/prowlarr
+  version: 0.0.3
+  namespace: media
+  labels:
+    purpose: media
+    application: prowlarr
+  <<: *default
+
 - name: jackett
   chart: szymonrychu/jackett
   version: 1.0.3

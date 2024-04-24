@@ -1,0 +1,37 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: prowlarr.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: prowlarr-tls
+      hosts:
+        - prowlarr.szymonrichert.pl
+
+resources:
+  limits:
+    cpu: "2"
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+oauth2proxy:
+  clientId: prowlarr
+  redirectUrl: https://prowlarr.szymonrichert.pl/oauth2/callback
+  realmUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: prowlarr.szymonrichert.pl
+  allowedGroups: prowlarr
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /var/lib/prowlarr

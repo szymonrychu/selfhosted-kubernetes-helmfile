@@ -70,6 +70,18 @@ output "sonarr_client_secret" {
   sensitive   = true
 }
 
+output "prowlarr_client_id" {
+  description = "'prowlarr' client id"
+  value       = keycloak_openid_client.prowlarr.client_id
+  sensitive   = true
+}
+
+output "prowlarr_client_secret" {
+  description = "'prowlarr' client secret"
+  value       = keycloak_openid_client.prowlarr.client_secret
+  sensitive   = true
+}
+
 output "code_server_client_id" {
   description = "'code-server' client id"
   value       = keycloak_openid_client.code-server.client_id

@@ -44,7 +44,7 @@ controller:
         topologyKey: "kubernetes.io/hostname"
 
   admissionWebhooks:
-    enabled: true
+    enabled: false
     timeoutSeconds: 10
 
   metrics:
