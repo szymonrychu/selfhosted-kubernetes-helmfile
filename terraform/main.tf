@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = ">=4.9.0"
     }
+    grafana = {
+      source = "grafana/grafana"
+      version = ">= 1.28.2"
+    }
   }
 }
 
@@ -20,4 +24,9 @@ provider "keycloak" {
   username  = var.admin_user_username
   password  = var.admin_user_password
   url       = var.keycloak_url
+}
+
+provider "grafana" {
+    url  = var.grafana_url
+    auth = var.grafana_api_key
 }

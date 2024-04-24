@@ -1,0 +1,112 @@
+~ ❯ kubectl get pods -o wide | grep -vE 'nuc4|nas'
+NAME                                             READY   STATUS      RESTARTS      AGE   IP             NODE   NOMINATED NODE   READINESS GATES
+csi-cephfsplugin-7cdtt                           2/2     Running     6 (8d ago)    19d   192.168.1.66   nuc2   <none>           <none>
+csi-cephfsplugin-mvwfr                           2/2     Running     4 (8d ago)    19d   192.168.1.67   nuc3   <none>           <none>
+csi-cephfsplugin-nn26k                           2/2     Running     7 (8d ago)    19d   192.168.1.65   nuc1   <none>           <none>
+csi-cephfsplugin-provisioner-56fc44b89b-zj967    5/5     Running     10 (8d ago)   12d   10.244.2.189   nuc2   <none>           <none>
+csi-rbdplugin-provisioner-d9dbc9999-p56tm        5/5     Running     18 (8d ago)   19d   10.244.2.188   nuc2   <none>           <none>
+csi-rbdplugin-provisioner-d9dbc9999-zv45s        5/5     Running     10 (8d ago)   12d   10.244.0.112   nuc1   <none>           <none>
+csi-rbdplugin-sl9rx                              2/2     Running     6 (8d ago)    19d   192.168.1.66   nuc2   <none>           <none>
+csi-rbdplugin-z7pqh                              2/2     Running     5 (8d ago)    19d   192.168.1.67   nuc3   <none>           <none>
+csi-rbdplugin-zqsd8                              2/2     Running     6 (8d ago)    19d   192.168.1.65   nuc1   <none>           <none>
+rook-ceph-crashcollector-nuc1-84fcfcc5d5-ppnzj   1/1     Running     1 (8d ago)    12d   10.244.0.101   nuc1   <none>           <none>
+rook-ceph-crashcollector-nuc2-5544d865d-4bnl8    1/1     Running     2 (8d ago)    19d   10.244.2.197   nuc2   <none>           <none>
+rook-ceph-crashcollector-nuc3-7bfb869849-jd54r   1/1     Running     2 (8d ago)    19d   10.244.1.6     nuc3   <none>           <none>
+rook-ceph-exporter-nuc1-5cb7764c6-7rwkc          1/1     Running     1 (8d ago)    12d   10.244.0.104   nuc1   <none>           <none>
+rook-ceph-exporter-nuc2-769fbdfd9f-bjdr8         1/1     Running     2 (8d ago)    19d   10.244.2.201   nuc2   <none>           <none>
+rook-ceph-exporter-nuc3-cfdc4c99b-bq5cr          1/1     Running     2 (8d ago)    19d   10.244.1.252   nuc3   <none>           <none>
+rook-ceph-mds-ceph-fs-b-78f846d79f-bvnv7         2/2     Running     2 (8d ago)    12d   10.244.0.100   nuc1   <none>           <none>
+rook-ceph-mgr-a-8fb94c67f-4zshj                  2/2     Running     7 (8d ago)    12d   10.244.2.200   nuc2   <none>           <none>
+rook-ceph-mon-a-6767fc9b47-smzmw                 2/2     Running     4 (8d ago)    19d   10.244.2.191   nuc2   <none>           <none>
+rook-ceph-mon-b-85d7c9b99f-lbthr                 2/2     Running     2 (8d ago)    12d   10.244.0.103   nuc1   <none>           <none>
+rook-ceph-mon-c-5ffcd989f5-gp6n7                 2/2     Running     4 (8d ago)    19d   10.244.1.4     nuc3   <none>           <none>
+rook-ceph-osd-1-77f487b9cd-ttnst                 2/2     Running     4 (8d ago)    25d   10.244.0.110   nuc1   <none>           <none>
+rook-ceph-osd-2-5c7bf49548-g4r2p                 2/2     Running     4 (8d ago)    25d   10.244.2.186   nuc2   <none>           <none>
+rook-ceph-osd-3-78896b4788-x5bhl                 2/2     Running     4 (8d ago)    25d   10.244.1.251   nuc3   <none>           <none>
+rook-ceph-osd-prepare-nuc1-bjjgh                 0/1     Completed   0             8d    10.244.0.120   nuc1   <none>           <none>
+rook-ceph-osd-prepare-nuc2-4mx5j                 0/1     Completed   0             10d   10.244.2.207   nuc2   <none>           <none>
+rook-ceph-osd-prepare-nuc3-rh82j                 0/1     Completed   0             8d    10.244.1.12    nuc3   <none>           <none>
+rook-ceph-tools-79b8bf575b-kz58d                 1/1     Running     4 (8d ago)    33d   10.244.1.2     nuc3   <none>           <none>
+~ ❯ kubectl geg
+~ ❯ kubectl get pods
+NAME                                             READY   STATUS      RESTARTS      AGE
+csi-cephfsplugin-7cdtt                           2/2     Running     6 (8d ago)    19d
+csi-cephfsplugin-cwc6s                           2/2     Running     34 (8d ago)   19d
+csi-cephfsplugin-lgd6h                           2/2     Running     11 (8d ago)   19d
+csi-cephfsplugin-mvwfr                           2/2     Running     4 (8d ago)    19d
+csi-cephfsplugin-nn26k                           2/2     Running     7 (8d ago)    19d
+csi-cephfsplugin-provisioner-56fc44b89b-98sxv    5/5     Running     5 (8d ago)    8d
+csi-cephfsplugin-provisioner-56fc44b89b-zj967    5/5     Running     10 (8d ago)   12d
+csi-rbdplugin-5jnrz                              2/2     Running     34 (8d ago)   19d
+csi-rbdplugin-provisioner-d9dbc9999-p56tm        5/5     Running     18 (8d ago)   19d
+csi-rbdplugin-provisioner-d9dbc9999-zv45s        5/5     Running     10 (8d ago)   12d
+csi-rbdplugin-sl9rx                              2/2     Running     6 (8d ago)    19d
+csi-rbdplugin-z7pqh                              2/2     Running     5 (8d ago)    19d
+csi-rbdplugin-zpv2l                              2/2     Running     10 (8d ago)   19d
+csi-rbdplugin-zqsd8                              2/2     Running     6 (8d ago)    19d
+rook-ceph-crashcollector-nuc1-84fcfcc5d5-ppnzj   1/1     Running     1 (8d ago)    12d
+rook-ceph-crashcollector-nuc2-5544d865d-4bnl8    1/1     Running     2 (8d ago)    19d
+rook-ceph-crashcollector-nuc3-7bfb869849-jd54r   1/1     Running     2 (8d ago)    19d
+rook-ceph-crashcollector-nuc4-6fc58cffc8-tkwqr   1/1     Running     1 (8d ago)    8d
+rook-ceph-exporter-nuc1-5cb7764c6-7rwkc          1/1     Running     1 (8d ago)    12d
+rook-ceph-exporter-nuc2-769fbdfd9f-bjdr8         1/1     Running     2 (8d ago)    19d
+rook-ceph-exporter-nuc3-cfdc4c99b-bq5cr          1/1     Running     2 (8d ago)    19d
+rook-ceph-exporter-nuc4-5b9dc9cc7f-99wfl         1/1     Running     1 (8d ago)    8d
+rook-ceph-mds-ceph-fs-a-6fd5bfb4f-6p6r9          2/2     Running     2 (8d ago)    8d
+rook-ceph-mds-ceph-fs-b-78f846d79f-bvnv7         2/2     Running     2 (8d ago)    12d
+rook-ceph-mgr-a-8fb94c67f-4zshj                  2/2     Running     7 (8d ago)    12d
+rook-ceph-mon-a-6767fc9b47-smzmw                 2/2     Running     4 (8d ago)    19d
+rook-ceph-mon-b-85d7c9b99f-lbthr                 2/2     Running     2 (8d ago)    12d
+rook-ceph-mon-c-5ffcd989f5-gp6n7                 2/2     Running     4 (8d ago)    19d
+rook-ceph-operator-58dfb477c8-h6dvz              1/1     Running     1 (8d ago)    8d
+rook-ceph-osd-0-c9544b689-n2zw5                  2/2     Running     2 (8d ago)    10d
+rook-ceph-osd-1-77f487b9cd-ttnst                 2/2     Running     4 (8d ago)    25d
+rook-ceph-osd-2-5c7bf49548-g4r2p                 2/2     Running     4 (8d ago)    25d
+rook-ceph-osd-3-78896b4788-x5bhl                 2/2     Running     4 (8d ago)    25d
+rook-ceph-osd-prepare-data-data-35jzfv-cnf9k     0/1     Completed   0             8d
+rook-ceph-osd-prepare-nuc1-bjjgh                 0/1     Completed   0             8d
+rook-ceph-osd-prepare-nuc2-4mx5j                 0/1     Completed   0             10d
+rook-ceph-osd-prepare-nuc3-rh82j                 0/1     Completed   0             8d
+rook-ceph-osd-prepare-nuc4-cq2nt                 0/1     Completed   0             8d
+rook-ceph-tools-79b8bf575b-kz58d                 1/1     Running     4 (8d ago)    33d
+~ ❯ kubectl get pods -o wide
+NAME                                             READY   STATUS      RESTARTS      AGE   IP             NODE   NOMINATED NODE   READINESS GATES
+csi-cephfsplugin-7cdtt                           2/2     Running     6 (8d ago)    19d   192.168.1.66   nuc2   <none>           <none>
+csi-cephfsplugin-cwc6s                           2/2     Running     34 (8d ago)   19d   192.168.1.72   nas    <none>           <none>
+csi-cephfsplugin-lgd6h                           2/2     Running     11 (8d ago)   19d   192.168.1.68   nuc4   <none>           <none>
+csi-cephfsplugin-mvwfr                           2/2     Running     4 (8d ago)    19d   192.168.1.67   nuc3   <none>           <none>
+csi-cephfsplugin-nn26k                           2/2     Running     7 (8d ago)    19d   192.168.1.65   nuc1   <none>           <none>
+csi-cephfsplugin-provisioner-56fc44b89b-98sxv    5/5     Running     5 (8d ago)    8d    10.244.4.198   nuc4   <none>           <none>
+csi-cephfsplugin-provisioner-56fc44b89b-zj967    5/5     Running     10 (8d ago)   12d   10.244.2.189   nuc2   <none>           <none>
+csi-rbdplugin-5jnrz                              2/2     Running     34 (8d ago)   19d   192.168.1.72   nas    <none>           <none>
+csi-rbdplugin-provisioner-d9dbc9999-p56tm        5/5     Running     18 (8d ago)   19d   10.244.2.188   nuc2   <none>           <none>
+csi-rbdplugin-provisioner-d9dbc9999-zv45s        5/5     Running     10 (8d ago)   12d   10.244.0.112   nuc1   <none>           <none>
+csi-rbdplugin-sl9rx                              2/2     Running     6 (8d ago)    19d   192.168.1.66   nuc2   <none>           <none>
+csi-rbdplugin-z7pqh                              2/2     Running     5 (8d ago)    19d   192.168.1.67   nuc3   <none>           <none>
+csi-rbdplugin-zpv2l                              2/2     Running     10 (8d ago)   19d   192.168.1.68   nuc4   <none>           <none>
+csi-rbdplugin-zqsd8                              2/2     Running     6 (8d ago)    19d   192.168.1.65   nuc1   <none>           <none>
+rook-ceph-crashcollector-nuc1-84fcfcc5d5-ppnzj   1/1     Running     1 (8d ago)    12d   10.244.0.101   nuc1   <none>           <none>
+rook-ceph-crashcollector-nuc2-5544d865d-4bnl8    1/1     Running     2 (8d ago)    19d   10.244.2.197   nuc2   <none>           <none>
+rook-ceph-crashcollector-nuc3-7bfb869849-jd54r   1/1     Running     2 (8d ago)    19d   10.244.1.6     nuc3   <none>           <none>
+rook-ceph-crashcollector-nuc4-6fc58cffc8-tkwqr   1/1     Running     1 (8d ago)    8d    10.244.4.199   nuc4   <none>           <none>
+rook-ceph-exporter-nuc1-5cb7764c6-7rwkc          1/1     Running     1 (8d ago)    12d   10.244.0.104   nuc1   <none>           <none>
+rook-ceph-exporter-nuc2-769fbdfd9f-bjdr8         1/1     Running     2 (8d ago)    19d   10.244.2.201   nuc2   <none>           <none>
+rook-ceph-exporter-nuc3-cfdc4c99b-bq5cr          1/1     Running     2 (8d ago)    19d   10.244.1.252   nuc3   <none>           <none>
+rook-ceph-exporter-nuc4-5b9dc9cc7f-99wfl         1/1     Running     1 (8d ago)    8d    10.244.4.196   nuc4   <none>           <none>
+rook-ceph-mds-ceph-fs-a-6fd5bfb4f-6p6r9          2/2     Running     2 (8d ago)    8d    10.244.4.202   nuc4   <none>           <none>
+rook-ceph-mds-ceph-fs-b-78f846d79f-bvnv7         2/2     Running     2 (8d ago)    12d   10.244.0.100   nuc1   <none>           <none>
+rook-ceph-mgr-a-8fb94c67f-4zshj                  2/2     Running     7 (8d ago)    12d   10.244.2.200   nuc2   <none>           <none>
+rook-ceph-mon-a-6767fc9b47-smzmw                 2/2     Running     4 (8d ago)    19d   10.244.2.191   nuc2   <none>           <none>
+rook-ceph-mon-b-85d7c9b99f-lbthr                 2/2     Running     2 (8d ago)    12d   10.244.0.103   nuc1   <none>           <none>
+rook-ceph-mon-c-5ffcd989f5-gp6n7                 2/2     Running     4 (8d ago)    19d   10.244.1.4     nuc3   <none>           <none>
+rook-ceph-operator-58dfb477c8-h6dvz              1/1     Running     1 (8d ago)    8d    10.244.4.197   nuc4   <none>           <none>
+rook-ceph-osd-0-c9544b689-n2zw5                  2/2     Running     2 (8d ago)    10d   10.244.4.201   nuc4   <none>           <none>
+rook-ceph-osd-1-77f487b9cd-ttnst                 2/2     Running     4 (8d ago)    25d   10.244.0.110   nuc1   <none>           <none>
+rook-ceph-osd-2-5c7bf49548-g4r2p                 2/2     Running     4 (8d ago)    25d   10.244.2.186   nuc2   <none>           <none>
+rook-ceph-osd-3-78896b4788-x5bhl                 2/2     Running     4 (8d ago)    25d   10.244.1.251   nuc3   <none>           <none>
+rook-ceph-osd-prepare-data-data-35jzfv-cnf9k     0/1     Completed   0             8d    10.244.4.212   nuc4   <none>           <none>
+rook-ceph-osd-prepare-nuc1-bjjgh                 0/1     Completed   0             8d    10.244.0.120   nuc1   <none>           <none>
+rook-ceph-osd-prepare-nuc2-4mx5j                 0/1     Completed   0             10d   10.244.2.207   nuc2   <none>           <none>
+rook-ceph-osd-prepare-nuc3-rh82j                 0/1     Completed   0             8d    10.244.1.12    nuc3   <none>           <none>
+rook-ceph-osd-prepare-nuc4-cq2nt                 0/1     Completed   0             8d    10.244.4.213   nuc4   <none>           <none>
+rook-ceph-tools-79b8bf575b-kz58d                 1/1     Running     4 (8d ago)    33d   10.244.1.2     nuc3   <none>           <none>

@@ -63,3 +63,15 @@ variable "admin_user_password" {
   type        = string
   nullable    = false
 }
+
+variable "grafana_url" {
+  description = "Url to grafana"
+  type        = string
+  nullable    = false
+}
+
+variable "grafana_api_key" {
+  description = "API key for grafana"
+  type        = string
+  nullable    = false
+}

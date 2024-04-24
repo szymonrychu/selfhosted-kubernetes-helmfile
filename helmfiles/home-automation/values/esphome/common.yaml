@@ -43,15 +43,3 @@ persistence:
   storageClass: ceph
   accessMode: ReadWriteMany
   size: 8Gi
-
-affinity:
-  nodeAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: "kubernetes.io/hostname"
-          operator: In
-          values:
-            - nuc1
-            - nuc2
-            - nuc3

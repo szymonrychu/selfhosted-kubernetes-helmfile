@@ -1,0 +1,9 @@
+persistence:
+  data:
+    enabled: true
+    storageClass: ceph
+    accessMode: ReadWriteMany
+    size: 8Gi
+
+monitoring:
+  enabled: true
