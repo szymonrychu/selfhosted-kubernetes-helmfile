@@ -34,18 +34,6 @@ output "files_client_secret" {
   sensitive   = true
 }
 
-output "jackett_client_id" {
-  description = "'jackett' client id"
-  value       = keycloak_openid_client.jackett.client_id
-  sensitive   = true
-}
-
-output "jackett_client_secret" {
-  description = "'jackett' client secret"
-  value       = keycloak_openid_client.jackett.client_secret
-  sensitive   = true
-}
-
 output "radarr_client_id" {
   description = "'radarr' client id"
   value       = keycloak_openid_client.radarr.client_id

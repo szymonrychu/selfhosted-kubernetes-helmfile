@@ -16,12 +16,6 @@ variable "files_client_secret" {
   default     = null
 }
 
-variable "jackett_client_secret" {
-  description = "Client secret for 'jackett' client"
-  type        = string
-  default     = null
-}
-
 variable "radarr_client_secret" {
   description = "Client secret for 'radarr' client"
   type        = string

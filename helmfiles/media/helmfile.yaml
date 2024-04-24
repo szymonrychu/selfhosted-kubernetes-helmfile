@@ -67,15 +67,6 @@ releases:
     application: prowlarr
   <<: *default
 
-- name: jackett
-  chart: szymonrychu/jackett
-  version: 1.0.3
-  namespace: media
-  labels:
-    purpose: media
-    application: jackett
-  <<: *default
-
 - name: filebrowser
   chart: szymonrychu/filebrowser-oauth2
   version: 1.0.1

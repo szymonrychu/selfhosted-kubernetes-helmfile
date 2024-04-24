@@ -12,7 +12,7 @@ resource "keycloak_user_groups" "user_groups" {
     keycloak_group.code-server.id,
     keycloak_group.esphome.id,
     keycloak_group.files.id,
-    keycloak_group.jackett.id,
+    keycloak_group.prowlarr.id,
     keycloak_group.qbittorrent.id,
     keycloak_group.radarr.id,
     keycloak_group.sonarr.id
