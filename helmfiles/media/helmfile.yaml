@@ -60,7 +60,7 @@ releases:
 
 - name: prowlarr
   chart: szymonrychu/prowlarr
-  version: 0.0.3
+  version: 0.0.4
   namespace: media
   labels:
     purpose: media
