@@ -40,7 +40,7 @@ releases:
 
 - name: esphome
   chart: szymonrychu/esphome
-  version: 2.0.9
+  version: 2.0.10
   namespace: home-automation
   labels:
     purpose: home-automation
