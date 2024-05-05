@@ -1,0 +1,41 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: tdarr.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: tdarr-tls
+      hosts:
+        - tdarr.szymonrichert.pl
+
+resources:
+  limits:
+    cpu: "2"
+    memory: 1024Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+oauth2proxy:
+  clientId: tdarr
+  redirectUrl: https://tdarr.szymonrichert.pl/oauth2/callback
+  realmUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie
+  cookieDomain: tdarr.szymonrichert.pl
+  allowedGroups: tdarr
+
+persistence:
+  config:
+    enabled: true
+    type: hostPath
+    hostPath: /var/lib/tdarr
+  media:
+    enabled: true
+    type: hostPath
+    hostPath: /samba

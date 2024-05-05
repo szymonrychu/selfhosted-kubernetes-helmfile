@@ -16,6 +16,7 @@ resource "keycloak_user_groups" "user_groups" {
     keycloak_group.prowlarr.id,
     keycloak_group.qbittorrent.id,
     keycloak_group.radarr.id,
+    keycloak_group.tdarr.id,
     keycloak_group.sonarr.id
   ]
 }

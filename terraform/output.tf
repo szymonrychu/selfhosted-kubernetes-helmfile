@@ -46,6 +46,18 @@ output "radarr_client_secret" {
   sensitive   = true
 }
 
+output "tdarr_client_id" {
+  description = "'tdarr' client id"
+  value       = keycloak_openid_client.tdarr.client_id
+  sensitive   = true
+}
+
+output "tdarr_client_secret" {
+  description = "'tdarr' client secret"
+  value       = keycloak_openid_client.tdarr.client_secret
+  sensitive   = true
+}
+
 output "sonarr_client_id" {
   description = "'sonarr' client id"
   value       = keycloak_openid_client.sonarr.client_id

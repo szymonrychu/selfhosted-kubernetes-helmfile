@@ -22,6 +22,12 @@ variable "radarr_client_secret" {
   default     = null
 }
 
+variable "tdarr_client_secret" {
+  description = "Client secret for 'tdarr' client"
+  type        = string
+  default     = null
+}
+
 variable "sonarr_client_secret" {
   description = "Client secret for 'sonarr' client"
   type        = string

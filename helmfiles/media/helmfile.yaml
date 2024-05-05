@@ -76,6 +76,15 @@ releases:
     application: bazarr
   <<: *default
 
+- name: tdarr
+  chart: szymonrychu/tdarr
+  version: 1.0.4
+  namespace: media
+  labels:
+    purpose: media
+    application: tdarr
+  <<: *default
+
 - name: filebrowser
   chart: szymonrychu/filebrowser-oauth2
   version: 1.0.1
