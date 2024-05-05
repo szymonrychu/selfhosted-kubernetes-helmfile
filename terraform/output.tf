@@ -70,6 +70,18 @@ output "prowlarr_client_secret" {
   sensitive   = true
 }
 
+output "bazarr_client_id" {
+  description = "'bazarr' client id"
+  value       = keycloak_openid_client.bazarr.client_id
+  sensitive   = true
+}
+
+output "bazarr_client_secret" {
+  description = "'bazarr' client secret"
+  value       = keycloak_openid_client.bazarr.client_secret
+  sensitive   = true
+}
+
 output "code_server_client_id" {
   description = "'code-server' client id"
   value       = keycloak_openid_client.code-server.client_id

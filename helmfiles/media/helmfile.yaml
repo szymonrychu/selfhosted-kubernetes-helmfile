@@ -67,6 +67,15 @@ releases:
     application: prowlarr
   <<: *default
 
+- name: bazarr
+  chart: szymonrychu/bazarr
+  version: 0.0.3
+  namespace: media
+  labels:
+    purpose: media
+    application: bazarr
+  <<: *default
+
 - name: filebrowser
   chart: szymonrychu/filebrowser-oauth2
   version: 1.0.1

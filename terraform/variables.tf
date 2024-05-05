@@ -34,6 +34,12 @@ variable "prowlarr_client_secret" {
   default     = null
 }
 
+variable "bazarr_client_secret" {
+  description = "Client secret for 'bazarr' client"
+  type        = string
+  default     = null
+}
+
 variable "code_server_client_secret" {
   description = "Client secret for 'code-server' client"
   type        = string
