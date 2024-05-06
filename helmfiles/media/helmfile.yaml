@@ -87,7 +87,7 @@ releases:
 
 - name: filebrowser
   chart: szymonrychu/filebrowser-oauth2
-  version: 1.0.1
+  version: 1.0.2
   namespace: media
   labels:
     purpose: media
