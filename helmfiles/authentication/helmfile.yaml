@@ -44,7 +44,7 @@ releases:
 
 - name: keycloak
   timeout: 2400
-  version: 21.1.1
+  version: 21.1.2
   chart: bitnami/keycloak
   namespace: authentication
   needs:
