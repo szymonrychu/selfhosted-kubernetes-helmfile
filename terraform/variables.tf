@@ -68,12 +68,14 @@ variable "admin_user_username" {
   description = "Username of the 1st user in keycloak"
   type        = string
   nullable    = false
+  sensitive   = true
 }
 
 variable "admin_user_password" {
   description = "Password of the 1st user in keycloak"
   type        = string
   nullable    = false
+  sensitive   = true
 }
 
 variable "grafana_url" {
@@ -86,4 +88,12 @@ variable "grafana_api_key" {
   description = "API key for grafana"
   type        = string
   nullable    = false
+  sensitive   = true
+}
+
+variable "kuberenetes_proxy_cookie_secret" {
+  description = "Oauth2proxy cookie secret"
+  type        = string
+  nullable    = false
+  sensitive   = true
 }

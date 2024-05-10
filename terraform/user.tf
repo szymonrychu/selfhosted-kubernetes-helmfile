@@ -8,15 +8,15 @@ resource "keycloak_user_groups" "user_groups" {
   user_id  = data.keycloak_user.admin.id
 
   group_ids = [
-    keycloak_group.bazarr.id,
     keycloak_group.grafana_admin.id,
-    keycloak_group.code-server.id,
-    keycloak_group.esphome.id,
-    keycloak_group.files.id,
-    keycloak_group.prowlarr.id,
-    keycloak_group.qbittorrent.id,
-    keycloak_group.radarr.id,
-    keycloak_group.tdarr.id,
-    keycloak_group.sonarr.id
+    module.bazarr.keycloak_group_id,
+    module.code-server.keycloak_group_id,
+    module.esphome.keycloak_group_id,
+    module.files.keycloak_group_id,
+    module.prowlarr.keycloak_group_id,
+    module.qbittorrent.keycloak_group_id,
+    module.radarr.keycloak_group_id,
+    module.tdarr.keycloak_group_id,
+    module.sonarr.keycloak_group_id
   ]
 }

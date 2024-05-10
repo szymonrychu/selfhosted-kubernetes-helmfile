@@ -1,0 +1,4 @@
+proxy:
+  redirectUrl: https://prowlarr.szymonrichert.pl/oauth2/callback
+  oidcIssuerUrl: https://auth.szymonrichert.pl/realms/master
+  cookieName: oauth2-authorization-cookie

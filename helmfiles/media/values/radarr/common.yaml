@@ -14,6 +14,10 @@ ingress:
       hosts:
         - radarr.szymonrichert.pl
 
+podAnnotations:
+  oauth2-proxy-admission/configuration-secret-name: radarr-proxy
+  oauth2-proxy-admission/configuration-secret-namespace: media
+
 resources:
   limits:
     cpu: "2"
@@ -21,14 +25,6 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
-
-oauth2proxy:
-  clientId: radarr
-  redirectUrl: https://radarr.szymonrichert.pl/oauth2/callback
-  realmUrl: https://auth.szymonrichert.pl/realms/master
-  cookieName: oauth2-authorization-cookie
-  cookieDomain: radarr.szymonrichert.pl
-  allowedGroups: radarr
 
 persistence:
   config:

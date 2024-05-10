@@ -75,3 +75,12 @@ releases:
     purpose: backbone
     application: cloudnative-pg
   <<: *operators
+
+- name: oauth2-proxy-admission-controller
+  chart: szymonrychu/oauth2-proxy-admission-controller
+  version: 1.1.0
+  namespace: kube-system
+  labels:
+    purpose: backbone
+    application: oauth2-proxy-admission-controller
+  <<: *operators

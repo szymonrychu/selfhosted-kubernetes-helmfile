@@ -14,6 +14,10 @@ ingress:
       hosts:
         - qbt.szymonrichert.pl
 
+podAnnotations:
+  oauth2-proxy-admission/configuration-secret-name: qbittorrent-proxy
+  oauth2-proxy-admission/configuration-secret-namespace: media
+
 podSecurityContext:
   fsGroup: 1000
   runAsGroup: 1000
@@ -27,14 +31,6 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
-
-oauth2proxy:
-  clientId: qbittorrent
-  redirectUrl: https://qbt.szymonrichert.pl/oauth2/callback
-  realmUrl: https://auth.szymonrichert.pl/realms/master
-  cookieName: oauth2-authorization-cookie
-  cookieDomain: qbt.szymonrichert.pl
-  allowedGroups: qbittorrent
 
 persistence:
   config:

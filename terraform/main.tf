@@ -10,7 +10,11 @@ terraform {
     }
     grafana = {
       source = "grafana/grafana"
-      version = ">= 1.28.2"
+      version = ">=1.28.2"
+    }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+      version = ">=2.30.0"
     }
   }
 }
@@ -24,6 +28,11 @@ provider "keycloak" {
   username  = var.admin_user_username
   password  = var.admin_user_password
   url       = var.keycloak_url
+}
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "kubernetes-admin@kubernetes"
 }
 
 provider "grafana" {

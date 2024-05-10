@@ -14,21 +14,6 @@ extraEntrypointScripts:
     grep "chmod 0600 /home/${USER_NAME}/.kube/config" "/home/${USER_NAME}/.zshrc" || \
       echo "chmod 0600 /home/${USER_NAME}/.kube/config" >> "/home/${USER_NAME}/.zshrc"
 
-oauth2proxy:
-  clientId: code-server
-  redirectUrl: https://code.szymonrichert.pl/oauth2/callback
-  realmUrl: https://auth.szymonrichert.pl/realms/master
-  cookieName: oauth2-authorization-cookie
-  cookieDomain: code.szymonrichert.pl
-  allowedGroups: code-server
-  resources:
-    requests:
-      memory: 396Mi
-      cpu: 10m
-    limits:
-      memory: 1Gi
-      cpu: 500m
-
 ingress:
   enabled: true
   className: nginx
@@ -44,6 +29,10 @@ ingress:
     - secretName: code-tls
       hosts:
         - code.szymonrichert.pl
+
+podAnnotations:
+  oauth2-proxy-admission/configuration-secret-name: code-server-proxy
+  oauth2-proxy-admission/configuration-secret-namespace: code-server
 
 podSecurityContext:
   fsGroup: 1000
