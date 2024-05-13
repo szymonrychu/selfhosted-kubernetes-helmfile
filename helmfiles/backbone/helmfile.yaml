@@ -78,7 +78,7 @@ releases:
 
 - name: oauth2-proxy-admission-controller
   chart: szymonrychu/oauth2-proxy-admission-controller
-  version: 0.0.1-1715606591-d2bdd89
+  version: 0.1.0
   namespace: kube-system
   labels:
     purpose: backbone

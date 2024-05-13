@@ -31,8 +31,8 @@ ingress:
         - code.szymonrichert.pl
 
 podAnnotations:
-  oauth2-proxy-admission/configuration-secret-name: code-server-proxy
-  oauth2-proxy-admission/configuration-secret-namespace: code-server
+  oauth2-proxy-admission/secret-name: code-server-proxy
+  oauth2-proxy-admission/secret-namespace: code-server
 
 podSecurityContext:
   fsGroup: 1000

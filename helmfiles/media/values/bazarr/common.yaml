@@ -15,8 +15,8 @@ ingress:
         - bazarr.szymonrichert.pl
 
 podAnnotations:
-  oauth2-proxy-admission/configuration-secret-name: bazarr-proxy
-  oauth2-proxy-admission/configuration-secret-namespace: media
+  oauth2-proxy-admission/secret-name: bazarr-proxy
+  oauth2-proxy-admission/secret-namespace: media
 
 resources:
   limits:

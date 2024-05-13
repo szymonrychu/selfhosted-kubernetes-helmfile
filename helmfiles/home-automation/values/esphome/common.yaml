@@ -15,8 +15,8 @@ ingress:
         - esphome.szymonrichert.pl
 
 podAnnotations:
-  oauth2-proxy-admission/configuration-secret-name: esphome-proxy
-  oauth2-proxy-admission/configuration-secret-namespace: home-automation
+  oauth2-proxy-admission/secret-name: esphome-proxy
+  oauth2-proxy-admission/secret-namespace: home-automation
 
 securityContext:
   privileged: true

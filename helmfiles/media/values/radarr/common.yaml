@@ -15,8 +15,8 @@ ingress:
         - radarr.szymonrichert.pl
 
 podAnnotations:
-  oauth2-proxy-admission/configuration-secret-name: radarr-proxy
-  oauth2-proxy-admission/configuration-secret-namespace: media
+  oauth2-proxy-admission/secret-name: radarr-proxy
+  oauth2-proxy-admission/secret-namespace: media
 
 resources:
   limits:

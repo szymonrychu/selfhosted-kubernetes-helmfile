@@ -15,8 +15,8 @@ ingress:
         - qbt.szymonrichert.pl
 
 podAnnotations:
-  oauth2-proxy-admission/configuration-secret-name: qbittorrent-proxy
-  oauth2-proxy-admission/configuration-secret-namespace: media
+  oauth2-proxy-admission/secret-name: qbittorrent-proxy
+  oauth2-proxy-admission/secret-namespace: media
 
 podSecurityContext:
   fsGroup: 1000
