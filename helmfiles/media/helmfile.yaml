@@ -102,3 +102,12 @@ releases:
     purpose: media
     application: jellyfin
   <<: *default
+
+- name: jellyseer
+  chart: szymonrychu/jellyseerr
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: jellyseer
+  <<: *default
