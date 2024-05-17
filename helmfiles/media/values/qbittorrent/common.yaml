@@ -42,3 +42,11 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /samba
+
+vpnContainer:
+  enabled: true
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
