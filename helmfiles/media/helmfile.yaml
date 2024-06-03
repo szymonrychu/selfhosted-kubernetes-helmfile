@@ -78,7 +78,7 @@ releases:
 
 - name: tdarr
   chart: szymonrychu/tdarr
-  version: 2.0.1
+  version: 2.0.2
   namespace: media
   labels:
     purpose: media
