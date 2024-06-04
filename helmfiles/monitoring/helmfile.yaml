@@ -60,7 +60,7 @@ releases:
 - name: smartctl-exporter
   namespace: monitoring
   chart: prometheus-community/prometheus-smartctl-exporter
-  version: 0.8.0
+  version: 0.9.0
   needs:
   - monitoring/prometheus
   labels:
