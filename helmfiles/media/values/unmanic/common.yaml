@@ -48,3 +48,7 @@ persistence:
     enabled: true
     type: hostPath
     hostPath: /samba
+  cache:
+    enabled: true
+    type: hostPath
+    hostPath: /samba/.unmanic_cache
