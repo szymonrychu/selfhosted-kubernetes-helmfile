@@ -5,25 +5,25 @@ ingress:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
   hosts:
-    - host: jellyfin.szymonrichert.pl
+    - host: unmanic.szymonrichert.pl
       paths:
         - path: /
           pathType: Prefix
   tls:
-    - secretName: jellyfin-tls
+    - secretName: unmanic-tls
       hosts:
-        - jellyfin.szymonrichert.pl
-
-nvidiaVisibleDevice: GPU-2e5cba96-e2d4-57ca-8b12-7652194abf17
+        - unmanic.szymonrichert.pl
 
 securityContext:
   privileged: true
 
+podAnnotations:
+  oauth2-proxy-admission/secret-name: unmanic-proxy
+  oauth2-proxy-admission/secret-namespace: media
+
 podSecurityContext:
   fsGroup: 1000
-  runAsGroup: 1000
   # runAsNonRoot: true
-  runAsUser: 1000
   supplementalGroups:
     - 109
 
@@ -43,7 +43,7 @@ persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: /var/lib/jellyfin
+    hostPath: /var/lib/unmanic
   media:
     enabled: true
     type: hostPath

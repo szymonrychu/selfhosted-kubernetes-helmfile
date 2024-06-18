@@ -76,15 +76,6 @@ releases:
     application: bazarr
   <<: *default
 
-- name: tdarr
-  chart: szymonrychu/tdarr
-  version: 2.0.2
-  namespace: media
-  labels:
-    purpose: media
-    application: tdarr
-  <<: *default
-
 - name: filebrowser
   chart: szymonrychu/filebrowser
   version: 2.0.1
@@ -110,4 +101,13 @@ releases:
   labels:
     purpose: media
     application: jellyseer
+  <<: *default
+
+- name: unmanic
+  chart: szymonrychu/unmanic
+  version: 0.1.0
+  namespace: media
+  labels:
+    purpose: media
+    application: unmanic
   <<: *default

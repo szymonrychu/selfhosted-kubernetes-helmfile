@@ -1,3 +1,16 @@
+replicas: 3
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - oauth2-proxy-admission-controller
+        topologyKey: "kubernetes.io/hostname"
+
 proxy:
   oidcIssuerUrl: https://auth.szymonrichert.pl/realms/master
   cookieName: oauth2-authorization-cookie
