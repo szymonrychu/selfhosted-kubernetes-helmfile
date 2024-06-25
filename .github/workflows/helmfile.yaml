@@ -31,7 +31,7 @@ jobs:
 
       - name: Get all test, doc and src files that have changed
         id: changed_files
-        uses: tj-actions/changed-files@cc3bbb0c526f8ee1d282f8c5f9f4e50745a5b457 # v44
+        uses: tj-actions/changed-files@cc733854b1f224978ef800d29e4709d5ee2883e4 # v44
         with:
           json: true
           escape_json: false
