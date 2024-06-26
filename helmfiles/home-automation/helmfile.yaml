@@ -40,7 +40,7 @@ releases:
 
 - name: esphome
   chart: szymonrychu/esphome
-  version: 3.0.1
+  version: 3.0.3
   namespace: home-automation
   labels:
     purpose: home-automation
@@ -59,7 +59,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.11.3
+  version: 0.11.4
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database
