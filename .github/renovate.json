@@ -7,13 +7,9 @@
   "commitMessageExtra": "to {{newVersion}}",
   "commitMessageSuffix": "",
   "rebaseWhen": "conflicted",
-  "username": "szymonrichert.pl bot",
   "pinDigests": true,
   "automerge": true,
   "gitAuthor": "szymonrichert.pl bot <bot@szymonrichert.pl>",
-  "onboarding": false,
-  "platform": "github",
-  "repositories": ["szymonrychu/selfhosted-kubernetes-helmfile"],
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
