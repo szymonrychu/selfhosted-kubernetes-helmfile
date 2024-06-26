@@ -96,7 +96,7 @@ releases:
 
 - name: jellyseer
   chart: szymonrychu/jellyseerr
-  version: 0.0.2
+  version: 0.0.3
   namespace: media
   labels:
     purpose: media
