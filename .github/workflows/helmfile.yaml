@@ -54,7 +54,7 @@ jobs:
 
     - name: Turnstyle
       if: github.ref == 'refs/heads/main'
-      uses: softprops/turnstyle@8db075d65b19bf94e6e8687b504db69938dc3c65 # v1
+      uses: softprops/turnstyle@a4aad77d10d0bc4fa51eb6beda0a63ed9741d7ca # v2
       with:
         continue-after-seconds: 1200
         poll-interval-seconds: 60
