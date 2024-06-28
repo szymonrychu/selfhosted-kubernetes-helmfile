@@ -9,14 +9,18 @@ terraform {
       version = ">=4.9.0"
     }
     grafana = {
-      source = "grafana/grafana"
+      source  = "grafana/grafana"
       version = ">=1.28.2"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = ">=2.30.0"
     }
   }
+}
+
+terraform {
+  required_version = ">= 1.8"
 }
 
 provider "aws" {
@@ -31,11 +35,9 @@ provider "keycloak" {
 }
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
-  config_context = "kubernetes-admin@kubernetes"
 }
 
 provider "grafana" {
-    url  = var.grafana_url
-    auth = var.grafana_api_key
+  url  = var.grafana_url
+  auth = var.grafana_api_key
 }
