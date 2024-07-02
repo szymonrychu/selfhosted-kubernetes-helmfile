@@ -21,13 +21,18 @@ env:
 jobs:
   terraform:
     runs-on: [self-hosted, linux, X64]
-    name: Terraform Plan
+    name: Terraform
     steps:
-      - name: Setup terraform
-        run: |
-          wget -qO /tmp/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-          unzip -u -d /tmp/ /tmp/terraform.zip
-          sudo mv /tmp/terraform /usr/local/bin/terraform
+      # - name: Setup terraform
+      #   run: |
+      #     wget -qO /tmp/terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      #     unzip -u -d /tmp/ /tmp/terraform.zip
+      #     sudo mv /tmp/terraform /usr/local/bin/terraform
+      - name: Checkout code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.SZYMONRYCHU_TOKEN }}"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4
