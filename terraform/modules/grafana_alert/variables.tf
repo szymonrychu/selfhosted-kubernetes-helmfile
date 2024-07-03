@@ -41,3 +41,8 @@ variable "threshold" {
   description = "Threshold to fire alert"
   type        = number
 }
+
+variable "summary" {
+  description = "Summary of the alert"
+  type        = string
+}

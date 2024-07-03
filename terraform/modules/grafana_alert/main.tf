@@ -7,10 +7,16 @@ resource "grafana_rule_group" "default" {
   folder_uid       = var.grafana_folder_uid
   interval_seconds = 60
   rule {
-    name      = var.rule_name == null ? var.alert_name : var.rule_name
-    condition = "C"
-    for       = "0s"
-    labels    = var.alert_tags
+    name           = var.rule_name == null ? var.alert_name : var.rule_name
+    condition      = "C"
+    for            = "0s"
+    no_data_state  = "NoData"
+    exec_err_state = "Alerting"
+    labels         = var.alert_tags
+
+    annotations = {
+      summary = var.summary
+    }
 
     data {
       ref_id = "A"

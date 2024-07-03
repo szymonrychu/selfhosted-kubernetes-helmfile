@@ -11,12 +11,7 @@ resource "grafana_contact_point" "default" {
   email {
     addresses               = ["szymon.rychu@gmail.com"]
     message                 = <<EOT
-{{ len .Alerts.Firing }} alerts are firing!
-
-Alert summaries:
-{{ range .Alerts.Firing }}
-{{ template "Alert Instance Template" . }}
-{{ end }}
+{{ template "alerts.message" . }}
 EOT
     subject                 = "{{ template \"default.title\" .}}"
     single_email            = true
@@ -28,9 +23,26 @@ resource "grafana_message_template" "default" {
   name = "Default"
 
   template = <<EOT
-{{ define "Alert Instance Template" }}
-Firing: {{ .Labels.alertname }}
-Silence: {{ .SilenceURL }}
+{{ define "alerts.message" -}}
+{{ if .Alerts.Firing -}}
+{{ len .Alerts.Firing }} firing alert(s):
+
+{{ template "alerts.summarize_with_links" .Alerts.Firing }}
+{{- end }}
+{{- if .Alerts.Resolved -}}
+{{ len .Alerts.Resolved }} resolved alert(s):
+
+{{ template "alerts.summarize_with_links" .Alerts.Resolved }}
+{{- end }}
+{{- end }}
+
+{{ define "alerts.summarize_with_links" -}}
+{{ range . -}}
+{{ index .Annotations "summary" }}
+{{- if eq .Status "firing" }} - Silence this alert: {{ .SilenceURL }}{{ end }}
+  - View on Grafana: {{ .GeneratorURL }}
+
+{{ end }}
 {{ end }}
 EOT
 }
