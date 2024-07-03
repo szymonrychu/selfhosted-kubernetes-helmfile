@@ -128,7 +128,7 @@ grafana:
     smtp:
       enabled: true
       host: "smtp.gmail.com:587"
-      from_address: "szymon.rychu@gmail.com"
+      from_address: "monitoring@szymonrichert.pl"
     database:
       type: postgres
       host: grafana-database-cluster-rw:5432
