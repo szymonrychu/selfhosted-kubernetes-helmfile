@@ -9,7 +9,7 @@ resource "grafana_rule_group" "default" {
   rule {
     name           = var.rule_name == null ? var.alert_name : var.rule_name
     condition      = "C"
-    for            = "0s"
+    for            = var.for
     no_data_state  = "NoData"
     exec_err_state = "Alerting"
     labels         = var.alert_tags

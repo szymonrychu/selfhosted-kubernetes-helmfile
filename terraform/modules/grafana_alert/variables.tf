@@ -46,3 +46,9 @@ variable "summary" {
   description = "Summary of the alert"
   type        = string
 }
+
+variable "for" {
+  description = "Amount of time to wait until firing the alert"
+  type        = string
+  default     = "60s"
+}

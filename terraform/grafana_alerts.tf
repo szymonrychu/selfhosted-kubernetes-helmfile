@@ -12,7 +12,7 @@ avg by (nodename) (node_filesystem_size_bytes{job="node-exporter", fstype!="", m
 EOF
   threshold  = 80
   summary    = <<EOF
-The server {{ index $labels "nodename" }} has exceeded 70% of available disk space. Disk space used is {{ index $values "B" }}%."
+The server {{ index $labels "nodename" }} has exceeded 80% of available disk space. Disk space used is {{ index $values "B" }}%."
 EOF
 }
 
@@ -31,6 +31,23 @@ EOF
   threshold  = 80
 
   summary = <<EOF
-Samba disk in nas server has exceeded 80% of available disk space. Disk space used is {{ index $values "B" }}%."
+Samba disk in nas server has exceeded 80% of available disk space. Disk space used is {{ index $values "B" }}%.
+EOF
+}
+
+module "kube_node_not_ready" {
+  source = "./modules/grafana_alert"
+
+  grafana_folder_uid = grafana_folder.default.uid
+
+  alert_name    = "Kube Node not ready"
+  query         = <<EOF
+sum(kube_node_status_condition{status="true", condition="Ready"}) by (node)
+EOF
+  threshold     = 1
+  math_operator = "<"
+
+  summary = <<EOF
+The server {{ index $labels "node" }} is not Ready.
 EOF
 }
