@@ -39,7 +39,7 @@ releases:
 
 - name: gha-runner
   chart: szymonrychu/gha-runner
-  version: 2.311.0
+  version: 2.311.1
   namespace: gha-runner
   labels:
     purpose: backbone
