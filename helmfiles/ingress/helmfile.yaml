@@ -44,7 +44,7 @@ releases:
 - name: metallb
   chart: metallb/metallb
   namespace: ingress-system
-  version: 0.14.5
+  version: 0.14.7
   labels:
     purpose: backbone
     application: metallb
