@@ -48,7 +48,7 @@ releases:
 
 - name: kured
   chart: kubereboot/kured
-  version: 5.4.5
+  version: 5.5.0
   namespace: kube-system
   labels:
     purpose: backbone
