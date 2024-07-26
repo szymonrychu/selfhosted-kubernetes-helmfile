@@ -31,7 +31,7 @@ templates:
 releases:
 - name: eclipse-mosquitto
   chart: szymonrychu/eclipse-mosquitto
-  version: 0.1.1
+  version: 0.1.2
   namespace: home-automation
   labels:
     purpose: home-automation
