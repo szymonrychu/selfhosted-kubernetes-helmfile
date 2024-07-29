@@ -31,7 +31,7 @@ templates:
 releases:
 - name: eclipse-mosquitto
   chart: szymonrychu/eclipse-mosquitto
-  version: 0.1.1
+  version: 0.1.2
   namespace: home-automation
   labels:
     purpose: home-automation
@@ -40,7 +40,7 @@ releases:
 
 - name: esphome
   chart: szymonrychu/esphome
-  version: 3.0.5
+  version: 3.0.8
   namespace: home-automation
   labels:
     purpose: home-automation
@@ -59,7 +59,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.11.5
+  version: 0.11.8
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database

@@ -76,7 +76,7 @@ jobs:
 
       - name: Get all test, doc and src files that have changed
         id: changed_files
-        uses: tj-actions/changed-files@cc733854b1f224978ef800d29e4709d5ee2883e4 # v44
+        uses: tj-actions/changed-files@6b2903bdce6310cfbddd87c418f253cf29b2dec9 # v44
         with:
           json: true
           escape_json: false
@@ -99,7 +99,7 @@ jobs:
 
     - name: Turnstyle
       if: github.ref == 'refs/heads/main'
-      uses: softprops/turnstyle@a4aad77d10d0bc4fa51eb6beda0a63ed9741d7ca # v2
+      uses: softprops/turnstyle@088c28e945274e7ee1b7606ed3c0f5294e0836de # v2
       with:
         continue-after-seconds: 1200
         poll-interval-seconds: 60
