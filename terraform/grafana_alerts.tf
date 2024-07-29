@@ -10,10 +10,10 @@ module "root_disk_space" {
 avg by (nodename) (node_filesystem_size_bytes{job="node-exporter", fstype!="", mountpoint="/"}))
 * 100
 EOF
-  threshold      = 80
-  decimal_points = 0
+  threshold      = 81 # technically it should be 80%, but in reality it's fluctuating around the threshold, therefore it's better to increase it by 1%
+  decimal_points = 3
   summary        = <<EOF
-The server {{ index $labels "nodename" }} has exceeded 80% of available disk space. Disk space used is {{ index $values "C" }}%."
+The server {{ index $labels "nodename" }} has exceeded 81% of available disk space. Disk space used is {{ index $values "C" }}%."
 EOF
 }
 
