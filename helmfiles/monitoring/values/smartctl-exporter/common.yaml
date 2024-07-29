@@ -1,9 +1,6 @@
 serviceMonitor:
   enabled: true
 
-prometheusRules:
-  enabled: true
-
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
@@ -21,7 +18,7 @@ affinity:
 resources:
   limits:
     cpu: 100m
-    memory: 128Mi
+    memory: 32Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 50m
+    memory: 32Mi
