@@ -52,3 +52,9 @@ variable "for" {
   type        = string
   default     = "60s"
 }
+
+variable "decimal_points" {
+  description = ""
+  type        = number
+  default     = 1
+}
