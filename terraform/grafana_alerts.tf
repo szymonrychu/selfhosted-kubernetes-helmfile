@@ -13,7 +13,7 @@ EOF
   threshold      = 80
   decimal_points = 0
   summary        = <<EOF
-The server {{ index $labels "nodename" }} has exceeded 80% of available disk space. Disk space used is {{ index $values "B" }}%."
+The server {{ index $labels "nodename" }} has exceeded 80% of available disk space. Disk space used is {{ index $values "C" }}%."
 EOF
 }
 
@@ -33,7 +33,7 @@ EOF
   decimal_points = 3
 
   summary = <<EOF
-Samba disk in nas server has exceeded 80% of available disk space. Disk space used is {{ index $values "B" }}%.
+Samba disk in nas server has exceeded 80% of available disk space. Disk space used is {{ index $values "C" }}%.
 EOF
 }
 
