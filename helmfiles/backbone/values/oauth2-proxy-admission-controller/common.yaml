@@ -14,3 +14,9 @@ affinity:
 proxy:
   oidcIssuerUrl: https://auth.szymonrichert.pl/realms/master
   cookieName: oauth2-authorization-cookie
+
+admissionWebhooks:
+  objectSelector: {}
+  namespaceSelector:
+    matchLabels:
+      oauth2-proxy-admission: enabled
