@@ -1,5 +1,5 @@
 module "bazarr" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "bazarr"
@@ -15,7 +15,7 @@ module "bazarr" {
 }
 
 module "code-server" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "code-server"
@@ -31,7 +31,7 @@ module "code-server" {
 }
 
 module "esphome" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "esphome"
@@ -47,7 +47,7 @@ module "esphome" {
 }
 
 module "files" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "files"
@@ -63,7 +63,7 @@ module "files" {
 }
 
 module "prowlarr" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "prowlarr"
@@ -79,7 +79,7 @@ module "prowlarr" {
 }
 
 module "qbittorrent" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "qbittorrent"
@@ -95,7 +95,7 @@ module "qbittorrent" {
 }
 
 module "radarr" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "radarr"
@@ -111,7 +111,7 @@ module "radarr" {
 }
 
 module "sonarr" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "sonarr"
@@ -127,7 +127,7 @@ module "sonarr" {
 }
 
 module "unmanic" {
-  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.1"
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
   keycloak_client_id       = "unmanic"
