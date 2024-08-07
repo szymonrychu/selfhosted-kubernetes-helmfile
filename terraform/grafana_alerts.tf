@@ -63,7 +63,7 @@ module "kube_pods_not_ready" {
 
   alert_name     = "Kube Pod not ready"
   query          = <<EOF
-sum(kube_pod_status_ready{condition="true", pod!~"rook-ceph-osd-prepare.*"}) by (namespace,pod) < 1
+sum(kube_pod_status_ready{condition="true", pod!~"rook-ceph-osd-prepare.*"}) by (namespace,pod)
 EOF
   threshold      = 1
   decimal_points = 0
