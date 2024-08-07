@@ -54,3 +54,25 @@ EOF
 The server {{ index $labels "node" }} is not Ready.
 EOF
 }
+
+
+module "kube_pods_not_ready" {
+  source = "./modules/grafana_alert"
+
+  grafana_folder_uid = grafana_folder.default.uid
+
+  alert_name     = "Kube Pod not ready"
+  query          = <<EOF
+sum(kube_pod_status_ready{condition="true", pod!~"rook-ceph-osd-prepare.*"}) by (namespace,pod) < 1
+EOF
+  threshold      = 1
+  decimal_points = 0
+  math_operator  = "<"
+  for            = "300s"
+
+  summary = <<EOF
+The pod {{ index $labels "pod" }} is not Ready.
+EOF
+}
+
+
