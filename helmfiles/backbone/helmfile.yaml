@@ -69,7 +69,7 @@ releases:
 - name: cloudnative-pg
   chart: cnpg/cloudnative-pg
   namespace: postgres-operator
-  version: 0.21.6
+  version: 0.22.0
   force: true
   labels:
     purpose: backbone
