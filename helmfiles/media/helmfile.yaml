@@ -87,7 +87,7 @@ releases:
 
 - name: jellyfin
   chart: szymonrychu/jellyfin
-  version: 0.6.5
+  version: 0.6.6
   namespace: media
   labels:
     purpose: media
