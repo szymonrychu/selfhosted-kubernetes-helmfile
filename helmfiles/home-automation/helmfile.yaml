@@ -29,14 +29,6 @@ templates:
     - values/{{`{{ .Release.Name }}`}}/{{`{{ .Environment.Name }}`}}.secrets.yaml
 
 releases:
-- name: eclipse-mosquitto
-  chart: szymonrychu/eclipse-mosquitto
-  version: 0.1.4
-  namespace: home-automation
-  labels:
-    purpose: home-automation
-    application: eclipse-mosquitto
-  <<: *default
 
 - name: esphome
   chart: szymonrychu/esphome
