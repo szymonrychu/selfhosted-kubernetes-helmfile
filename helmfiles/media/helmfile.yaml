@@ -105,7 +105,7 @@ releases:
 
 - name: unmanic
   chart: szymonrychu/unmanic
-  version: 0.1.1
+  version: 0.1.2
   namespace: media
   labels:
     purpose: media
