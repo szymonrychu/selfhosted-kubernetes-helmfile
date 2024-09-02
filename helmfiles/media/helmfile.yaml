@@ -78,7 +78,7 @@ releases:
 
 - name: filebrowser
   chart: szymonrychu/filebrowser
-  version: 2.0.2
+  version: 2.0.3
   namespace: media
   labels:
     purpose: media
