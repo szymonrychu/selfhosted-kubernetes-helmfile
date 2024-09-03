@@ -39,7 +39,7 @@ releases:
 - name: grafana-database
   chart: cnpg/cluster
   namespace: monitoring
-  version: 0.0.10
+  version: 0.0.11
   force: true
   labels:
     purpose: monitoring
