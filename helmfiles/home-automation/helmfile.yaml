@@ -51,7 +51,7 @@ releases:
 
 - name: home-assistant
   chart: szymonrychu/home-assistant
-  version: 0.11.13
+  version: 0.11.14
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database
