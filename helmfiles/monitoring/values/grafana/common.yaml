@@ -1,0 +1,90 @@
+assertNoLeakedSecrets: false
+deploymentStrategy:
+  type: Recreate
+priorityClassName: system-cluster-critical
+securityContext:
+  fsGroup: 1000
+  runAsGroup: 1000
+  runAsNonRoot: false
+  runAsUser: 1000
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: "kubernetes.io/hostname"
+          operator: In
+          values:
+            - nuc1
+            - nuc2
+            - nuc3
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - grafana
+      topologyKey: "kubernetes.io/hostname"
+resources:
+  requests:
+    cpu: 10m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 384Mi
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: ceph
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
+ingress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - grafana.szymonrichert.pl
+  path: /
+  tls:
+    - hosts:
+      - grafana.szymonrichert.pl
+      secretName: grafana-tls
+grafana.ini:
+  auth:
+    disable_login_form: true
+  "auth.generic_oauth":
+    enabled: true
+    auto_login: true
+    scopes: openid,profile,email,offline_access,groups
+    email_attribute_path: email
+    login_attribute_path: username
+    name_attribute_path: full_name
+    name: Keycloak
+    allow_sign_up: true
+    auth_url: https://auth.szymonrichert.pl/realms/master/protocol/openid-connect/auth
+    token_url: https://auth.szymonrichert.pl/realms/master/protocol/openid-connect/token
+    api_url: https://auth.szymonrichert.pl/realms/master/protocol/openid-connect/userinfo
+    role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
+    allow_assign_grafana_admin: true
+  server:
+    root_url: https://grafana.szymonrichert.pl/
+  smtp:
+    enabled: true
+    host: "smtp.gmail.com:587"
+    from_address: "monitoring@szymonrichert.pl"
+  database:
+    type: postgres
+    host: grafana-database-cluster-rw:5432
+    user: grafana
+    password: "${POSTGRESQL_PASSWORD}"
+    ssl_mode: require
+envValueFrom:
+  POSTGRESQL_PASSWORD:
+    secretKeyRef:
+      name: grafana-database-cluster-app
+      key: password
