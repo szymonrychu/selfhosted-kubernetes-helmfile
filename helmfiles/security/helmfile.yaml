@@ -33,7 +33,7 @@ releases:
 - name: tetragon
   chart: cilium/tetragon
   namespace: kube-system
-  version: 1.1.2
+  version: 1.2.0
   labels:
     purpose: security
     application: tetragon
