@@ -40,39 +40,17 @@ cluster:
     database: keycloak
     owner: keycloak
 
-
 backups:
-  # -- You need to configure backups manually, so backups are disabled by default.
-  enabled: false
-
-  # -- Overrides the provider specific default endpoint. Defaults to:
-  # S3: https://s3.<region>.amazonaws.com"
-  endpointURL: ""  # Leave empty if using the default S3 endpoint
-
-  # -- Overrides the provider specific default path. Defaults to:
-  # S3: s3://<bucket><path>
-  # Azure: https://<storageAccount>.<serviceName>.core.windows.net/<clusterName><path>
-  # Google: gs://<bucket><path>
-  destinationPath: ""
-  # -- One of `s3`, `azure` or `google`
-  provider: s3
+  enabled: true
   s3:
-    region: ""
-    bucket: ""
-    path: "/"
-    accessKey: ""
-    secretKey: ""
+    region: eu-central-1
+    bucket: database-backup-szymonrychu
+    path: /keycloak-database/
 
   scheduledBackups:
-    -
-      # -- Scheduled backup name
-      name: daily-backup
-      # -- Schedule in cron format
+    - name: daily-backup
       schedule: "0 0 0 * * *"
-      # -- Backup owner reference
       backupOwnerReference: self
-
-  # -- Retention policy for backups
   retentionPolicy: "30d"
 
 pooler:

@@ -1,7 +1,7 @@
 cluster:
   instances: 3
   storage:
-    size: 25Gi
+    size: 10Gi
     storageClass: ceph
   resources: {}
     # limits:
@@ -37,8 +37,8 @@ cluster:
               description: "Cache hit ratio"
 
   initdb:
-    database: grafana
-    owner: grafana
+    database: harbor
+    owner: harbor
 
 
 backups:
@@ -46,7 +46,13 @@ backups:
   s3:
     region: eu-central-1
     bucket: database-backup-szymonrychu
-    path: /grafana-database/
+    path: /harbor-database/
+
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 0 0 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "30d"
 
 pooler:
   # -- Whether to enable PgBouncer
