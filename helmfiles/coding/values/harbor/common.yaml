@@ -5,7 +5,7 @@ expose:
       secretName: harbor-tls
   ingress:
     hosts:
-      core: harbor.szymonrichert.pl
+      core: repo.szymonrichert.pl
     className: nginx
     annotations:
       cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -16,7 +16,7 @@ expose:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/proxy-body-size: "0"
 
-externalURL: https://harbor.szymonrichert.pl
+externalURL: https://repo.szymonrichert.pl
 
 persistence:
   resourcePolicy: "keep"
