@@ -20,6 +20,9 @@ toolbox:
       memory: "128Mi"
 
 cephClusterSpec:
+  network:
+    connections:
+      provider: host
   placement:
     all:
       nodeAffinity:
