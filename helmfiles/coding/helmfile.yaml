@@ -1,10 +1,6 @@
 repositories:
 - name: szymonrychu
   url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
-- name: harbor
-  url: https://helm.goharbor.io
-- name: cnpg
-  url: https://cloudnative-pg.github.io/charts
 templates:
   default: &default
     disableValidation: true
@@ -41,25 +37,4 @@ releases:
   labels:
     purpose: editor
     application: code-server
-  <<: *default
-
-- name: harbor-database
-  chart: cnpg/cluster
-  namespace: harbor
-  version: 0.0.11
-  force: true
-  labels:
-    purpose: coding
-    application: harbor-database
-  <<: *default
-
-- name: harbor
-  version: 1.15.1
-  chart: harbor/harbor
-  namespace: harbor
-  needs:
-  - harbor/harbor-database
-  labels:
-    purpose: coding
-    application: harbor
   <<: *default
