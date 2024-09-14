@@ -5,8 +5,6 @@ repositories:
   url: https://grafana.github.io/helm-charts
 - name: cnpg
   url: https://cloudnative-pg.github.io/charts
-- name: szymonrychu
-  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 templates:
   default: &default
     disableValidation: true
@@ -82,7 +80,7 @@ releases:
 
 - name: microtik-exporter
   namespace: monitoring
-  chart: szymonrychu/microtik-exporter
+  chart: oci://ghcr.io/szymonrychu/helm-charts/microtik-exporter
   version: 0.1.0
   needs:
   - monitoring/prometheus

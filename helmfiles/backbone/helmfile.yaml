@@ -3,10 +3,10 @@ repositories:
   url: https://charts.helm.sh/stable
 - name: kubereboot
   url: https://kubereboot.github.io/charts
-- name: szymonrychu
-  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 - name: cnpg
   url: https://cloudnative-pg.github.io/charts
+- name: hashicorp
+  url: https://helm.releases.hashicorp.com
 templates:
   default: &default
     wait: true
@@ -37,8 +37,19 @@ templates:
     <<: *default
 releases:
 
+
+
+- name: vault
+  chart: hashicorp/vault
+  version: 0.28.1
+  namespace: vault
+  labels:
+    purpose: backbone
+    application: vault
+  <<: *default
+
 - name: gha-runner
-  chart: szymonrychu/gha-runner
+  chart: oci://ghcr.io/szymonrychu/helm-charts/gha-runner
   version: 2.311.1
   namespace: gha-runner
   labels:
@@ -56,7 +67,7 @@ releases:
   <<: *default
 
 - name: apt-autoupgrade
-  chart: szymonrychu/ubuntu-apt-autoupgrade
+  chart: oci://ghcr.io/szymonrychu/helm-charts/ubuntu-apt-autoupgrade
   version: 0.1.0
   namespace: kube-system
   needs:
@@ -77,7 +88,7 @@ releases:
   <<: *operators
 
 - name: oauth2-proxy-admission-controller
-  chart: szymonrychu/oauth2-proxy-admission-controller
+  chart: oci://ghcr.io/szymonrychu/helm-charts/oauth2-proxy-admission-controller
   version: 0.1.8
   namespace: kube-system
   labels:

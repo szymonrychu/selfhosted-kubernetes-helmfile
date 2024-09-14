@@ -39,7 +39,7 @@ persistence:
   enabled: true
   storageClassName: ceph
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   size: 5Gi
 ingress:
   enabled: true
