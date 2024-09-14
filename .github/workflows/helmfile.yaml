@@ -111,6 +111,10 @@ jobs:
       with:
         token: "${{ secrets.SZYMONRYCHU_TOKEN }}"
 
+    - name: Login to GHCR szymonrychu
+      run: |
+        echo "${{ secrets.SZYMONRYCHU_TOKEN }}" | helm registry login -u szymonrychu --password-stdin ghcr.io
+
     - name: helmfile diff
       if: github.ref != 'refs/heads/main'
       env:
