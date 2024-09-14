@@ -1,6 +1,3 @@
-repositories:
-- name: szymonrychu
-  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 environments:
   lab: {}
 templates:
@@ -31,8 +28,8 @@ templates:
 releases:
 
 - name: esphome
-  chart: szymonrychu/esphome
-  version: 3.0.10
+  chart: oci://ghcr.io/szymonrychu/helm-charts/esphome
+  version: 3.0.12
   namespace: home-automation
   labels:
     purpose: home-automation
@@ -50,8 +47,8 @@ releases:
   <<: *default
 
 - name: home-assistant
-  chart: szymonrychu/home-assistant
-  version: 0.11.13
+  chart: oci://ghcr.io/szymonrychu/helm-charts/home-assistant
+  version: 0.11.15
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database

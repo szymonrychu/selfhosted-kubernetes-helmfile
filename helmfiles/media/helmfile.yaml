@@ -1,6 +1,3 @@
-repositories:
-- name: szymonrychu
-  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 templates:
   operators-default:
     disableValidation: true
@@ -32,7 +29,7 @@ templates:
 releases:
 
 - name: qbittorrent
-  chart: szymonrychu/qbittorrent
+  chart: oci://ghcr.io/szymonrychu/helm-charts/qbittorrent
   version: 2.1.1
   namespace: media
   labels:
@@ -41,7 +38,7 @@ releases:
   <<: *default
 
 - name: sonarr
-  chart: szymonrychu/sonarr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/sonarr
   version: 2.0.0
   namespace: media
   labels:
@@ -50,7 +47,7 @@ releases:
   <<: *default
 
 - name: radarr
-  chart: szymonrychu/radarr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/radarr
   version: 2.0.0
   namespace: media
   labels:
@@ -59,7 +56,7 @@ releases:
   <<: *default
 
 - name: prowlarr
-  chart: szymonrychu/prowlarr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/prowlarr
   version: 1.0.0
   namespace: media
   labels:
@@ -68,7 +65,7 @@ releases:
   <<: *default
 
 - name: bazarr
-  chart: szymonrychu/bazarr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/bazarr
   version: 1.0.0
   namespace: media
   labels:
@@ -77,8 +74,8 @@ releases:
   <<: *default
 
 - name: filebrowser
-  chart: szymonrychu/filebrowser
-  version: 2.0.1
+  chart: oci://ghcr.io/szymonrychu/helm-charts/filebrowser
+  version: 2.0.3
   namespace: media
   labels:
     purpose: media
@@ -86,8 +83,8 @@ releases:
   <<: *default
 
 - name: jellyfin
-  chart: szymonrychu/jellyfin
-  version: 0.6.6
+  chart: oci://ghcr.io/szymonrychu/helm-charts/jellyfin
+  version: 0.6.7
   namespace: media
   labels:
     purpose: media
@@ -95,7 +92,7 @@ releases:
   <<: *default
 
 - name: jellyseer
-  chart: szymonrychu/jellyseerr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/jellyseerr
   version: 0.0.3
   namespace: media
   labels:
@@ -104,8 +101,8 @@ releases:
   <<: *default
 
 - name: unmanic
-  chart: szymonrychu/unmanic
-  version: 0.1.1
+  chart: oci://ghcr.io/szymonrychu/helm-charts/unmanic
+  version: 0.1.2
   namespace: media
   labels:
     purpose: media

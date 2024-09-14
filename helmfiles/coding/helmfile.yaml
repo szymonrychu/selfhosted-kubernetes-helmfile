@@ -1,6 +1,3 @@
-repositories:
-- name: szymonrychu
-  url: https://szymonrychu.github.io/selfhosted-kubernetes-charts
 templates:
   default: &default
     disableValidation: true
@@ -31,8 +28,8 @@ templates:
 releases:
 
 - name: code-server
-  version: 2.0.0
-  chart: szymonrychu/code-server
+  version: 2.0.1
+  chart: oci://ghcr.io/szymonrychu/helm-charts/code-server
   namespace: code-server
   labels:
     purpose: editor

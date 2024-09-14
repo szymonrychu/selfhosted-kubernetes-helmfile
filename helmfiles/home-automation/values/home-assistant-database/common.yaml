@@ -3,13 +3,13 @@ cluster:
   storage:
     size: 30Gi
     storageClass: ceph
-  resources: {}
-    # limits:
-    #   cpu: 2000m
-    #   memory: 8Gi
-    # requests:
-    #   cpu: 2000m
-    #   memory: 8Gi
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
   priorityClassName: system-cluster-critical
 
