@@ -10,6 +10,19 @@
   "pinDigests": true,
   "automerge": true,
   "gitAuthor": "szymonrichert.pl bot <bot@szymonrichert.pl>",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update image in helmfile.yaml",
+      "fileMatch": ["^helmfile.yaml$"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "chart:\\s*\"(?<depName>.*)\"\\s*//",
+        "version:\\s*\"(?<currentValue>.*)\"\\s*//"
+      ],
+      "datasourceTemplate": "helm"
+    }
+  ],
   "packageRules": [
     {
       "matchManagers": ["github-actions"],
