@@ -1,0 +1,11 @@
+[tools]
+terraform = '1.9.7'
+helm = '3.16.2'
+helm-diff = '3.9.11'
+helm-secrets = '4.6.1'
+sops = 'latest'
+helmfile = '0.168.0'
+pre-commit = { version = 'latest', postinstall = 'pre-commit install' }
+
+[plugins]
+helm-secrets = "https://github.com/istreamlabs/asdf-helm-secrets.git"
