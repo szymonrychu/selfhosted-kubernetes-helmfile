@@ -3,7 +3,7 @@ ingress:
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/configuration-snippet: |
-       rewrite ^/#/login?redirect=/$ https://qbt.szymonrichert.pl/ permanent;
+       rewrite ^/#\/login\?redirect\=\/$ https://qbt.szymonrichert.pl/#/ permanent;
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
   hosts:
