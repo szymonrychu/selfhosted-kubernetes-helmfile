@@ -1,3 +1,7 @@
+repositories:
+- name: ot-helm
+  url: https://ot-container-kit.github.io/helm-charts
+
 templates:
   operators-default:
     disableValidation: true
@@ -107,4 +111,33 @@ releases:
   labels:
     purpose: media
     application: unmanic
+  <<: *default
+
+- name: paperless-ngx-redis
+  chart: ot-helm/redis
+  namespace: paperless-ngx
+  version: 0.16.1
+  force: true
+  labels:
+    purpose: media
+    application: paperless-ngx-redis
+  <<: *default
+
+- name: paperless-ngx-database
+  chart: cnpg/cluster
+  namespace: paperless-ngx
+  version: 0.0.11
+  force: true
+  labels:
+    purpose: media
+    application: paperless-ngx-database
+  <<: *default
+
+- name: paperless-ngx
+  chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
+  version: 0.0.1
+  namespace: paperless-ngx
+  labels:
+    purpose: media
+    application: paperless-ngx
   <<: *default

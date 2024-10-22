@@ -1,0 +1,67 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 20m
+    nginx.ingress.kubernetes.io/proxy-buffering: "off"
+  hosts:
+    - host: paperless-ngx.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: paperless-ngx-tls
+      hosts:
+        - paperless-ngx.szymonrichert.pl
+
+
+
+paperless_url: https://paperless-ngx.szymonrichert.pl
+
+redis:
+  host: paperless-ngx-redis
+
+database:
+  host: paperless-ngx-database-cluster-rw
+  name: paperless-ngx
+  usernameSecret: paperless-ngx-database-cluster-app/username
+  passwordSecret: paperless-ngx-database-cluster-app/password
+
+podSecurityContext:
+  fsGroup: 1000
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 750m
+    memory: 1Gi
+
+persistence:
+  data:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: ceph
+    size: 8Gi
+    annotations: {}
+  media:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: ceph
+    size: 8Gi
+    annotations: {}
+  export:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: ceph
+    size: 8Gi
+    annotations: {}
+  consume:
+    enabled: true
+    accessMode: ReadWriteMany
+    storageClass: ceph
+    size: 8Gi
+    annotations: {}

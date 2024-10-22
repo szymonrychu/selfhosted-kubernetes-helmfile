@@ -7,6 +7,8 @@ repositories:
   url: https://cloudnative-pg.github.io/charts
 - name: hashicorp
   url: https://helm.releases.hashicorp.com
+- name: ot-helm
+  url: https://ot-container-kit.github.io/helm-charts
 templates:
   default: &default
     wait: true
@@ -85,6 +87,16 @@ releases:
   labels:
     purpose: backbone
     application: cloudnative-pg
+  <<: *operators
+
+- name: redis-operator
+  chart: ot-helm/redis-operator
+  namespace: redis-operator
+  version: 0.18.3
+  force: true
+  labels:
+    purpose: backbone
+    application: redis-operator
   <<: *operators
 
 - name: oauth2-proxy-admission-controller
