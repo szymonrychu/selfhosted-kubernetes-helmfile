@@ -29,7 +29,7 @@ releases:
 
 - name: esphome
   chart: oci://ghcr.io/szymonrychu/helm-charts/esphome
-  version: 3.0.16
+  version: 3.0.17
   namespace: home-automation
   labels:
     purpose: home-automation
