@@ -29,7 +29,7 @@ module "nas_samba_disk_space" {
 avg by (mountpoint) (node_filesystem_size_bytes{job="node-exporter", fstype!="", mountpoint="/samba"}))
 * 100
 EOF
-  threshold      = 80
+  threshold      = 90
   decimal_points = 3
 
   summary = <<EOF
