@@ -99,11 +99,11 @@ releases:
     application: redis-operator
   <<: *operators
 
-- name: oauth2-proxy-admission-controller
-  chart: oci://ghcr.io/szymonrychu/helm-charts/oauth2-proxy-admission-controller
-  version: 0.1.8
-  namespace: kube-system
-  labels:
-    purpose: backbone
-    application: oauth2-proxy-admission-controller
-  <<: *operators
+# - name: oauth2-proxy-admission-controller
+#   chart: oci://ghcr.io/szymonrychu/helm-charts/oauth2-proxy-admission-controller
+#   version: 0.1.8
+#    namespace: kube-system
+#   labels:
+#     purpose: backbone
+#     application: oauth2-proxy-admission-controller
+#   <<: *operators
