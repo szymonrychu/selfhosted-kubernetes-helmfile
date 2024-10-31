@@ -45,23 +45,19 @@ persistence:
     enabled: true
     accessMode: ReadWriteMany
     storageClass: ceph
-    size: 8Gi
+    size: 20Gi
     annotations: {}
   media:
     enabled: true
-    accessMode: ReadWriteMany
-    storageClass: ceph
-    size: 8Gi
-    annotations: {}
+    type: hostPath
+    hostPath: /samba/documents/paperless/media
   export:
     enabled: true
-    accessMode: ReadWriteMany
-    storageClass: ceph
-    size: 8Gi
-    annotations: {}
+    type: hostPath
+    hostPath: /samba/documents/paperless/export
   consume:
     enabled: true
     accessMode: ReadWriteMany
     storageClass: ceph
-    size: 8Gi
+    size: 20Gi
     annotations: {}

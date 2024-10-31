@@ -1,3 +1,7 @@
+version:
+  # renovate: image=ghcr.io/cloudnative-pg/postgresql
+  postgresql: "15"
+
 cluster:
   instances: 2
   storage:
@@ -74,15 +78,3 @@ backups:
 
   # -- Retention policy for backups
   retentionPolicy: "30d"
-
-pooler:
-  # -- Whether to enable PgBouncer
-  enabled: false
-  # -- PgBouncer pooling mode
-  poolMode: transaction
-  # -- Number of PgBouncer instances
-  instances: 3
-  # -- PgBouncer configuration parameters
-  parameters:
-    max_client_conn: "1000"
-    default_pool_size: "25"

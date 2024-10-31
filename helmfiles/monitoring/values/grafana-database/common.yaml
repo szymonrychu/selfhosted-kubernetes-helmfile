@@ -1,3 +1,6 @@
+version:
+  postgresql: "15"
+
 cluster:
   instances: 3
   storage:
@@ -12,7 +15,6 @@ cluster:
       memory: 128Mi
 
   priorityClassName: system-cluster-critical
-
 
   # -- Affinity/Anti-affinity rules for Pods
   # See: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-AffinityConfiguration
@@ -47,15 +49,3 @@ backups:
     region: eu-central-1
     bucket: database-backup-szymonrychu
     path: /grafana-database/
-
-pooler:
-  # -- Whether to enable PgBouncer
-  enabled: false
-  # -- PgBouncer pooling mode
-  poolMode: transaction
-  # -- Number of PgBouncer instances
-  instances: 3
-  # -- PgBouncer configuration parameters
-  parameters:
-    max_client_conn: "1000"
-    default_pool_size: "25"

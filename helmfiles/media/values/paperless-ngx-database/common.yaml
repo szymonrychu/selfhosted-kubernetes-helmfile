@@ -1,7 +1,11 @@
+version:
+  # renovate: image=ghcr.io/cloudnative-pg/postgresql
+  postgresql: "15"
+
 cluster:
   instances: 3
   storage:
-    size: 10Gi
+    size: 50Gi
     storageClass: ceph
   resources:
     limits:
@@ -10,8 +14,6 @@ cluster:
     requests:
       cpu: 100m
       memory: 128Mi
-
-  priorityClassName: system-cluster-critical
 
 
   # -- Affinity/Anti-affinity rules for Pods
@@ -51,16 +53,4 @@ backups:
     - name: daily-backup
       schedule: "0 0 0 * * *"
       backupOwnerReference: self
-  retentionPolicy: "30d"
-
-pooler:
-  # -- Whether to enable PgBouncer
-  enabled: false
-  # -- PgBouncer pooling mode
-  poolMode: transaction
-  # -- Number of PgBouncer instances
-  instances: 3
-  # -- PgBouncer configuration parameters
-  parameters:
-    max_client_conn: "1000"
-    default_pool_size: "25"
+  retentionPolicy: "7d"
