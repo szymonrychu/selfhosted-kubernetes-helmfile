@@ -39,16 +39,14 @@ templates:
     <<: *default
 releases:
 
-
-
-- name: vault
-  chart: hashicorp/vault
-  version: 0.28.1
-  namespace: vault
-  labels:
-    purpose: backbone
-    application: vault
-  <<: *default
+# - name: vault
+#   chart: hashicorp/vault
+#   version: 0.28.1
+#   namespace: vault
+#   labels:
+#     purpose: backbone
+#     application: vault
+#   <<: *default
 
 - name: gha-runner
   chart: oci://ghcr.io/szymonrychu/helm-charts/gha-runner
