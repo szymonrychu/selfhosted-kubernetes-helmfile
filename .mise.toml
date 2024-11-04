@@ -3,9 +3,15 @@ terraform = '1.9.7'
 helm = '3.16.2'
 helm-diff = '3.9.11'
 helm-secrets = '4.6.1'
-sops = 'latest'
+sops = 'v3.9.1'
 helmfile = '0.168.0'
 pre-commit = { version = 'latest', postinstall = 'pre-commit install' }
+kubectl = '1.31.2'
+kubectx = '0.9.5'
+stern = '1.31.0'
 
 [plugins]
 helm-secrets = "https://github.com/istreamlabs/asdf-helm-secrets.git"
+kubectl = "https://github.com/asdf-community/asdf-kubectl.git"
+kubectx = "https://github.com/virtualstaticvoid/asdf-kubectx.git"
+stern = "https://github.com/looztra/asdf-stern.git"
