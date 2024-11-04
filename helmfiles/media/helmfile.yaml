@@ -165,9 +165,8 @@ releases:
   <<: *default
 
 - name: bitmagnet
-  # chart: oci://ghcr.io/szymonrychu/helm-charts/bitmagnet
-  # version: 0.0.1
-  chart: ../../../selfhosted-kubernetes-charts/charts/bitmagnet
+  chart: oci://ghcr.io/szymonrychu/helm-charts/bitmagnet
+  version: 0.0.1
   namespace: media
   labels:
     purpose: media
