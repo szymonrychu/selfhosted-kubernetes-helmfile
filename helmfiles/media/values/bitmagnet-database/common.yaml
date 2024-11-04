@@ -1,0 +1,56 @@
+version:
+  # renovate: image=ghcr.io/cloudnative-pg/postgresql
+  postgresql: "15"
+
+cluster:
+  instances: 3
+  storage:
+    size: 50Gi
+    storageClass: ceph
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+
+  # -- Affinity/Anti-affinity rules for Pods
+  # See: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-AffinityConfiguration
+  affinity:
+    topologyKey: kubernetes.io/hostname
+
+  monitoring:
+    enabled: true
+    podMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: false
+    customQueries:
+      - name: "pg_cache_hit_ratio"
+        query: "SELECT current_database() as datname, sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read)) as ratio FROM pg_statio_user_tables;"
+        metrics:
+          - datname:
+              usage: "LABEL"
+              description: "Name of the database"
+          - ratio:
+              usage: GAUGE
+              description: "Cache hit ratio"
+
+  initdb:
+    database: bitmagnet
+    owner: bitmagnet
+
+backups:
+  enabled: true
+  s3:
+    region: eu-central-1
+    bucket: database-backup-szymonrychu
+    path: /bitmagnet-database/
+
+  scheduledBackups:
+    - name: daily-backup
+      schedule: "0 0 0 * * *"
+      backupOwnerReference: self
+  retentionPolicy: "7d"

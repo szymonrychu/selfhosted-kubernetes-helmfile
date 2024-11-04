@@ -143,9 +143,8 @@ releases:
   <<: *default
 
 - name: paperless-ngx
-  chart: ../../../selfhosted-kubernetes-charts/charts/paperless-ngx/
-  # chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
-  # version: 0.0.5
+  chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
+  version: 0.1.0
   namespace: paperless-ngx
   labels:
     purpose: media
@@ -153,4 +152,26 @@ releases:
   needs:
     - paperless-ngx/paperless-ngx-redis
     - paperless-ngx/paperless-ngx-database
+  <<: *default
+
+- name: bitmagnet-database
+  chart: cnpg/cluster
+  namespace: media
+  version: 0.0.11
+  force: true
+  labels:
+    purpose: media
+    application: bitmagnet-database
+  <<: *default
+
+- name: bitmagnet
+  # chart: oci://ghcr.io/szymonrychu/helm-charts/bitmagnet
+  # version: 0.0.1
+  chart: ../../../selfhosted-kubernetes-charts/charts/bitmagnet
+  namespace: media
+  labels:
+    purpose: media
+    application: bitmagnet
+  needs:
+    - media/bitmagnet-database
   <<: *default
