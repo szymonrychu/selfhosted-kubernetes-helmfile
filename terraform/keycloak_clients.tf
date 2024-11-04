@@ -141,3 +141,19 @@ module "unmanic" {
 
   keycloak_openid_client_scope_name = keycloak_openid_client_scope.groups.name
 }
+
+module "lidarr" {
+  source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
+
+  keycloak_url             = var.keycloak_url
+  keycloak_client_id       = "lidarr"
+  keycloak_client_name     = "Lidarr"
+  keycloak_client_hostname = "lidarr.szymonrichert.pl"
+  keycloak_group_name      = "lidarr"
+
+  kubernetes_secret_namespace = "media"
+
+  kuberenetes_proxy_cookie_secret = var.kuberenetes_proxy_cookie_secret
+
+  keycloak_openid_client_scope_name = keycloak_openid_client_scope.groups.name
+}

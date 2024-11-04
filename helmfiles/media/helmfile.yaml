@@ -59,6 +59,15 @@ releases:
     application: radarr
   <<: *default
 
+- name: lidarr
+  chart: oci://ghcr.io/szymonrychu/helm-charts/lidarr
+  version: 0.0.1
+  namespace: media
+  labels:
+    purpose: media
+    application: lidarr
+  <<: *default
+
 - name: prowlarr
   chart: oci://ghcr.io/szymonrychu/helm-charts/prowlarr
   version: 1.0.1
