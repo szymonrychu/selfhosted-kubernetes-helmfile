@@ -106,7 +106,7 @@ releases:
 
 - name: jellyseer
   chart: oci://ghcr.io/szymonrychu/helm-charts/jellyseerr
-  version: 0.0.5
+  version: 0.1.0
   namespace: media
   labels:
     purpose: media
@@ -143,10 +143,14 @@ releases:
   <<: *default
 
 - name: paperless-ngx
-  chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
-  version: 0.0.5
+  chart: ../../../selfhosted-kubernetes-charts/charts/paperless-ngx/
+  # chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
+  # version: 0.0.5
   namespace: paperless-ngx
   labels:
     purpose: media
     application: paperless-ngx
+  needs:
+    - paperless-ngx/paperless-ngx-redis
+    - paperless-ngx/paperless-ngx-database
   <<: *default

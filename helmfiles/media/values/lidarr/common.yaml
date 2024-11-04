@@ -22,6 +22,9 @@ resources:
   limits:
     cpu: "2"
     memory: 1024Mi
+  requests:
+    cpu: 50m
+    memory: 128Mi
 
 persistence:
   config:

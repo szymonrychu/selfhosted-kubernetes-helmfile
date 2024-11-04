@@ -16,7 +16,8 @@ ingress:
       hosts:
         - paperless-ngx.szymonrichert.pl
 
-
+gotenbergTika:
+  enabled: true
 
 paperless_url: https://paperless-ngx.szymonrichert.pl
 

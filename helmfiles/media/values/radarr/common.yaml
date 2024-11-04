@@ -23,7 +23,7 @@ resources:
     cpu: "2"
     memory: 1024Mi
   requests:
-    cpu: 100m
+    cpu: 50m
     memory: 128Mi
 
 persistence:
