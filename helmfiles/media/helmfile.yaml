@@ -164,13 +164,13 @@ releases:
     application: bitmagnet-database
   <<: *default
 
-- name: bitmagnet
-  chart: oci://ghcr.io/szymonrychu/helm-charts/bitmagnet
-  version: 0.0.1
-  namespace: media
-  labels:
-    purpose: media
-    application: bitmagnet
-  needs:
-    - media/bitmagnet-database
-  <<: *default
+# - name: bitmagnet
+#   chart: oci://ghcr.io/szymonrychu/helm-charts/bitmagnet
+#   version: 0.0.1
+#   namespace: media
+#   labels:
+#     purpose: media
+#     application: bitmagnet
+#   needs:
+#     - media/bitmagnet-database
+#   <<: *default
