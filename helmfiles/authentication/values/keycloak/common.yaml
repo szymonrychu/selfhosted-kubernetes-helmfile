@@ -15,6 +15,9 @@ resources:
 
 proxy: edge
 
+logging:
+  output: json
+
 priorityClassName: system-cluster-critical
 
 extraEnvVars:
@@ -24,12 +27,12 @@ extraEnvVars:
   value: https://auth.szymonrichert.pl/
 - name: KEYCLOAK_ENABLE_HTTPS
   value: "false"
+- name: PROMETHEUS_GROUPING_KEY_INSTANCE
+  value: ENVVALUE:HOSTNAME
+
 
 podLabels:
   application: keycloak
-
-  # https://github.com/nkelemen18/koreui/releases/download/22.0.0/koreui-22.0.0.jar
-  # /opt/bitnami/keycloak/providers/
 
 extraVolumes:
   - name: providers
@@ -58,14 +61,14 @@ initContainers:
         type: RuntimeDefault
     command: [ bash ]
     args:
-      - -c
+      - -cex
       - cp -R /opt/bitnami/keycloak/providers/ /providers/
     volumeMounts:
-    - mountPath: /providers
-      name: providers
+      - mountPath: /providers
+        name: providers
 
   - name: koreui-download
-    image: busybox:1.36.1-glibc
+    image: ghcr.io/szymonrychu/keycloak-providers:0.0.1
     imagePullPolicy: IfNotPresent
     securityContext:
       allowPrivilegeEscalation: false
@@ -82,11 +85,11 @@ initContainers:
         type: RuntimeDefault
     command: [ sh ]
     args:
-      - -c
-      - 'wget -O /providers/koreui.jar https://github.com/nkelemen18/koreui/releases/download/22.0.0/koreui-22.0.0.jar'
+      - -cex
+      - cp -R /keycloak-providers/*.jar /providers/
     volumeMounts:
-    - mountPath: /providers
-      name: providers
+      - mountPath: /providers
+        name: providers
 
 
 affinity:
@@ -129,12 +132,16 @@ pdb:
 
 metrics:
   enabled: true
+  service:
+    ports:
+      http: 9000
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "{{ .Values.metrics.service.ports.http }}"
+
+
   serviceMonitor:
     enabled: true
-    endpoints:
-      - path: /metrics
-      - path: /realms/master/metrics
-      - path: /realms/Lab/metrics
   prometheusRule:
     enabled: true
 
