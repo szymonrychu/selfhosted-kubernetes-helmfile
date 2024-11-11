@@ -47,7 +47,7 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
-  version: 65.7.0
+  version: 65.8.1
   needs:
   - monitoring/grafana-database
   labels:
@@ -58,7 +58,7 @@ releases:
 - name: grafana
   namespace: monitoring
   chart: grafana/grafana
-  version: 8.5.12
+  version: 8.6.0
   needs:
   - monitoring/grafana-database
   - monitoring/prometheus
@@ -70,7 +70,7 @@ releases:
 - name: smartctl-exporter
   namespace: monitoring
   chart: prometheus-community/prometheus-smartctl-exporter
-  version: 0.10.0
+  version: 0.11.0
   needs:
   - monitoring/prometheus
   labels:

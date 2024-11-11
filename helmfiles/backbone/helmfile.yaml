@@ -59,7 +59,7 @@ releases:
 
 - name: kured
   chart: kubereboot/kured
-  version: 5.5.1
+  version: 5.5.2
   namespace: kube-system
   labels:
     purpose: backbone
@@ -90,7 +90,7 @@ releases:
 - name: redis-operator
   chart: ot-helm/redis-operator
   namespace: redis-operator
-  version: 0.18.3
+  version: 0.18.5
   force: true
   labels:
     purpose: backbone
