@@ -135,11 +135,6 @@ metrics:
   service:
     ports:
       http: 9000
-    annotations:
-      prometheus.io/scrape: "true"
-      prometheus.io/port: "{{ .Values.metrics.service.ports.http }}"
-
-
   serviceMonitor:
     enabled: true
   prometheusRule:
