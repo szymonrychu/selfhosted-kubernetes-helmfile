@@ -106,7 +106,7 @@ releases:
 
 - name: jellyseer
   chart: oci://ghcr.io/szymonrychu/helm-charts/jellyseerr
-  version: 0.1.0
+  version: 0.0.6
   namespace: media
   labels:
     purpose: media

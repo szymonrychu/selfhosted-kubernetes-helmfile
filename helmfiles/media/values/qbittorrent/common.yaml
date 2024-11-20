@@ -6,6 +6,7 @@ ingress:
        rewrite ^/#\/login\?redirect\=\/$ https://qbt.szymonrichert.pl/#/ permanent;
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
   hosts:
     - host: qbt.szymonrichert.pl
       paths:
