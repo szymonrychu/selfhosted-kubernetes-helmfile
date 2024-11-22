@@ -29,7 +29,7 @@ releases:
 
 - name: esphome
   chart: oci://ghcr.io/szymonrychu/helm-charts/esphome
-  version: 3.0.19
+  version: 3.0.21
   namespace: home-automation
   labels:
     purpose: home-automation
@@ -48,7 +48,7 @@ releases:
 
 - name: home-assistant
   chart: oci://ghcr.io/szymonrychu/helm-charts/home-assistant
-  version: 0.11.25
+  version: 0.11.26
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database

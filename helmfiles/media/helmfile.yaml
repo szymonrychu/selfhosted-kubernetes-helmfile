@@ -97,7 +97,7 @@ releases:
 
 - name: jellyfin
   chart: oci://ghcr.io/szymonrychu/helm-charts/jellyfin
-  version: 0.6.9
+  version: 0.6.11
   namespace: media
   labels:
     purpose: media
@@ -125,7 +125,7 @@ releases:
 - name: paperless-ngx-redis
   chart: ot-helm/redis
   namespace: paperless-ngx
-  version: 0.16.1
+  version: 0.16.2
   force: true
   labels:
     purpose: media
@@ -144,7 +144,7 @@ releases:
 
 - name: paperless-ngx
   chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
-  version: 0.1.2
+  version: 0.1.4
   namespace: paperless-ngx
   labels:
     purpose: media
