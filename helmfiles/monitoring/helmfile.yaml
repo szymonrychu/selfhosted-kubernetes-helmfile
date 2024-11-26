@@ -58,7 +58,7 @@ releases:
 - name: grafana
   namespace: monitoring
   chart: grafana/grafana
-  version: 8.6.1
+  version: 8.6.2
   needs:
   - monitoring/grafana-database
   - monitoring/prometheus
