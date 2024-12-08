@@ -5,8 +5,14 @@ version:
 cluster:
   instances: 3
   storage:
-    size: 50Gi
+    size: 100Gi
     storageClass: ceph
+
+  walStorage:
+    enabled: true
+    size: 30Gi
+    storageClass: ceph
+
   resources:
     limits:
       cpu: 500m

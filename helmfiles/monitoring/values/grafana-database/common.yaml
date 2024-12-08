@@ -4,7 +4,11 @@ version:
 cluster:
   instances: 3
   storage:
-    size: 25Gi
+    size: 50Gi
+    storageClass: ceph
+  walStorage:
+    enabled: true
+    size: 10Gi
     storageClass: ceph
   resources:
     limits:

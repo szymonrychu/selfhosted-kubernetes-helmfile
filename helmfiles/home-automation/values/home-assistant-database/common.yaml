@@ -7,6 +7,11 @@ cluster:
   storage:
     size: 30Gi
     storageClass: ceph
+  walStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: ceph
+
   resources:
     limits:
       cpu: 500m
