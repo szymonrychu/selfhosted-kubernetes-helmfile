@@ -125,7 +125,7 @@ releases:
 - name: paperless-ngx-redis
   chart: ot-helm/redis
   namespace: paperless-ngx
-  version: 0.16.2
+  version: 0.16.4
   force: true
   labels:
     purpose: media
