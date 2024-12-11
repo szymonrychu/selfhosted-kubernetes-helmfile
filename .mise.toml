@@ -4,7 +4,7 @@ helm = '3.16.2'
 sops = 'v3.9.1'
 helmfile = '0.168.0'
 pre-commit = { version = 'latest', postinstall = 'pre-commit install' }
-kubectl = '1.31.3'
+kubectl = '1.31.4'
 kubectx = '0.9.5'
 stern = '1.31.0'
 helm-diff = '3.9.11'
