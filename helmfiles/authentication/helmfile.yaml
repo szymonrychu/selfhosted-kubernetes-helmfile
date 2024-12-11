@@ -33,7 +33,7 @@ releases:
 - name: keycloak-database
   chart: cnpg/cluster
   namespace: authentication
-  version: 0.1.0
+  version: 0.1.1
   force: true
   labels:
     purpose: authentication
@@ -42,7 +42,7 @@ releases:
 
 - name: keycloak
   timeout: 2400
-  version: 24.2.2
+  version: 24.3.0
   chart: oci://registry-1.docker.io/bitnamicharts/keycloak
   namespace: authentication
   needs:
