@@ -37,7 +37,7 @@ releases:
 - name: grafana-database
   chart: cnpg/cluster
   namespace: monitoring
-  version: 0.1.1
+  version: 0.1.3
   force: true
   labels:
     purpose: monitoring
@@ -47,7 +47,7 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
-  version: 66.5.0
+  version: 66.7.1
   needs:
   - monitoring/grafana-database
   labels:
@@ -58,7 +58,7 @@ releases:
 - name: grafana
   namespace: monitoring
   chart: grafana/grafana
-  version: 8.7.0
+  version: 8.8.2
   needs:
   - monitoring/grafana-database
   - monitoring/prometheus
