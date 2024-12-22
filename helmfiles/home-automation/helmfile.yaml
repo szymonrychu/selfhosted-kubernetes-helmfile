@@ -39,7 +39,7 @@ releases:
 - name: home-assistant-database
   chart: cnpg/cluster
   namespace: home-automation
-  version: 0.0.3
+  version: 0.1.3
   force: true
   labels:
     purpose: home-automation

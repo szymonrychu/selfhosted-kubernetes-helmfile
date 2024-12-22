@@ -1,6 +1,6 @@
 
 localVoiceProcessing:
-  enabled: true
+  enabled: false
   whisperModel: small-int8
   whisperBeamSize: 8
 
