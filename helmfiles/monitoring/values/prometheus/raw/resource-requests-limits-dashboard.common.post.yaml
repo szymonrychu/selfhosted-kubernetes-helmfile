@@ -27,9 +27,8 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 382,
+      "id": 32,
       "links": [],
-      "liveNow": false,
       "panels": [
         {
           "collapsed": false,
@@ -61,6 +60,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
@@ -125,6 +125,7 @@ data:
               "sort": "none"
             }
           },
+          "pluginVersion": "11.4.0",
           "targets": [
             {
               "datasource": {
@@ -132,7 +133,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_irate{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"}) by (pod,container) > 0",
+              "expr": "sum(irate(container_cpu_usage_seconds_total{namespace=~"$namespace", pod=~"$pod", container=~"$container"} [$__rate_interval])) by (pod,container) > 0",
               "instant": false,
               "legendFormat": "{{pod}}/{{container}}",
               "range": true,
@@ -144,7 +145,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "$show_requests * sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"}) by (pod,container) > 0",
+              "expr": "$show_requests * sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"}) by (pod,container) > 0",
               "hide": false,
               "instant": false,
               "legendFormat": "R{{pod}}/{{container}}",
@@ -157,7 +158,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "$show_limits * sum(cluster:namespace:pod_cpu:active:kube_pod_container_resource_limits{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"}) by (pod,container) > 0",
+              "expr": "$show_limits * sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"}) by (pod,container) > 0",
               "hide": false,
               "instant": false,
               "legendFormat": "L{{pod}}/{{container}}",
@@ -198,6 +199,7 @@ data:
                 "axisLabel": "",
                 "axisPlacement": "auto",
                 "barAlignment": 0,
+                "barWidthFactor": 0.6,
                 "drawStyle": "line",
                 "fillOpacity": 0,
                 "gradientMode": "none",
@@ -263,6 +265,7 @@ data:
               "sort": "none"
             }
           },
+          "pluginVersion": "11.4.0",
           "targets": [
             {
               "datasource": {
@@ -307,15 +310,15 @@ data:
           "type": "timeseries"
         }
       ],
+      "preload": false,
       "refresh": "",
-      "schemaVersion": 39,
+      "schemaVersion": 40,
       "tags": [],
       "templating": {
         "list": [
           {
             "allValue": ".*",
             "current": {
-              "selected": true,
               "text": [
                 "All"
               ],
@@ -328,7 +331,6 @@ data:
               "uid": "prometheus"
             },
             "definition": "label_values(kube_namespace_status_phase{job=\"kube-state-metrics\"},namespace)",
-            "hide": 0,
             "includeAll": true,
             "multi": true,
             "name": "namespace",
@@ -340,14 +342,12 @@ data:
             },
             "refresh": 2,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 1,
             "type": "query"
           },
           {
             "allValue": ".*",
             "current": {
-              "selected": false,
               "text": "All",
               "value": "$__all"
             },
@@ -356,7 +356,6 @@ data:
               "uid": "prometheus"
             },
             "definition": "label_values(kube_pod_info{job=\"kube-state-metrics\", namespace=\"$namespace\"},pod)",
-            "hide": 0,
             "includeAll": true,
             "multi": true,
             "name": "pod",
@@ -368,14 +367,12 @@ data:
             },
             "refresh": 2,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 1,
             "type": "query"
           },
           {
             "allValue": ".*",
             "current": {
-              "selected": false,
               "text": "All",
               "value": "$__all"
             },
@@ -384,7 +381,6 @@ data:
               "uid": "prometheus"
             },
             "definition": "label_values(kube_container_info{namespace=\"$namespace\", pod=\"$pod\"},container)",
-            "hide": 0,
             "includeAll": true,
             "multi": true,
             "name": "container",
@@ -396,19 +392,15 @@ data:
             },
             "refresh": 2,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 1,
             "type": "query"
           },
           {
             "current": {
-              "selected": false,
               "text": "false",
               "value": "0"
             },
-            "hide": 0,
             "includeAll": false,
-            "multi": false,
             "name": "show_requests",
             "options": [
               {
@@ -423,19 +415,14 @@ data:
               }
             ],
             "query": "true : 1, false : 0",
-            "queryValue": "",
-            "skipUrlSync": false,
             "type": "custom"
           },
           {
             "current": {
-              "selected": false,
               "text": "false",
               "value": "0"
             },
-            "hide": 0,
             "includeAll": false,
-            "multi": false,
             "name": "show_limits",
             "options": [
               {
@@ -450,8 +437,6 @@ data:
               }
             ],
             "query": "true : 1, false : 0",
-            "queryValue": "",
-            "skipUrlSync": false,
             "type": "custom"
           }
         ]
@@ -464,6 +449,6 @@ data:
       "timezone": "",
       "title": "Resource Usage vs Requests and Limits",
       "uid": "c9692a1d-5ec0-451b-976e-974dc0307334",
-      "version": 2,
+      "version": 1,
       "weekStart": ""
     }
