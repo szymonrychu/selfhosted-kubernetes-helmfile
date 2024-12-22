@@ -20,7 +20,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/sda
+    path: /dev/disk/by-id/ata-SSD_256GB_YS202305231545HT
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -44,7 +44,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/sda
+    path: /dev/disk/by-id/ata-Patriot_P210_256GB_P210IIBB23102405152
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -68,7 +68,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/sda
+    path: /dev/disk/by-id/ata-SSD_256GB_YS202305232763HT
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -92,7 +92,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/sda
+    path: /dev/disk/by-id/ata-Patriot_P210_256GB_P210JBCB23100601928
   nodeAffinity:
     required:
       nodeSelectorTerms:

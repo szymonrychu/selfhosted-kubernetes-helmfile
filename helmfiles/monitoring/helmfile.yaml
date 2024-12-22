@@ -55,18 +55,6 @@ releases:
     application: prometheus
   <<: *default
 
-- name: grafana
-  namespace: monitoring
-  chart: grafana/grafana
-  version: 8.8.2
-  needs:
-  - monitoring/grafana-database
-  - monitoring/prometheus
-  labels:
-    purpose: monitoring
-    application: grafana
-  <<: *default
-
 - name: smartctl-exporter
   namespace: monitoring
   chart: prometheus-community/prometheus-smartctl-exporter
