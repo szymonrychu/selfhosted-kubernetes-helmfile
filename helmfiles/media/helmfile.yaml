@@ -144,7 +144,7 @@ releases:
 
 - name: paperless-ngx
   chart: oci://ghcr.io/szymonrychu/helm-charts/paperless-ngx
-  version: 0.1.5
+  version: 0.1.6
   namespace: paperless-ngx
   labels:
     purpose: media
