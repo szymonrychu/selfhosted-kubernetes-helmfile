@@ -133,7 +133,7 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "sum(irate(container_cpu_usage_seconds_total{namespace=~"$namespace", pod=~"$pod", container=~"$container"} [$__rate_interval])) by (pod,container) > 0",
+              "expr": "sum(irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", pod=~\"$pod\", container=~\"$container\"} [$__rate_interval])) by (pod,container) > 0",
               "instant": false,
               "legendFormat": "{{pod}}/{{container}}",
               "range": true,

@@ -13,14 +13,14 @@ metadata:
   namespace: storage-system
 spec:
   capacity:
-    storage: 230Gi
+    storage: 930Gi
   volumeMode: Block
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/disk/by-id/ata-SSD_256GB_YS202305231545HT
+    path: /dev/disk/by-id/ata-ST1000DM010-2EP102_ZN1LYRWB
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -37,14 +37,14 @@ metadata:
   namespace: storage-system
 spec:
   capacity:
-    storage: 230Gi
+    storage: 930Gi
   volumeMode: Block
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/disk/by-id/ata-Patriot_P210_256GB_P210IIBB23102405152
+    path: /dev/disk/by-id/ata-ST1000DM010-2EP102_ZN1LXZYZ
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -61,14 +61,14 @@ metadata:
   namespace: storage-system
 spec:
   capacity:
-    storage: 230Gi
+    storage: 930Gi
   volumeMode: Block
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/disk/by-id/ata-SSD_256GB_YS202305232763HT
+    path: /dev/disk/by-id/ata-ST1000DM010-2EP102_ZN1XQ69T
   nodeAffinity:
     required:
       nodeSelectorTerms:
@@ -85,14 +85,14 @@ metadata:
   namespace: storage-system
 spec:
   capacity:
-    storage: 230Gi
+    storage: 930Gi
   volumeMode: Block
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Delete
   storageClassName: block-storage
   local:
-    path: /dev/disk/by-id/ata-Patriot_P210_256GB_P210JBCB23100601928
+    path: /dev/disk/by-id/ata-ST1000DM010-2EP102_ZN1LYHEV
   nodeAffinity:
     required:
       nodeSelectorTerms:

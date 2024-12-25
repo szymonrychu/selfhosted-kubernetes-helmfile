@@ -44,3 +44,13 @@ resource "keycloak_group" "grafana_dev" {
   realm_id = data.keycloak_realm.master.id
   name     = "grafana-dev"
 }
+
+
+output "grafana_client_id" {
+  value = keycloak_openid_client.grafana.client_id
+}
+
+output "grafana_client_secret" {
+  value     = keycloak_openid_client.grafana.client_secret
+  sensitive = true
+}

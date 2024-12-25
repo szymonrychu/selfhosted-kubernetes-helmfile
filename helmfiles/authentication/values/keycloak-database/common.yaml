@@ -50,6 +50,20 @@ cluster:
     database: keycloak
     owner: keycloak
 
+# mode: recovery
+
+# recovery:
+#   method: object_store
+#   pitrTarget:
+#     time: "2024-12-13 00:18:10"
+#   clusterName: keycloak-database-cluster
+#   provider: s3
+#   s3:
+#     region: eu-central-1
+#     bucket: database-backup-szymonrychu
+#     path: /keycloak-database/
+
+
 backups:
   enabled: true
   s3:
