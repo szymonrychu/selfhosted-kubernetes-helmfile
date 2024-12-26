@@ -34,7 +34,7 @@ releases:
 
 - name: qbittorrent
   chart: oci://ghcr.io/szymonrychu/helm-charts/qbittorrent
-  version: 2.1.3
+  version: 2.1.4
   namespace: media
   labels:
     purpose: media
