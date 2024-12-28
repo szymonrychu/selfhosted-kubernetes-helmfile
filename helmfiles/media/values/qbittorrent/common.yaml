@@ -38,9 +38,8 @@ resources:
 persistence:
   config:
     enabled: true
-    storageClass: ceph
-    type: pvc
-    size: 10Gi
+    type: hostPath
+    hostPath: /var/lib/qbittorrent
   media:
     enabled: true
     type: hostPath
