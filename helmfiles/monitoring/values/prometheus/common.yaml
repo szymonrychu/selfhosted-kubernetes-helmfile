@@ -91,7 +91,7 @@ grafana:
   persistence:
     type: pvc
     enabled: true
-    storageClassName: ceph
+    storageClassName: nas-nfs
     accessModes:
       - ReadWriteMany
     size: 5Gi

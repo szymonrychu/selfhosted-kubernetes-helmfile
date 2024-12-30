@@ -27,14 +27,14 @@ templates:
 
 releases:
 
-# - name: esphome
-#   chart: oci://ghcr.io/szymonrychu/helm-charts/esphome
-#   version: 3.0.26
-#   namespace: home-automation
-#   labels:
-#     purpose: home-automation
-#     application: esphome
-#   <<: *default
+- name: esphome
+  chart: oci://ghcr.io/szymonrychu/helm-charts/esphome
+  version: 3.0.26
+  namespace: home-automation
+  labels:
+    purpose: home-automation
+    application: esphome
+  <<: *default
 
 - name: home-assistant-database
   chart: cnpg/cluster

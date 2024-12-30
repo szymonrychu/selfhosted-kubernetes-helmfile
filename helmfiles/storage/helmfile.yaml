@@ -42,34 +42,43 @@ releases:
     application: local-path-provisioner
   <<: *default
 
-- name: snapshot-controller
-  chart: oci://ghcr.io/szymonrychu/helm-charts/snapshot-controller
+- name: nfs-subdir-external-provisioner
+  chart: nfs-subdir-external-provisioner/nfs-subdir-external-provisioner
   namespace: storage-system
-  version: 2.0.4
+  version: 4.0.18
   labels:
     purpose: storage
-    application: snapshot-controller
+    application: nfs-subdir-external-provisioner
   <<: *default
 
-- name: rook-ceph
-  chart: rook-release/rook-ceph
-  namespace: rook-ceph
-  version: v1.16.0
-  needs:
-  - storage-system/snapshot-controller
-  labels:
-    purpose: storage
-    application: rook-ceph
-  <<: *default
+# - name: snapshot-controller
+#   chart: oci://ghcr.io/szymonrychu/helm-charts/snapshot-controller
+#   namespace: storage-system
+#   version: 2.0.4
+#   labels:
+#     purpose: storage
+#     application: snapshot-controller
+#   <<: *default
 
-- name: rook-ceph-cluster
-  chart: rook-release/rook-ceph-cluster
-  namespace: rook-ceph
-  version: v1.16.0
-  needs:
-  - storage-system/snapshot-controller
-  - rook-ceph/rook-ceph
-  labels:
-    purpose: storage
-    application: rook-ceph
-  <<: *default
+# - name: rook-ceph
+#   chart: rook-release/rook-ceph
+#   namespace: rook-ceph
+#   version: v1.16.0
+#   needs:
+#   - storage-system/snapshot-controller
+#   labels:
+#     purpose: storage
+#     application: rook-ceph
+#   <<: *default
+
+# - name: rook-ceph-cluster
+#   chart: rook-release/rook-ceph-cluster
+#   namespace: rook-ceph
+#   version: v1.16.0
+#   needs:
+#   - storage-system/snapshot-controller
+#   - rook-ceph/rook-ceph
+#   labels:
+#     purpose: storage
+#     application: rook-ceph
+#   <<: *default

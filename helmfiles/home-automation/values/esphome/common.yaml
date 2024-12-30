@@ -35,6 +35,6 @@ resources:
 
 persistence:
   enabled: true
-  storageClass: ceph
+  storageClass: nas-nfs
   accessMode: ReadWriteMany
   size: 8Gi

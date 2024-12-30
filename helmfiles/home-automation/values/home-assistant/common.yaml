@@ -138,17 +138,17 @@ resources:
 persistence:
   homeassistant:
     enabled: true
-    storageClass: ceph
+    storageClass: nas-nfs
     accessMode: ReadWriteMany
     size: 50Gi
   piper:
     enabled: true
-    storageClass: ceph
+    storageClass: nas-nfs
     accessMode: ReadWriteMany
     size: 8Gi
   whisper:
     enabled: true
-    storageClass: ceph
+    storageClass: nas-nfs
     accessMode: ReadWriteMany
     size: 8Gi
 

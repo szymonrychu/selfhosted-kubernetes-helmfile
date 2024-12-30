@@ -54,12 +54,12 @@ persistence:
   config:
     enabled: true
     accessMode: ReadWriteMany
-    storageClass: ceph
+    storageClass: nas-nfs
     size: 8Gi
     annotations: {}
   sharedData:
     enabled: true
     accessMode: ReadWriteMany
-    storageClass: ceph
+    storageClass: nas-nfs
     size: 8Gi
     annotations: {}

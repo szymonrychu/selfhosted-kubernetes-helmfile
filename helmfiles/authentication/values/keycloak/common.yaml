@@ -132,9 +132,6 @@ pdb:
 
 metrics:
   enabled: true
-  service:
-    ports:
-      http: 9000
   serviceMonitor:
     enabled: true
   prometheusRule:

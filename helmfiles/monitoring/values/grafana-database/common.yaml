@@ -5,11 +5,11 @@ cluster:
   instances: 3
   storage:
     size: 50Gi
-    storageClass: ceph
+    storageClass: nas-nfs
   walStorage:
     enabled: true
     size: 10Gi
-    storageClass: ceph
+    storageClass: nas-nfs
   resources:
     limits:
       cpu: 500m

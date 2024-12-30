@@ -1,6 +1,6 @@
 nfs:
   server: nas.lan
-  path: /nfs
+  path: /data
 
 storageClass:
   name: nas-nfs

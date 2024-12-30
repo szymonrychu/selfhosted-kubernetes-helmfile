@@ -6,11 +6,11 @@ cluster:
   instances: 2
   storage:
     size: 30Gi
-    storageClass: ceph
+    storageClass: nas-nfs
   walStorage:
     enabled: true
     size: 10Gi
-    storageClass: ceph
+    storageClass: nas-nfs
 
   resources:
     limits:
