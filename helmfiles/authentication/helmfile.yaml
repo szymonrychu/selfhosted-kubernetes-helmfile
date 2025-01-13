@@ -42,7 +42,7 @@ releases:
 
 - name: keycloak
   timeout: 2400
-  version: 24.3.2
+  version: 24.4.1
   chart: oci://registry-1.docker.io/bitnamicharts/keycloak
   namespace: authentication
   needs:

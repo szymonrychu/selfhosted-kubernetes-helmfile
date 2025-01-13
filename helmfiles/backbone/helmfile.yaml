@@ -50,7 +50,7 @@ releases:
 
 - name: gha-runner
   chart: oci://ghcr.io/szymonrychu/helm-charts/gha-runner
-  version: 2.311.16
+  version: 2.311.17
   namespace: gha-runner
   labels:
     purpose: backbone
@@ -90,7 +90,7 @@ releases:
 - name: redis-operator
   chart: ot-helm/redis-operator
   namespace: redis-operator
-  version: 0.18.5
+  version: 0.19.0
   force: true
   labels:
     purpose: backbone
