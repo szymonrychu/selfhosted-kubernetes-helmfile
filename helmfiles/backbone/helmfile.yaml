@@ -50,7 +50,7 @@ releases:
 
 - name: gha-runner
   chart: oci://ghcr.io/szymonrychu/helm-charts/gha-runner
-  version: 2.311.17
+  version: 2.311.18
   namespace: gha-runner
   labels:
     purpose: backbone
@@ -59,7 +59,7 @@ releases:
 
 - name: kured
   chart: kubereboot/kured
-  version: 5.5.2
+  version: 5.6.0
   namespace: kube-system
   labels:
     purpose: backbone
