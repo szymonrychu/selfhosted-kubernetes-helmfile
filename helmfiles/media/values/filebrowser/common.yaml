@@ -15,6 +15,16 @@ ingress:
       hosts:
         - files.szymonrichert.pl
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nas
+          operator: In
+          values:
+          - "true"
+
 podAnnotations:
   oauth2-proxy-admission/secret-name: files-proxy
   oauth2-proxy-admission/secret-namespace: media

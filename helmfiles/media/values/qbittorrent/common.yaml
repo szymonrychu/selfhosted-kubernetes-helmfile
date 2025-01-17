@@ -17,6 +17,16 @@ ingress:
       hosts:
         - qbt.szymonrichert.pl
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nas
+          operator: In
+          values:
+          - "true"
+
 podAnnotations:
   oauth2-proxy-admission/secret-name: qbittorrent-proxy
   oauth2-proxy-admission/secret-namespace: media
@@ -38,8 +48,10 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /var/lib/qbittorrent
+    accessMode: ReadWriteMany
+    storageClass: nas-nfs
+    size: 8Gi
+    annotations: {}
   media:
     enabled: true
     type: hostPath

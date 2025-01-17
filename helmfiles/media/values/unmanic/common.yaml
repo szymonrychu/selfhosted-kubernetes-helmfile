@@ -14,6 +14,16 @@ ingress:
       hosts:
         - unmanic.szymonrichert.pl
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nas
+          operator: In
+          values:
+          - "true"
+
 image:
   tag: 0.2.7
 

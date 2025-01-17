@@ -18,6 +18,16 @@ podAnnotations:
   oauth2-proxy-admission/secret-name: lidarr-proxy
   oauth2-proxy-admission/secret-namespace: media
 
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nas
+          operator: In
+          values:
+          - "true"
+
 resources:
   limits:
     cpu: "2"
@@ -29,8 +39,10 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /var/lib/lidarr
+    accessMode: ReadWriteMany
+    storageClass: nas-nfs
+    size: 8Gi
+    annotations: {}
   media:
     enabled: true
     type: hostPath

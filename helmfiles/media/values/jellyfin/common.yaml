@@ -16,7 +16,15 @@ ingress:
       hosts:
         - jellyfin.szymonrichert.pl
 
-nvidiaVisibleDevice: GPU-2e5cba96-e2d4-57ca-8b12-7652194abf17
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: nas
+          operator: In
+          values:
+          - "true"
 
 securityContext:
   privileged: true
@@ -44,8 +52,10 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /var/lib/jellyfin
+    accessMode: ReadWriteMany
+    storageClass: nas-nfs
+    size: 8Gi
+    annotations: {}
   media:
     enabled: true
     type: hostPath

@@ -104,7 +104,7 @@ releases:
     application: jellyfin
   <<: *default
 
-- name: jellyseer
+- name: jellyseerr
   chart: oci://ghcr.io/szymonrychu/helm-charts/jellyseerr
   version: 0.0.8
   namespace: media

@@ -29,5 +29,7 @@ resources:
 persistence:
   config:
     enabled: true
-    type: hostPath
-    hostPath: /var/lib/prowlarr
+    accessMode: ReadWriteMany
+    storageClass: nas-nfs
+    size: 8Gi
+    annotations: {}
