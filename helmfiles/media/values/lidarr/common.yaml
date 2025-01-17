@@ -39,10 +39,8 @@ resources:
 persistence:
   config:
     enabled: true
-    accessMode: ReadWriteMany
-    storageClass: nas-nfs
-    size: 8Gi
-    annotations: {}
+    type: hostPath
+    hostPath: /var/lib/lidarr
   media:
     enabled: true
     type: hostPath

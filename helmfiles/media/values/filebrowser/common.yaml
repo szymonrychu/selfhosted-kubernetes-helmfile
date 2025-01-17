@@ -46,9 +46,8 @@ podSecurityContext:
 persistence:
   config:
     enabled: true
-    storageClass: nas-nfs
-    type: pvc
-    size: 1Gi
+    type: hostPath
+    hostPath: /var/lib/filebrowser
   media:
     enabled: true
     type: hostPath
