@@ -56,3 +56,12 @@ releases:
     purpose: home-automation
     application: home-assistant
   <<: *default
+
+- name: octoprint-external
+  chart: oci://ghcr.io/szymonrychu/helm-charts/oauth2proxy-external
+  version: 0.0.1
+  namespace: home-automation
+  labels:
+    purpose: home-automation
+    application: octoprint-external
+  <<: *default

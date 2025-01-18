@@ -1,0 +1,30 @@
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: octoprint.szymonrichert.pl
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: octoprint-tls
+      hosts:
+        - octoprint.szymonrichert.pl
+
+
+externalAddress: http://192.168.1.32
+realmUrl: https://auth.szymonrichert.pl/realms/master
+
+redirectUrlSecret: octoprint-proxy/proxy-redirect-url
+cookieDomainSecret: octoprint-proxy/proxy-cookie-domain
+allowedGroupsSecret: octoprint-proxy/proxy-allowed-groups
+
+clientIdSecret: octoprint-proxy/proxy-client-id
+clientSecretSecret: octoprint-proxy/proxy-client-secret
+cookieSecretSecret: octoprint-proxy/proxy-cookie-secret
+
+additionalDNSServers:
+  - 192.168.1.1

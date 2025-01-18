@@ -19,6 +19,6 @@ resource "keycloak_user_groups" "user_groups" {
     module.unmanic.keycloak_group_id,
     module.sonarr.keycloak_group_id,
     module.lidarr.keycloak_group_id,
-    module.bitmagnet.keycloak_group_id
+    module.octoprint.keycloak_group_id
   ]
 }

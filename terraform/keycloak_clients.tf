@@ -158,16 +158,16 @@ module "lidarr" {
   keycloak_openid_client_scope_name = keycloak_openid_client_scope.groups.name
 }
 
-module "bitmagnet" {
+module "octoprint" {
   source = "github.com/szymonrychu/oauth2-proxy-admission-controller.git//terraform_keycloak_client?ref=0.1.8"
 
   keycloak_url             = var.keycloak_url
-  keycloak_client_id       = "bitmagnet"
-  keycloak_client_name     = "bitmagnet"
-  keycloak_client_hostname = "bitmagnet.szymonrichert.pl"
-  keycloak_group_name      = "bitmagnet"
+  keycloak_client_id       = "octoprint"
+  keycloak_client_name     = "octoprint"
+  keycloak_client_hostname = "octoprint.szymonrichert.pl"
+  keycloak_group_name      = "octoprint"
 
-  kubernetes_secret_namespace = "media"
+  kubernetes_secret_namespace = "home-automation"
 
   kuberenetes_proxy_cookie_secret = var.kuberenetes_proxy_cookie_secret
 
