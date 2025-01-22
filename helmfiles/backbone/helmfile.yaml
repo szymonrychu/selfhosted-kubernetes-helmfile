@@ -50,7 +50,7 @@ releases:
 
 - name: gha-runner
   chart: oci://ghcr.io/szymonrychu/helm-charts/gha-runner
-  version: 2.311.19
+  version: 2.311.20
   namespace: gha-runner
   labels:
     purpose: backbone
