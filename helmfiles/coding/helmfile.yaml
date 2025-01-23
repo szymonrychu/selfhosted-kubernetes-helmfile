@@ -4,7 +4,6 @@ templates:
     disableValidationOnInstall: true
     wait: true
     missingFileHandler: Warn
-    timeout: 600
     hooks:
     - events:
       - prepare
@@ -28,7 +27,8 @@ templates:
 releases:
 
 - name: code-server
-  version: 2.1.4
+  version: 2.2.6
+  timeout: 2400
   chart: oci://ghcr.io/szymonrychu/helm-charts/code-server
   namespace: code-server
   labels:
