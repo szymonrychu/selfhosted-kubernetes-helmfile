@@ -97,7 +97,7 @@ releases:
 
 - name: jellyfin
   chart: oci://ghcr.io/szymonrychu/helm-charts/jellyfin
-  version: 0.6.11
+  version: 0.6.12
   namespace: media
   labels:
     purpose: media
