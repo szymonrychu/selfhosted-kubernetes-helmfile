@@ -48,7 +48,7 @@ releases:
 
 - name: home-assistant
   chart: oci://ghcr.io/szymonrychu/helm-charts/home-assistant
-  version: 0.12.1
+  version: 0.12.2
   namespace: home-automation
   needs:
   - home-automation/home-assistant-database
