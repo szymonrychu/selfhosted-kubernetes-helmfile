@@ -20,10 +20,14 @@ cluster:
 
   priorityClassName: system-cluster-critical
 
-  # -- Affinity/Anti-affinity rules for Pods
-  # See: https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-AffinityConfiguration
   affinity:
-    topologyKey: kubernetes.io/hostname
+    topologyKey: topology.kubernetes.io/zone
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
 
   monitoring:
     enabled: true

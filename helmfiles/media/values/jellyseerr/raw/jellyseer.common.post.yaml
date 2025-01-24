@@ -17,7 +17,7 @@ metadata:
 rules:
   - apiGroups: ["apps", "extensions"]
     resources: ["deployments"]
-    resourceNames: ["jellyseer-jellyseerr"]
+    resourceNames: ["jellyseerr"]
     verbs: ["get", "patch", "list", "watch"] # "list" and "watch" are only needed
                                              # if you want to use `rollout status`
 ---
@@ -33,7 +33,7 @@ roleRef:
   name: jellyseerr-restart
 subjects:
   - kind: ServiceAccount
-    name: jellyseerr-restart
+    name: jellyseerr
     namespace: media
 ---
 apiVersion: batch/v1
@@ -67,4 +67,4 @@ spec:
                 - 'kubectl'
                 - 'rollout'
                 - 'restart'
-                - 'deployment/jellyseer-jellyseerr'
+                - 'deployment/jellyseerr'

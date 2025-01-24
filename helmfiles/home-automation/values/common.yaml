@@ -3,10 +3,5 @@ affinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - nuc1
-          - nuc2
-          - nuc3
-          - nuc4
+        - key: node-role.kubernetes.io/control-plane
+          operator: Exists
