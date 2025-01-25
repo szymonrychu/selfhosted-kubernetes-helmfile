@@ -2,11 +2,10 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-       rewrite ^/#\/login\?redirect\=\/$ https://qbt.szymonrichert.pl/#/ permanent;
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/whitelist-source-range: "192.168.0.0/16"
+    nginx.ingress.kubernetes.io/proxy-redirect-from: "#/login?redirect=/"
+    nginx.ingress.kubernetes.io/proxy-redirect-to: "/#/"
   hosts:
     - host: qbt.szymonrichert.pl
       paths:
