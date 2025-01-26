@@ -33,7 +33,7 @@ roleRef:
   name: jellyfin-restart
 subjects:
   - kind: ServiceAccount
-    name: jellyfin
+    name: jellyfin-restart
     namespace: media
 ---
 apiVersion: batch/v1

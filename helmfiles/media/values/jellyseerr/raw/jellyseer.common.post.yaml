@@ -33,7 +33,7 @@ roleRef:
   name: jellyseerr-restart
 subjects:
   - kind: ServiceAccount
-    name: jellyseerr
+    name: jellyseerr-restart
     namespace: media
 ---
 apiVersion: batch/v1
