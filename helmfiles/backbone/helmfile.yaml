@@ -90,7 +90,7 @@ releases:
 - name: redis-operator
   chart: ot-helm/redis-operator
   namespace: redis-operator
-  version: 0.19.1
+  version: 0.19.2
   force: true
   labels:
     purpose: backbone
