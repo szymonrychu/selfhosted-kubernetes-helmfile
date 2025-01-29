@@ -47,7 +47,7 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: prometheus-community/kube-prometheus-stack
-  version: 68.3.2
+  version: 68.3.3
   needs:
   - monitoring/grafana-database
   labels:
