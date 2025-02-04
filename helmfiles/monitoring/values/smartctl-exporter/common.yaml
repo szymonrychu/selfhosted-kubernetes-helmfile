@@ -1,19 +1,22 @@
 serviceMonitor:
   enabled: true
+  relabelings:
+    - sourceLabels: [__meta_kubernetes_pod_node_name]
+      separator: ;
+      regex: ^(.*)$
+      targetLabel: nodename
+      replacement: $1
+      action: replace
 
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
       nodeSelectorTerms:
       - matchExpressions:
-        - key: kubernetes.io/hostname
+        - key: kubernetes.io/os
           operator: In
           values:
-          - nuc1
-          - nuc2
-          - nuc3
-          - nuc4
-          - nas
+          - linux
 
 resources:
   limits:

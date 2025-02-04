@@ -6,7 +6,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
 data:
-  etcd-dashboard.json: |
+  pod-availability-dashboard.json: |
     {
       "annotations": {
         "list": [
@@ -27,9 +27,8 @@ data:
       "editable": true,
       "fiscalYearStartMonth": 0,
       "graphTooltip": 0,
-      "id": 130,
+      "id": 157,
       "links": [],
-      "liveNow": false,
       "panels": [
         {
           "datasource": {
@@ -70,7 +69,7 @@ data:
             "overrides": []
           },
           "gridPos": {
-            "h": 24,
+            "h": 49,
             "w": 24,
             "x": 0,
             "y": 0
@@ -81,7 +80,7 @@ data:
             "legend": {
               "displayMode": "list",
               "placement": "bottom",
-              "showLegend": true
+              "showLegend": false
             },
             "mergeValues": true,
             "rowHeight": 0.9,
@@ -91,7 +90,7 @@ data:
               "sort": "none"
             }
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "11.4.0",
           "targets": [
             {
               "datasource": {
@@ -99,27 +98,26 @@ data:
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "sum(kube_pod_container_status_running{pod!~\"availability-checker-.*\",pod!~\"apt-autoupgrade-ubuntu-apt-autoupgrade-.*\",pod!~\"kube-.*?-nuc[0-9]\",namespace=~\"$namespace\"}) by (pod)",
+              "expr": "(\n  sum(kube_pod_status_phase{phase=\"Running\", namespace=~\"$namespace\"}) by (pod)\n  +\n  sum(kube_pod_status_phase{phase=\"Succeeded\", namespace=~\"$namespace\"}) by (pod)\n)\n/\nsum(kube_pod_status_phase{namespace=~\"$namespace\"}) by (pod)",
               "instant": false,
-              "legendFormat": "__auto",
+              "legendFormat": "{{pod}}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Panel Title",
+          "title": "",
           "type": "state-timeline"
         }
       ],
+      "preload": false,
       "refresh": "",
-      "schemaVersion": 38,
-      "style": "dark",
+      "schemaVersion": 40,
       "tags": [],
       "templating": {
         "list": [
           {
             "allValue": ".*",
             "current": {
-              "selected": true,
               "text": [
                 "All"
               ],
@@ -132,7 +130,6 @@ data:
               "uid": "prometheus"
             },
             "definition": "label_values(kube_namespace_status_phase{job=\"kube-state-metrics\"},namespace)",
-            "hide": 0,
             "includeAll": true,
             "multi": true,
             "name": "namespace",
@@ -143,20 +140,19 @@ data:
             },
             "refresh": 1,
             "regex": "",
-            "skipUrlSync": false,
             "sort": 1,
             "type": "query"
           }
         ]
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-24h",
         "to": "now"
       },
       "timepicker": {},
       "timezone": "",
-      "title": "POD Availability",
-      "uid": "e017795c-bd1f-4299-bae4-bacae2cca87f",
-      "version": 1,
+      "title": "PODs",
+      "uid": "e017795c-bd1f-4299-bae4-bacae2cca87e",
+      "version": 2,
       "weekStart": ""
     }
