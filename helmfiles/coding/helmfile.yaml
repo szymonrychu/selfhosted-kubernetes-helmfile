@@ -27,7 +27,7 @@ templates:
 releases:
 
 - name: code-server
-  version: 2.2.8
+  version: 2.2.9
   timeout: 2400
   chart: oci://ghcr.io/szymonrychu/helm-charts/code-server
   namespace: code-server
