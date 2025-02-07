@@ -1,0 +1,43 @@
+stages:
+  - generate
+  - trigger
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+      variables:
+        HELMFILE_COMMAND: diff
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      variables:
+        HELMFILE_COMMAND: apply
+
+.default:
+  tags:
+    - ci
+  image: registry.gitlab.com/szymonrychu/builder:latest
+
+process:template:
+  extends: 
+    - .default
+  variables:
+    KUBERNETES_CPU_REQUEST: '0.1'
+    KUBERNETES_MEMORY_REQUEST: 256M
+  stage: generate
+  script:
+    - ./.parse_helmfile.py
+  artifacts:
+    paths:
+      - .sub.gitlab-ci.yml
+
+
+trigger:template:
+  stage: trigger
+  trigger:
+    strategy: depend
+    include:
+      - artifact: .sub.gitlab-ci.yml
+        job: process:template
+    forward:
+      pipeline_variables: true
+  needs:
+    - job: process:template
