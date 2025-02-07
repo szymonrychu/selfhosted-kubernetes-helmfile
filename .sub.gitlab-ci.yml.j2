@@ -1,0 +1,38 @@
+stages:
+{%- for stage in stages %}
+  - {{ stage.name -}}
+{%- endfor %}
+
+.default:
+  tags:
+    - ci
+  image: registry.gitlab.com/szymonrychu/builder:latest
+
+{%- for stage in stages %}
+{%- for release in stage.releases %}
+{{ release.namespace }}:{{ release.name }}:
+  stage: {{ stage.name }}
+  extends: .default
+  environment: {{ release.namespace }}.{{ release.name }}
+  rules:
+    - changes:
+        - .parse_helmfile.py
+        - .gitlab-ci.yml
+        - .sub.gitlab-ci.yml.j2
+{%- for path in release.changed_files %}
+        - {{ path -}}
+{%- endfor %}
+  script:
+    - |
+        echo "${GPG_PRIVATE_RSA_B64}" | base64 --decode | gpg --import
+        mkdir -p ~/.kube
+        echo "${KUBE_CONFIG_B64}" | base64 --decode > ~/.kube/config
+        chmod 0600 ~/.kube/config
+        echo "${GHCR_TOKEN}" | helm registry login ghcr.io --username "${GHCR_USER}" --password-stdin 
+    - |
+        helmfile {{ helmfile_command }} \
+          --selector name={{ release.name }} \
+          --skip-needs
+
+{%- endfor %}
+{%- endfor %}
