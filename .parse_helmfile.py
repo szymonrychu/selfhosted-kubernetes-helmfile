@@ -47,6 +47,7 @@ class Release(BaseModel):
     needed_by: List[Release] = []
     needs: List[Release] = []
     changed_files: List[str] = []
+    helmfile_stage: str = None
 
     @staticmethod
     def from_helmfile_release(hr: ReleaseHelmfile) -> Release:
@@ -58,12 +59,14 @@ class Release(BaseModel):
         if hr.source_path:
             r.changed_files.append(hr.source_path)
             _helmfile_root = os.path.dirname(hr.source_path)
+            r.helmfile_stage = os.path.basename(_helmfile_root)
             _values_path = os.path.join(_helmfile_root, 'values', hr.name)
             r.changed_files.append(_values_path + '/**')
         return r
 
 
 class Stage(BaseModel):
+    name: str = None
     releases: List[Release] = []
 
 Release.update_forward_refs()
@@ -72,6 +75,7 @@ Release.update_forward_refs()
 class HelmfileReleaseParser:
 
     def __init__(self, root_helmfile_path:str = 'helmfile.yaml'):
+        self._helmfile_stages = []
         _log.info(f"Loading root helmfile from {root_helmfile_path}")
         self._main_helmfile = self._parse_helmfile(root_helmfile_path)
         for subhelmfile in self._main_helmfile.helmfiles:
@@ -80,7 +84,8 @@ class HelmfileReleaseParser:
             for release in releases:
                 release.source_path = subhelmfile.path
             self._main_helmfile.releases.extend(releases)
-        self._main_helmfile.helmfiles = []
+            _helmfile_root = os.path.dirname(subhelmfile.path)
+            self._helmfile_stages.append(os.path.basename(_helmfile_root))
         self._stages = []
         
     def _parse_helmfile(self, path):
@@ -129,7 +134,21 @@ class HelmfileReleaseParser:
             current_stage = next_stage
 
         _stages = list(reversed(_stages))
-        return _stages
+
+        stages = []
+        for helmfile_stage in self._helmfile_stages:
+            stage_idx = 0
+            for stage in _stages:
+                _stage = Stage()
+                _stage.name = f"{helmfile_stage}:{stage_idx}"
+                for release in stage.releases:
+                    if release.helmfile_stage == helmfile_stage:
+                        _stage.releases.append(release)
+                if _stage.releases:
+                    stages.append(_stage)
+                    stage_idx += 1
+                
+        return stages
 
 
 def main():
@@ -139,7 +158,7 @@ def main():
     _helmfile_command = os.environ.get('HELMFILE_COMMAND', 'apply')
 
     result = []
-    for idx, stage in enumerate(HelmfileReleaseParser(_helmfile_path).get_stages()):
+    for stage in HelmfileReleaseParser(_helmfile_path).get_stages():
         releases = []
         for release in stage.releases:
             namespace, name = release.namespace_name.split('/')
@@ -150,9 +169,10 @@ def main():
                 'changed_files': release.changed_files
             })
         result.append({
-            'name': f"stage_{idx}",
+            'name': stage.name,
             'releases': releases
         })
+    print(yaml.dump({'stages': result}))
     templateLoader = jinja2.FileSystemLoader(searchpath="./")
     templateEnv = jinja2.Environment(loader=templateLoader)
     template = templateEnv.get_template(_template_path)
