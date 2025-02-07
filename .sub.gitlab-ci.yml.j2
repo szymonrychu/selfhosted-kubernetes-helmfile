@@ -32,7 +32,10 @@ stages:
     - |
         helmfile {{ helmfile_command }} \
           --selector name={{ release.name }} \
-          --skip-needs
+{%- if helmfile_command == "diff" %}
+          --detailed-exitcode \
+{%- endif %}
+          --skip-needs 
 
 {%- endfor %}
 {%- endfor %}
