@@ -1,4 +1,5 @@
 stages:
+  - renovate
   - generate
   - trigger
 
@@ -16,9 +17,29 @@ workflow:
     - ci
   image: registry.gitlab.com/szymonrychu/builder:latest
 
+
+renovate:
+  tags:
+    - ci
+  stage: renovate
+  image: ghcr.io/renovatebot/renovate:37.373.0
+  script:
+    - renovate
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+    - if: $CI_PIPELINE_SOURCE == 'web'
+  variables:
+    RENOVATE_CONFIG_FILE: renovate-config.js
+
+
 process:template:
   extends: 
     - .default
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'web'
+      when: never
   variables:
     KUBERNETES_CPU_REQUEST: '0.1'
     KUBERNETES_MEMORY_REQUEST: 256M
@@ -32,6 +53,11 @@ process:template:
 
 trigger:template:
   stage: trigger
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'schedule'
+      when: never
+    - if: $CI_PIPELINE_SOURCE == 'web'
+      when: never
   trigger:
     strategy: depend
     include:
