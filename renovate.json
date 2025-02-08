@@ -25,18 +25,16 @@
   ],
   "packageRules": [
     {
-      "matchManagers": ["github-actions"],
-      "commitMessageTopic": "github-action {{depName}}"
-    },
-    {
       "description": "MinorAutoUpgrade",
       "matchUpdateTypes": ["pin", "digest", "patch", "minor", "major"],
-      "minimumReleaseAge": null
+      "minimumReleaseAge": null,
+      "automerge": true
     },
     {
       "description": "MajorUpgrade",
       "matchUpdateTypes": ["major"],
-      "minimumReleaseAge": "7 days"
+      "minimumReleaseAge": "7 days",
+      "automerge": true
     },
     {
       "matchPackagePatterns": [
