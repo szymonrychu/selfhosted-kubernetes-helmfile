@@ -1,0 +1,13 @@
+image:
+  tag: v0.16.0
+sidecarImage:
+  tag: v0.16.0
+certificate:
+  createIssuer: true
+resources:
+  limits:
+    cpu: 100m
+    memory: 200Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
