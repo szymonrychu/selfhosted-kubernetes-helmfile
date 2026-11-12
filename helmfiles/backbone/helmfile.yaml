@@ -87,6 +87,17 @@ releases:
     application: cloudnative-pg
   <<: *operators
 
+- name: plugin-barman-cloud
+  chart: cnpg/plugin-barman-cloud
+  namespace: postgres-operator
+  version: 0.9.0
+  needs:
+  - postgres-operator/cloudnative-pg
+  labels:
+    purpose: backbone
+    application: plugin-barman-cloud
+  <<: *default
+
 - name: redis-operator
   chart: ot-helm/redis-operator
   namespace: redis-operator
