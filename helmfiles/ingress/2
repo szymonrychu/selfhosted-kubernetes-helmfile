@@ -1,1 +1,0 @@
-Not implemented event: '{{ .Event.Name }}'
