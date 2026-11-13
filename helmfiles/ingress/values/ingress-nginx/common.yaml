@@ -1,5 +1,8 @@
 tcp:
-  "1883": "home-automation/eclipse-mosquitto:1883"
+  "1883": "home-automation/mosquitto-eclipse-mosquitto:1883"
+
+imagePullSecrets:
+  - name: regcred
 
 controller:
   hostNetwork: true
@@ -10,15 +13,70 @@ controller:
   hostPort:
     enabled: true
 
+  updateStrategy:
+    type: Recreate
+
+  config:
+    Referrer-Policy: strict-origin-when-cross-origin
+    X-Content-Type-Options: nosniff
+    X-Frame-Options: SAMEORIGIN
+    X-XSS-Protection: 1; mode=block
+    allow-snippet-annotations: "true"
+    annotations-risk-level: Critical
+    hide-headers: X-Powered-By,Server
+    http-snippet: |
+      map $http_cf_ipcountry $geo_blocked {
+        default 1;
+        # EU countries
+        AT 0;  # Austria
+        BE 0;  # Belgium
+        BG 0;  # Bulgaria
+        HR 0;  # Croatia
+        CY 0;  # Cyprus
+        CZ 0;  # Czech Republic
+        DK 0;  # Denmark
+        EE 0;  # Estonia
+        FI 0;  # Finland
+        FR 0;  # France
+        DE 0;  # Germany
+        GR 0;  # Greece
+        HU 0;  # Hungary
+        IE 0;  # Ireland
+        IT 0;  # Italy
+        LV 0;  # Latvia
+        LT 0;  # Lithuania
+        LU 0;  # Luxembourg
+        MT 0;  # Malta
+        NL 0;  # Netherlands
+        PL 0;  # Poland
+        PT 0;  # Portugal
+        RO 0;  # Romania
+        SK 0;  # Slovakia
+        SI 0;  # Slovenia
+        ES 0;  # Spain
+        SE 0;  # Sweden
+        # USA
+        US 0;
+        # Allow requests without CF-IPCountry header (local/internal traffic)
+        "" 0;
+      }
+    large-client-header-buffers: 16 64k
+    proxy-buffer-size: 16k
+    server-snippet: |
+      if ($geo_blocked = 1) {
+        return 403;
+      }
+    server-tokens: "false"
+
   priorityClassName: system-cluster-critical
-  replicaCount: 4
+  replicaCount: 3
 
   resources:
     requests:
-      cpu: 10m
+      cpu: 300m
       memory: 128Mi
     limits:
-      cpu: 500m
+      cpu: 1000m
       memory: 512Mi
 
   affinity:
@@ -26,13 +84,8 @@ controller:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: "kubernetes.io/hostname"
-            operator: In
-            values:
-              - nuc1
-              - nuc2
-              - nuc3
-              - nuc4
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
       - labelSelector:
@@ -85,4 +138,4 @@ controller:
             severity: warning
           annotations:
             description: Too many 4XXs
-            summary: More than 5% of all requests returned 4XX, this requires your attention
+          summary: More than 5% of all requests returned 4XX, this requires your attention
