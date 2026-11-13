@@ -60,7 +60,7 @@ controller:
         # Allow requests without CF-IPCountry header (local/internal traffic)
         "" 0;
       }
-    large-client-header-buffers: 16 64k
+    large-client-header-buffers: 8 128k
     proxy-buffer-size: 16k
     server-snippet: |
       if ($geo_blocked = 1) {
